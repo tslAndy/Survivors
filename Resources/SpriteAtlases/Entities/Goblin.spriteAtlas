@@ -1,0 +1,79 @@
+texture ./Resources/Textures/Entities/Goblin.png
+
+##-----------------------IDLE---------------------##
+key idle_right_1 0 0 16 16
+key idle_right_2 16 0 16 16
+key idle_right_3 32 0 16 16
+key idle_right_4 48 0 16 16
+
+key idle_left_1 0 16 16 16
+key idle_left_2 16 16 16 16
+key idle_left_3 32 16 16 16
+key idle_left_4 48 16 16 16
+
+key idle_down_1 0 32 16 16
+key idle_down_2 16 32 16 16
+key idle_down_3 32 32 16 16
+key idle_down_4 48 32 16 16
+
+key idle_up_1 0 48 16 16
+key idle_up_2 16 48 16 16
+key idle_up_3 32 48 16 16
+key idle_up_4 48 48 16 16
+
+
+##-----------------------WALK---------------------##
+
+key walk_right_1 0 64 16 16
+key walk_right_2 16 64 16 16
+key walk_right_3 32 64 16 16
+key walk_right_4 48 64 16 16
+
+key walk_left_1 0 80 16 16
+key walk_left_2 16 80 16 16
+key walk_left_3 32 80 16 16
+key walk_left_4 48 80 16 16
+
+key walk_down_1 0 96 16 16
+key walk_down_2 16 96 16 16
+key walk_down_3 32 96 16 16
+key walk_down_4 48 96 16 16
+
+key walk_up_1 0 112 16 16
+key walk_up_2 16 112 16 16
+key walk_up_3 32 112 16 16
+key walk_up_4 48 112 16 16
+
+##-----------------------ATTACK---------------------##
+
+key attack_right_1 0 128 16 16
+key attack_right_2 16 128 16 16
+key attack_right_3 32 128 16 16
+key attack_right_4 48 128 16 16
+
+key attack_left_1 0 144 16 16
+key attack_left_2 16 144 16 16
+key attack_left_3 32 144 16 16
+key attack_left_4 48 144 16 16
+
+key attack_down_1 0 160 16 16
+key attack_down_2 16 160 16 16
+key attack_down_3 32 160 16 16
+key attack_down_4 48 160 16 16
+
+key attack_up_1 0 176 16 16
+key attack_up_2 16 176 16 16
+key attack_up_3 32 176 16 16
+key attack_up_4 48 176 16 16
+
+##-----------------------DIE---------------------##
+
+key die_right_1 0 192 16 16
+key die_right_2 16 192 16 16
+key die_right_3 32 192 16 16
+key die_right_4 48 192 16 16
+
+key die_left_1 0 208 16 16
+key die_left_2 16 208 16 16
+key die_left_3 32 208 16 16
+key die_left_4 48 208 16 16

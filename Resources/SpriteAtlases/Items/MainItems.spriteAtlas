@@ -1,0 +1,204 @@
+texture ./Resources/Textures/Items/MainItems.png
+
+
+##-----------------------DART---------------------##
+key dart_1 0 0 16 16
+key dart_2 16 0 16 16
+key dart_3 32 0 16 16
+key dart_4 48 0 16 16
+key dart_5 64 0 16 16
+key dart_6 80 0 16 16
+key dart_7 96 0 16 16
+key dart_8 112 0 16 16
+
+##-----------------------ARROW---------------------##
+key arrow_1 0 16 16 16
+key arrow_2 16 16 16 16
+key arrow_3 32 16 16 16
+key arrow_4 48 16 16 16
+key arrow_5 64 16 16 16
+key arrow_6 80 16 16 16
+key arrow_7 96 16 16 16
+key arrow_8 112 16 16 16
+
+##-----------------------KUNAI---------------------##
+key kunai_1 0 32 16 16
+key kunai_2 16 32 16 16
+key kunai_3 32 32 16 16
+key kunai_4 48 32 16 16
+key kunai_5 64 32 16 16
+key kunai_6 80 32 16 16
+key kunai_7 96 32 16 16
+key kunai_8 112 32 16 16
+
+##-----------------------CHAKRAM---------------------##
+key chakram_1 0 48 16 16
+key chakram_2 16 48 16 16
+key chakram_3 32 48 16 16
+key chakram_4 48 48 16 16
+key chakram_5 64 48 16 16
+key chakram_6 80 48 16 16
+key chakram_7 96 48 16 16
+key chakram_8 112 48 16 16
+
+##-----------------------SURIKEN---------------------##
+key suriken_1 0 64 16 16
+key suriken_2 16 64 16 16
+key suriken_3 32 64 16 16
+key suriken_4 48 64 16 16
+key suriken_5 64 64 16 16
+key suriken_6 80 64 16 16
+key suriken_7 96 64 16 16
+key suriken_8 112 64 16 16
+
+##-----------------------BOOMERANG---------------------##
+key boomerang_1 0 80 16 16
+key boomerang_2 16 80 16 16
+key boomerang_3 32 80 16 16
+key boomerang_4 48 80 16 16
+key boomerang_5 64 80 16 16
+key boomerang_6 80 80 16 16
+key boomerang_7 96 80 16 16
+key boomerang_8 112 80 16 16
+
+##-----------------------THROW_STONES---------------------##
+key throw_stones_1 0 96 16 16
+key throw_stones_2 16 96 16 16
+key throw_stones_3 32 96 16 16
+key throw_stones_4 48 96 16 16
+
+##-----------------------BOOK---------------------##
+key book_1 0 128 16 16
+key book_2 16 128 16 16
+key book_3 32 128 16 16
+key book_4 48 128 16 16
+key book_5 64 128 16 16
+key book_6 80 128 16 16
+key book_7 96 128 16 16
+key book_8 112 128 16 16
+
+##-----------------------CARD---------------------##
+key card_1 0 144 16 16
+key card_2 16 144 16 16
+key card_3 32 144 16 16
+key card_4 48 144 16 16
+key card_5 64 144 16 16
+key card_6 80 144 16 16
+key card_7 96 144 16 16
+key card_8 112 144 16 16
+
+##-----------------------STAVE---------------------##
+key stave_1 0 160 16 16
+key stave_2 16 160 16 16
+key stave_3 32 160 16 16
+key stave_4 48 160 16 16
+key stave_5 64 160 16 16
+key stave_6 80 160 16 16
+key stave_7 96 160 16 16
+key stave_8 112 160 16 16
+
+##-----------------------SLINGSHOT---------------------##
+key slingshot_1 0 192 16 16
+key slingshot_2 16 192 16 16
+key slingshot_3 32 192 16 16
+key slingshot_4 48 192 16 16
+key slingshot_5 64 192 16 16
+key slingshot_6 80 192 16 16
+key slingshot_7 96 192 16 16
+key slingshot_8 112 192 16 16
+
+##-----------------------CROSSBOW---------------------##
+key crossbow_1 0 208 16 16
+key crossbow_2 16 208 16 16
+key crossbow_3 32 208 16 16
+key crossbow_4 48 208 16 16
+key crossbow_5 64 208 16 16
+key crossbow_6 80 208 16 16
+key crossbow_7 96 208 16 16
+key crossbow_8 112 208 16 16
+
+##-----------------------SMALL_BOW---------------------##
+key small_bow_1 0 224 16 16
+key small_bow_2 16 224 16 16
+key small_bow_3 32 224 16 16
+key small_bow_4 48 224 16 16
+key small_bow_5 64 224 16 16
+key small_bow_6 80 224 16 16
+key small_bow_7 96 224 16 16
+key small_bow_8 112 224 16 16
+
+##-----------------------LONG_BOW---------------------##
+key long_bow_1 0 240 16 16
+key long_bow_2 16 240 16 16
+key long_bow_3 32 240 16 16
+key long_bow_4 48 240 16 16
+key long_bow_5 64 240 16 16
+key long_bow_6 80 240 16 16
+key long_bow_7 96 240 16 16
+key long_bow_8 112 240 16 16
+
+##-----------------------COMPOUND_BOW---------------------##
+key compound_bow_1 0 256 16 16
+key compound_bow_2 16 256 16 16
+key compound_bow_3 32 256 16 16
+key compound_bow_4 48 256 16 16
+key compound_bow_5 64 256 16 16
+key compound_bow_6 80 256 16 16
+key compound_bow_7 96 256 16 16
+key compound_bow_8 112 256 16 16
+
+##-----------------------SHIELD---------------------##
+key shield_1 0 272 16 16
+key shield_2 16 272 16 16
+key shield_3 32 272 16 16
+key shield_4 48 272 16 16
+key shield_5 64 272 16 16
+key shield_6 80 272 16 16
+key shield_7 96 272 16 16
+key shield_8 112 272 16 16
+
+##-----------------------SWORD---------------------##
+key sword_1 0 288 16 16
+key sword_2 16 288 16 16
+key sword_3 32 288 16 16
+key sword_4 48 288 16 16
+key sword_5 64 288 16 16
+key sword_6 80 288 16 16
+key sword_7 96 288 16 16
+key sword_8 112 288 16 16
+
+##-----------------------RAPIER---------------------##
+key rapier_1 0 304 16 16
+key rapier_2 16 304 16 16
+key rapier_3 32 304 16 16
+key rapier_4 48 304 16 16
+key rapier_5 64 304 16 16
+key rapier_6 80 304 16 16
+key rapier_7 96 304 16 16
+key rapier_8 112 304 16 16
+
+
+##----------------------MONEY THOUSANDS-----------##
+group money_thousand
+key thousand_1 0 336 16 16
+key thousand_2 16 336 16 16
+key thousand_3 32 336 16 16
+endgroup
+
+group money_hundred
+key hundred_1 48 336 16 16
+key hundred_2 64 336 16 16
+key hundred_3 80 336 16 16
+endgroup
+
+group money_ten
+key ten_1 96 336 16 16
+key ten_2 112 336 16 16
+key ten_3 0 352 16 16
+endgroup
+
+group money_one
+key one_1 16 352 16 16
+key one_2 32 352 16 16
+key one_3 48 352 16 16
+endgroup

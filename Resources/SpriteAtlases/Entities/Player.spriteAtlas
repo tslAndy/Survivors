@@ -1,0 +1,91 @@
+texture ./Resources/Textures/Entities/Player.png
+
+##-----------------------IDLE---------------------##
+
+key idle_right_1 0 0 16 16
+key idle_right_2 16 0 16 16
+key idle_right_3 32 0 16 16
+key idle_right_4 48 0 16 16
+
+key idle_left_1 0 16 16 16
+key idle_left_2 16 16 16 16
+key idle_left_3 32 16 16 16
+key idle_left_4 48 16 16 16
+
+key idle_down_1 0 32 16 16
+key idle_down_2 16 32 16 16
+key idle_down_3 32 32 16 16
+key idle_down_4 48 32 16 16
+
+key idle_up_1 0 48 16 16
+key idle_up_2 16 48 16 16
+key idle_up_3 32 48 16 16
+key idle_up_4 48 48 16 16
+
+
+##-----------------------WALK---------------------##
+
+key walk_right_1 0 64 16 16
+key walk_right_2 16 64 16 16
+key walk_right_3 32 64 16 16
+key walk_right_4 48 64 16 16
+
+key walk_left_1 0 80 16 16
+key walk_left_2 16 80 16 16
+key walk_left_3 32 80 16 16
+key walk_left_4 48 80 16 16
+
+key walk_down_1 0 96 16 16
+key walk_down_2 16 96 16 16
+key walk_down_3 32 96 16 16
+key walk_down_4 48 96 16 16
+
+key walk_up_1 0 112 16 16
+key walk_up_2 16 112 16 16
+key walk_up_3 32 112 16 16
+key walk_up_4 48 112 16 16
+
+##-----------------------RUN---------------------##
+
+key run_right_1 0 128 16 16
+key run_right_2 16 128 16 16
+key run_right_3 32 128 16 16
+key run_right_4 48 128 16 16
+
+key run_left_1 0 144 16 16
+key run_left_2 16 144 16 16
+key run_left_3 32 144 16 16
+key run_left_4 48 144 16 16
+
+key run_down_1 0 160 16 16
+key run_down_2 16 160 16 16
+key run_down_3 32 160 16 16
+key run_down_4 48 160 16 16
+
+key run_up_1 0 176 16 16
+key run_up_2 16 176 16 16
+key run_up_3 32 176 16 16
+key run_up_4 48 176 16 16
+
+
+##-----------------------DIE---------------------##
+
+key die_right_1 0 192 16 16
+key die_right_2 16 192 16 16
+key die_right_3 32 192 16 16
+key die_right_4 48 192 16 16
+
+key die_left_1 0 208 16 16
+key die_left_2 16 208 16 16
+key die_left_3 32 208 16 16
+key die_left_4 48 208 16 16
+
+key die_down_1 0 224 16 16
+key die_down_2 16 224 16 16
+key die_down_3 32 224 16 16
+key die_down_4 48 224 16 16
+
+key die_up_1 0 240 16 16
+key die_up_2 16 240 16 16
+key die_up_3 32 240 16 16
+key die_up_4 48 240 16 16

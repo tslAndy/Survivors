@@ -1,0 +1,162 @@
+spriteAtlas ./Resources/SpriteAtlases/Entities/Player.spriteAtlas
+
+##-----------------------IDLE---------------------##
+group Idle
+
+anim IdleUp 
+frametime 200
+repeat true
+key idle_up_1
+key idle_up_2
+key idle_up_3
+key idle_up_4
+endkey
+
+anim IdleDown 
+frametime 200
+repeat true
+key idle_down_1
+key idle_down_2
+key idle_down_3
+key idle_down_4
+endkey
+
+anim IdleLeft 
+frametime 200
+repeat true
+key idle_left_1
+key idle_left_2
+key idle_left_3
+key idle_left_4
+endkey
+
+anim IdleRight 
+frametime 200
+repeat true
+key idle_right_1
+key idle_right_2
+key idle_right_3
+key idle_right_4
+endkey
+
+endgroup 
+##-----------------------WALK---------------------##
+group Walk 
+
+anim WalkUp 
+frametime 200
+repeat true
+key walk_up_1
+key walk_up_2
+key walk_up_3
+key walk_up_4
+endkey
+
+anim WalkDown 
+frametime 200
+repeat true
+key walk_down_1
+key walk_down_2
+key walk_down_3
+key walk_down_4
+endkey
+
+anim WalkLeft 
+frametime 200
+repeat true
+key walk_left_1
+key walk_left_2
+key walk_left_3
+key walk_left_4
+endkey
+
+anim WalkRight 
+frametime 200
+repeat true
+key walk_right_1
+key walk_right_2
+key walk_right_3
+key walk_right_4
+endkey
+
+endgroup
+##-----------------------RUN---------------------##
+group Run
+
+anim RunUp 
+frametime 200
+repeat true
+key run_up_1
+key run_up_2
+key run_up_3
+key run_up_4
+endkey
+
+anim RunDown 
+frametime 200
+repeat true
+key run_down_1
+key run_down_2
+key run_down_3
+key run_down_4
+endkey
+
+anim RunLeft 
+frametime 200
+repeat true
+key run_left_1
+key run_left_2
+key run_left_3
+key run_left_4
+endkey
+
+anim RunRight 
+frametime 200
+repeat true
+key run_right_1
+key run_right_2
+key run_right_3
+key run_right_4
+endkey
+
+endgroup
+##-----------------------DIE---------------------##
+group Die
+
+anim DieUp 
+frametime 200
+repeat false
+key die_up_1
+key die_up_2
+key die_up_3
+key die_up_4
+endkey
+
+anim DieDown 
+frametime 200
+repeat false
+key die_down_1
+key die_down_2
+key die_down_3
+key die_down_4
+endkey
+
+anim DieLeft 
+frametime 200
+repeat false
+key die_left_1
+key die_left_2
+key die_left_3
+key die_left_4
+endkey
+
+anim DieRight 
+frametime 200
+repeat false
+key die_right_1
+key die_right_2
+key die_right_3
+key die_right_4
+endkey
+
+endgroup
