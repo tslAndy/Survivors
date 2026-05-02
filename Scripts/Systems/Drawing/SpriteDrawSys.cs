@@ -24,7 +24,7 @@ partial class SpriteDrawSys : BaseSystem<World, float>
         _comparer = Comparer<LayerItem>.Create((a, b) => a.y.CompareTo(b.y));
 
         for (int i = 0; i < _layers.Length; i++)
-            _layers[i] = new CachedList<LayerItem>();
+            _layers[i] = CachedList<LayerItem>.Create();
     }
 
     public override void Update(in float t)

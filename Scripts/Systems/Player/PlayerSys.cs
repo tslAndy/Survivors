@@ -36,14 +36,11 @@ partial class PlayerSys : BaseSystem<World, float>
         ref RigidComp rigid
     )
     {
-        CachedList<TileColl> tileColls = ObjectPool<CachedList<TileColl>>.Shared.Get();
+        using CachedList<TileColl> tileColls = CachedList<TileColl>.Create();
         _tileCollSys.GetOverlap(trs.position, trs.scale * coll.radius, default, tileColls);
 
         if (tileColls.Count == 0)
-        {
-            ObjectPool<CachedList<TileColl>>.Shared.Return(tileColls);
             return;
-        }
 
         Vector2 corr = Vector2.Zero;
         for (int i = 0; i < tileColls.Count; i++)
@@ -55,8 +52,6 @@ partial class PlayerSys : BaseSystem<World, float>
 
         rigid.velocity = Vector2.Zero;
         trs.position += corr * CORR_RATE;
-
-        ObjectPool<CachedList<TileColl>>.Shared.Return(tileColls);
     }
 
     [Query]

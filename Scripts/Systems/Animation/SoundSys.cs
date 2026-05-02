@@ -7,7 +7,7 @@ namespace Systems.Animation;
 
 class SoundSys : BaseSystem<World, float>
 {
-    private readonly List<Sound> playing;
+    private readonly CachedList<Sound> playing;
     private readonly CircularSet<Sound> queue;
 
     private const int MAX_SOUNDS = 5;
@@ -15,7 +15,7 @@ class SoundSys : BaseSystem<World, float>
     public SoundSys(World world)
         : base(world)
     {
-        playing = new List<Sound>(MAX_SOUNDS);
+        playing = CachedList<Sound>.Create();
         queue = new CircularSet<Sound>(MAX_SOUNDS);
     }
 

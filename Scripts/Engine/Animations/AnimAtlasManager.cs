@@ -22,7 +22,7 @@ class AnimAtlasManager : ResourceManager<AnimAtlas>
         List<AnimAtlas.Entry> entries = new List<AnimAtlas.Entry>();
         List<AnimAtlas.Group> groups = new List<AnimAtlas.Group>();
 
-        List<Anim.Key>? animKeys = null;
+        List<Anim.Key> animKeys = new List<Anim.Key>();
         string? animName = null;
         float frametime = 0;
         bool repeating = false;
@@ -76,7 +76,6 @@ class AnimAtlasManager : ResourceManager<AnimAtlas>
             else if (tokens[0] == "anim")
             {
                 animName = tokens[1];
-                animKeys = new List<Anim.Key>();
             }
             else if (tokens[0] == "frametime")
             {
@@ -88,7 +87,7 @@ class AnimAtlasManager : ResourceManager<AnimAtlas>
             }
             else if (tokens[0] == "key")
             {
-                if (animKeys == null || animName == null)
+                if (animName == null)
                     throw new Exception($"Anim doesn't exists. Parsing {path}");
 
                 if (spriteAtlas == null)
@@ -111,20 +110,20 @@ class AnimAtlasManager : ResourceManager<AnimAtlas>
             }
             else if (tokens[0] == "endkey")
             {
-                if (animKeys == null || animName == null)
+                if (animName == null)
                     throw new Exception($"Anim doesn't exists. Parsing {path}");
 
                 Anim anim = new Anim(animKeys.ToArray(), frametime, repeating);
                 entries.Add(new AnimAtlas.Entry(anim, animName));
 
-                animKeys = null;
+                animKeys.Clear();
                 animName = null;
                 frametime = 0;
                 repeating = false;
             }
         }
 
-        if (animKeys != null)
+        if (animKeys.Count != 0)
             throw new Exception($"Anim's endkey wasn't found. Parsing {path}");
 
         return new AnimAtlas(entries.ToArray(), groups.Count == 0 ? null : groups.ToArray());

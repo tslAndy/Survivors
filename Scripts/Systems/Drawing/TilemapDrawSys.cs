@@ -12,13 +12,15 @@ namespace Systems.Drawing;
 
 partial class TilemapDrawSys : BaseSystem<World, float>
 {
-    private readonly List<TilemapItem> _tilemapItems;
+    private readonly CachedList<TilemapItem> _tilemapItems;
+    private readonly IComparer<TilemapItem> _comparer;
     private readonly Camera _cam;
 
     public TilemapDrawSys(World world)
         : base(world)
     {
-        _tilemapItems = new List<TilemapItem>();
+        _tilemapItems = CachedList<TilemapItem>.Create();
+        _comparer = Comparer<TilemapItem>.Create((a, b) => a.order.CompareTo(b.order));
         _cam = ServiceLocator.Get<Camera>();
     }
 
@@ -36,7 +38,7 @@ partial class TilemapDrawSys : BaseSystem<World, float>
 
     private void DrawTilemaps()
     {
-        _tilemapItems.Sort((a, b) => a.order.CompareTo(b.order));
+        Array.Sort(_tilemapItems.Arr, 0, _tilemapItems.Count, _comparer);
 
         (int sx, int ex, int sy, int ey) = GetFrustChunks();
 
@@ -58,7 +60,7 @@ partial class TilemapDrawSys : BaseSystem<World, float>
             }
         }
 
-        _tilemapItems.Clear();
+        _tilemapItems.Reset();
     }
 
     private void DrawChunk(TileChunk chunk, Vector2 chunkPos)

@@ -8,8 +8,13 @@ namespace Systems.Animation;
 
 partial class AnimSys : BaseSystem<World, float>
 {
+    private readonly SoundSys soundSys;
+
     public AnimSys(World world)
-        : base(world) { }
+        : base(world)
+    {
+        soundSys = ServiceLocator.Get<SoundSys>();
+    }
 
     [Query]
     private void Execute([Data] in float dt, ref AnimComp animator, ref SpriteComp spriteComp)
@@ -40,6 +45,6 @@ partial class AnimSys : BaseSystem<World, float>
     {
         spriteComp.sprite = key.sprite;
         if (key.sound != null)
-            ServiceLocator.Get<SoundSys>().AddSound(key.sound.Value);
+            soundSys.AddSound(key.sound.Value);
     }
 }

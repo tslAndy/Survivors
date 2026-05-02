@@ -89,10 +89,7 @@ partial class SpatialSys : BaseSystem<World, float>
     {
         collRegistry.Update();
         foreach (KeyValuePair<Key, CachedList<Entity>> kvp in _map)
-        {
-            // kvp.Value.Reset();
-            ObjectPool<CachedList<Entity>>.Shared.Return(kvp.Value);
-        }
+            kvp.Value.Dispose();
         _map.Clear();
 
         FillQuery(World);
@@ -108,7 +105,7 @@ partial class SpatialSys : BaseSystem<World, float>
         Key key = GetKey(position, radius);
         if (!_map.TryGetValue(key, out CachedList<Entity>? list))
         {
-            list = ObjectPool<CachedList<Entity>>.Shared.Get();
+            list = CachedList<Entity>.Create();
             _map[key] = list;
         }
         list.Add(entity);
@@ -146,7 +143,7 @@ class CollisionRegistry
     public CollisionRegistry()
     {
         _collStates = new Dictionary<(Entity, Entity), CollState>();
-        _removeList = new CachedList<(Entity, Entity)>();
+        _removeList = CachedList<(Entity, Entity)>.Create();
     }
 
     // should be called before AddColl

@@ -21,6 +21,7 @@ using Systems.Physics;
 using Systems.Player;
 using Utils;
 using Weapons;
+using Weapons.Specific;
 
 class Game : IDisposable
 {
@@ -88,20 +89,20 @@ class Game : IDisposable
         RigidSys rigidSys = new RigidSys(_world);
         ServiceLocator.Register(rigidSys);
 
+        SoundSys soundSys = new SoundSys(_world);
+        ServiceLocator.Register(soundSys);
+
+        SpriteDrawSys spriteDrawSys = new SpriteDrawSys(_world);
+        ServiceLocator.Register(spriteDrawSys);
+
         AnimSys animSys = new AnimSys(_world);
         ServiceLocator.Register(animSys);
 
         TilemapDrawSys tilemapDrawSys = new TilemapDrawSys(_world);
         ServiceLocator.Register(tilemapDrawSys);
 
-        SpriteDrawSys spriteDrawSys = new SpriteDrawSys(_world);
-        ServiceLocator.Register(spriteDrawSys);
-
         TextDrawSys textDrawSys = new TextDrawSys(_world);
         ServiceLocator.Register(textDrawSys);
-
-        SoundSys soundSys = new SoundSys(_world);
-        ServiceLocator.Register(soundSys);
 
         // INIT SYSTEMS
         _systems = new Group<float>(
@@ -186,11 +187,11 @@ class Game : IDisposable
                 new RigidComp { layer = (int)Layers.EnemiesEnts },
                 new CollComp { radius = 0.5f },
                 new HealthComp { currentHP = 100, maxHP = 100 },
-                new DamageComp { hits = ObjectPool<CachedList<Hit>>.Shared.Get() },
+                new DamageComp { hits = CachedList<Hit>.Create() },
                 new StatusEffectComp
                 {
-                    newEffects = ObjectPool<CachedList<StatusEffect>>.Shared.Get(),
-                    runningEffects = ObjectPool<CachedList<StatusEffect>>.Shared.Get(),
+                    newEffects = CachedList<StatusEffect>.Create(),
+                    runningEffects = CachedList<StatusEffect>.Create(),
                 },
                 new DropComp { amount = Random.Shared.Next(1, 5000) }
             );
@@ -219,7 +220,7 @@ class Game : IDisposable
             .Get<AnimAtlasManager>()
             .Get("./Resources/AnimAtlases/Entities/Player.animAtlas");
 
-        CachedList<Weapon> weapons = new CachedList<Weapon>();
+        CachedList<Weapon> weapons = CachedList<Weapon>.Create();
         WeaponConfig weaponConfig = new WeaponConfig
         {
             baseDamage = 10,
@@ -230,8 +231,6 @@ class Game : IDisposable
         };
 
         WeaponCallbacks callbacks = new WeaponCallbacks { };
-
-        weapons.Add(new MeleeWeapon(weaponConfig, callbacks, 0));
 
         weapons.Add(
             new Bow(

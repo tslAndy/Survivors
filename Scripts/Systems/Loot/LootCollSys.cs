@@ -28,7 +28,7 @@ partial class LootCollSys : BaseSystem<World, float>
         ref TransformComp trs
     )
     {
-        CachedList<Entity> overlap = ObjectPool<CachedList<Entity>>.Shared.Get();
+        using CachedList<Entity> overlap = CachedList<Entity>.Create();
         _spatial.GetOverlap(entity, trs.position, lootColl.radius, (int)Layers.Loot, overlap);
 
         for (int i = 0; i < overlap.Count; i++)
@@ -51,7 +51,5 @@ partial class LootCollSys : BaseSystem<World, float>
             lootColl.amount += targLoot.amount;
             targTimerDestroy.time = 0.0f;
         }
-
-        ObjectPool<CachedList<Entity>>.Shared.Return(overlap);
     }
 }

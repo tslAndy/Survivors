@@ -1,5 +1,3 @@
-using Components.Fighting;
-
 namespace Utils;
 
 class ObjectPool<T>
@@ -17,13 +15,6 @@ class ObjectPool<T>
 
     public void Return(T elem)
     {
-        if (elem is IResettable resettable)
-            resettable.Reset();
         _elems.Push(elem);
     }
-}
-
-interface IResettable
-{
-    void Reset();
 }

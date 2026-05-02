@@ -8,10 +8,10 @@ static class ServiceLocator
     public static T Get<T>()
         where T : class
     {
-        // if (cached?.GetType() == typeof(T))
-        //     return (T)cached;
+        if (cached?.GetType() == typeof(T))
+            return (T)cached;
         T result = (T)_services[typeof(T)];
-        // cached = result;
+        cached = result;
         return result;
     }
 

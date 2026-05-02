@@ -2,10 +2,12 @@ using System.Buffers;
 
 namespace Utils;
 
-class CachedList<T> : IResettable
+class CachedList<T> : IDisposable
 {
     private T[] _elems;
     private int _index;
+
+    private bool _disposed;
 
     private const int INITIAL_CAPACITY = 4;
 
@@ -69,4 +71,21 @@ class CachedList<T> : IResettable
     public T Find<U>(Func<T, U, bool> func, U param) => _elems.Find(func, param, 0, _index);
 
     public int IndexOf<U>(Func<T, U, bool> func, U param) => _elems.IndexOf(func, param, 0, _index);
+
+    public static CachedList<T> Create()
+    {
+        CachedList<T> list = ObjectPool<CachedList<T>>.Shared.Get();
+        list._disposed = false;
+        return list;
+    }
+
+    public void Dispose()
+    {
+        if (_disposed)
+            throw new Exception("List has already been disposed");
+
+        Reset();
+        _disposed = true;
+        ObjectPool<CachedList<T>>.Shared.Return(this);
+    }
 }

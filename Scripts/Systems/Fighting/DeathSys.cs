@@ -31,9 +31,9 @@ partial class DeathSys : BaseSystem<World, float>
         if (!animator.isFinished)
             return;
 
-        ObjectPool<CachedList<Hit>>.Shared.Return(damage.hits);
-        ObjectPool<CachedList<StatusEffect>>.Shared.Return(effects.newEffects);
-        ObjectPool<CachedList<StatusEffect>>.Shared.Return(effects.runningEffects);
+        damage.hits.Dispose();
+        effects.newEffects.Dispose();
+        effects.runningEffects.Dispose();
 
         // TODO: remove weapons list
 

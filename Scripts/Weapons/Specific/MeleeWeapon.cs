@@ -2,7 +2,7 @@ using System.Numerics;
 using Arch.Core;
 using Utils;
 
-namespace Weapons;
+namespace Weapons.Specific;
 
 class MeleeWeapon : Weapon
 {
@@ -11,12 +11,10 @@ class MeleeWeapon : Weapon
 
     protected override void OnTimer(Entity entity, Vector2 position)
     {
-        CachedList<Entity> overlap = ObjectPool<CachedList<Entity>>.Shared.Get();
+        using CachedList<Entity> overlap = CachedList<Entity>.Create();
         spatial.GetOverlap(entity, position, config.detectRadius, targetLayer, overlap);
 
         for (int i = 0; i < overlap.Count; i++)
             Damage(entity, overlap[i]);
-
-        ObjectPool<CachedList<Entity>>.Shared.Return(overlap);
     }
 }
