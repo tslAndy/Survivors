@@ -1,14 +1,17 @@
 using Engine.ResourceManagement;
-using Utils;
 
 namespace Engine.Tilemaps;
 
 class TilemapManager : ResourceManager<Tilemap>
 {
-    public TilemapManager()
-        : base(Load, null) { }
+    private readonly TilesetManager _tilesetManager;
 
-    private static Tilemap Load(string path)
+    public TilemapManager(TilesetManager tilesetManager)
+    {
+        _tilesetManager = tilesetManager;
+    }
+
+    protected override Tilemap Load(string path)
     {
         Tilemap tilemap = new Tilemap();
         Tileset? tileset = null;
@@ -26,7 +29,7 @@ class TilemapManager : ResourceManager<Tilemap>
                 if (tileset != null)
                     throw new Exception($"Tileset already exists. Parsing {path}");
                 string tilesetPath = tokens[1];
-                tileset = ServiceLocator.Get<TilesetManager>().Get(tilesetPath);
+                tileset = _tilesetManager.Get(tilesetPath);
             }
             else if (tokens[0] == "key")
             {

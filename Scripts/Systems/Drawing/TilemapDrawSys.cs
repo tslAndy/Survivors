@@ -16,12 +16,12 @@ partial class TilemapDrawSys : BaseSystem<World, float>
     private readonly IComparer<TilemapItem> _comparer;
     private readonly Camera _cam;
 
-    public TilemapDrawSys(World world)
+    public TilemapDrawSys(World world, Camera cam)
         : base(world)
     {
         _tilemapItems = CachedList<TilemapItem>.Create();
         _comparer = Comparer<TilemapItem>.Create((a, b) => a.order.CompareTo(b.order));
-        _cam = ServiceLocator.Get<Camera>();
+        _cam = cam;
     }
 
     public override void Update(in float dt)
@@ -31,7 +31,7 @@ partial class TilemapDrawSys : BaseSystem<World, float>
     }
 
     [Query]
-    private void FillTilemaps(Entity entity, ref TilemapComp tilemapComp)
+    private void FillTilemaps(Entity entity, in TilemapComp tilemapComp)
     {
         _tilemapItems.Add(new TilemapItem(entity, tilemapComp.drawOrder));
     }

@@ -8,16 +8,18 @@ using Components.Other;
 using Systems.Physics;
 using Utils;
 
-namespace Systems.Fighting;
+namespace Systems.Loot;
 
-partial class LootCollSys : BaseSystem<World, float>
+partial class LootCollectSys : BaseSystem<World, float>
 {
     private readonly SpatialSys _spatial;
+    private readonly int _lootLayer;
 
-    public LootCollSys(World world)
+    public LootCollectSys(World world, SpatialSys spatial, int lootLayer)
         : base(world)
     {
-        _spatial = ServiceLocator.Get<SpatialSys>();
+        _spatial = spatial;
+        _lootLayer = lootLayer;
     }
 
     [Query]
@@ -29,7 +31,7 @@ partial class LootCollSys : BaseSystem<World, float>
     )
     {
         using CachedList<Entity> overlap = CachedList<Entity>.Create();
-        _spatial.GetOverlap(entity, trs.position, lootColl.radius, (int)Layers.Loot, overlap);
+        _spatial.GetOverlap(entity, trs.position, lootColl.radius, _lootLayer, overlap);
 
         for (int i = 0; i < overlap.Count; i++)
         {

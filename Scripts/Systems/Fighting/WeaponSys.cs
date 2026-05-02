@@ -15,11 +15,20 @@ partial class WeaponSys : BaseSystem<World, float>
     private void UpdateWeapon(
         [Data] in float dt,
         Entity entity,
-        ref TransformComp trs,
+        in TransformComp trs,
         ref WeaponComp weapon
     )
     {
         for (int i = 0; i < weapon.weapons.Count; i++)
             weapon.weapons[i].Update(entity, trs.position, dt);
+    }
+
+    [Query]
+    private void HandleDeath(in DeathComp death, ref WeaponComp weapon)
+    {
+        if (!death.isDead)
+            return;
+
+        weapon.weapons.Dispose();
     }
 }

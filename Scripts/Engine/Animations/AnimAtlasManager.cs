@@ -2,20 +2,25 @@ using Engine.ResourceManagement;
 using Engine.Sounds;
 using Engine.Sprites;
 using Raylib_cs;
-using Utils;
 
 namespace Engine.Animations;
 
 class AnimAtlasManager : ResourceManager<AnimAtlas>
 {
-    public AnimAtlasManager()
-        : base(Load, null) { }
+    private readonly SpriteAtlasManager _spriteAtlasManager;
+    private readonly SoundAtlasManager _soundAtlasManager;
 
-    private static AnimAtlas Load(string path)
+    public AnimAtlasManager(
+        SpriteAtlasManager spriteAtlasManager,
+        SoundAtlasManager soundAtlasManager
+    )
     {
-        SpriteAtlasManager spriteAtlasManager = ServiceLocator.Get<SpriteAtlasManager>();
-        SoundAtlasManager soundAtlasManager = ServiceLocator.Get<SoundAtlasManager>();
+        _spriteAtlasManager = spriteAtlasManager;
+        _soundAtlasManager = soundAtlasManager;
+    }
 
+    protected override AnimAtlas Load(string path)
+    {
         SpriteAtlas? spriteAtlas = null;
         SoundAtlas? soundAtlas = null;
 
@@ -43,7 +48,7 @@ class AnimAtlasManager : ResourceManager<AnimAtlas>
                     throw new Exception($"Sprite atlas already exists. Parsing {path}");
 
                 string spriteAtlasName = tokens[1];
-                spriteAtlas = spriteAtlasManager.Get(spriteAtlasName);
+                spriteAtlas = _spriteAtlasManager.Get(spriteAtlasName);
             }
             else if (tokens[0] == "soundAtlas")
             {
@@ -51,7 +56,7 @@ class AnimAtlasManager : ResourceManager<AnimAtlas>
                     throw new Exception($"Sound atlas already exists. Parsing {path}");
 
                 string soundAtlasName = tokens[1];
-                soundAtlas = soundAtlasManager.Get(soundAtlasName);
+                soundAtlas = _soundAtlasManager.Get(soundAtlasName);
             }
             else if (tokens[0] == "group")
             {

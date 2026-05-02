@@ -7,18 +7,17 @@ using Components.Fighting;
 using Components.Other;
 using Components.Physics;
 using Raylib_cs;
-using Utils;
 
 namespace Systems.Fighting;
 
 partial class DamageSys : BaseSystem<World, float>
 {
-    private readonly CommandBuffer _commBuffer;
+    private readonly CommandBuffer _commandBuffer;
 
-    public DamageSys(World world)
+    public DamageSys(World world, CommandBuffer commandBuffer)
         : base(world)
     {
-        _commBuffer = ServiceLocator.Get<CommandBuffer>();
+        _commandBuffer = commandBuffer;
     }
 
     [Query]
@@ -26,8 +25,8 @@ partial class DamageSys : BaseSystem<World, float>
     private void UpdateDamage(
         Entity entity,
         in DamageComp damage,
-        ref HealthComp health,
-        in TransformComp trs
+        in TransformComp trs,
+        ref HealthComp health
     )
     {
         for (int i = 0; i < damage.hits.Count; i++)
@@ -40,6 +39,13 @@ partial class DamageSys : BaseSystem<World, float>
         }
 
         damage.hits.Reset();
+    }
+
+    [Query]
+    private void HandleDeath(in DamageComp damage, in DeathComp death)
+    {
+        if (death.isDead)
+            damage.hits.Dispose();
     }
 }
 

@@ -7,9 +7,8 @@ using Components.Other;
 using Components.Physics;
 using Engine.Common;
 using Engine.Sprites;
-using Utils;
 
-namespace Systems.Fighting;
+namespace Systems.Loot;
 
 partial class DropSys : BaseSystem<World, float>
 {
@@ -19,20 +18,19 @@ partial class DropSys : BaseSystem<World, float>
     private Hash ONE_HASH = SpriteAtlas.CountHash("money_one");
 
     private readonly SpriteAtlas _itemsAtlas;
+    private readonly int _lootLayer;
 
-    public DropSys(World world)
+    public DropSys(World world, SpriteAtlas itemsAtlas, int lootLayer)
         : base(world)
     {
-        _itemsAtlas = ServiceLocator
-            .Get<SpriteAtlasManager>()
-            .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas");
+        _itemsAtlas = itemsAtlas;
+        _lootLayer = lootLayer;
     }
 
     [Query]
-    [All(typeof(DeathComp))]
-    private void UpdateDrop(in DropComp drop, in AnimComp animator, in TransformComp trs)
+    private void UpdateDrop(in DeathComp death, in DropComp drop, in TransformComp trs)
     {
-        if (!animator.isFinished)
+        if (!death.isDead)
             return;
 
         int amount = drop.amount;
@@ -66,7 +64,7 @@ partial class DropSys : BaseSystem<World, float>
 
         World.Create<TransformComp, RigidComp, CollComp, SpriteComp, LootComp, TimerDestroyComp>(
             new TransformComp { position = position + offset, scale = 0.5f },
-            new RigidComp { layer = (int)Layers.Loot },
+            new RigidComp { layer = _lootLayer },
             new CollComp { radius = 1.0f },
             new SpriteComp
             {

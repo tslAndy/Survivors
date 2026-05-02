@@ -1,3 +1,6 @@
 namespace Components.Basic;
 
-struct DeathComp { }
+struct DeathComp
+{
+    public bool isDead;
+}

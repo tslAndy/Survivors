@@ -3,11 +3,11 @@ using Raylib_cs;
 
 namespace Engine.Input;
 
-public static class InputHandler
+class InputHandler
 {
-    public static bool IsModifierPressed() => Raylib.IsKeyDown(KeyboardKey.LeftShift);
+    public bool IsModifierPressed() => Raylib.IsKeyDown(KeyboardKey.LeftShift);
 
-    public static Vector2 GetInput()
+    public Vector2 GetInput()
     {
         float x = 0.0f;
         if (Raylib.IsKeyDown(KeyboardKey.A))

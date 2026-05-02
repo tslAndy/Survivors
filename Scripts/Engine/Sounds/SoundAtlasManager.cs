@@ -1,17 +1,19 @@
 using Engine.ResourceManagement;
 using Raylib_cs;
-using Utils;
 
 namespace Engine.Sounds;
 
 class SoundAtlasManager : ResourceManager<SoundAtlas>
 {
-    public SoundAtlasManager()
-        : base(Load, null) { }
+    private readonly SoundManager _soundManager;
 
-    private static SoundAtlas Load(string path)
+    public SoundAtlasManager(SoundManager soundManager)
     {
-        SoundManager soundManager = ServiceLocator.Get<SoundManager>();
+        _soundManager = soundManager;
+    }
+
+    protected override SoundAtlas Load(string path)
+    {
         List<SoundAtlas.Entry> entries = new List<SoundAtlas.Entry>();
         foreach (string line in File.ReadLines(path))
         {
@@ -24,7 +26,7 @@ class SoundAtlasManager : ResourceManager<SoundAtlas>
                 string soundName = tokens[1];
                 string soundPath = tokens[2];
 
-                Sound sound = soundManager.Get(soundPath);
+                Sound sound = _soundManager.Get(soundPath);
                 entries.Add(new SoundAtlas.Entry(sound, soundName));
             }
         }

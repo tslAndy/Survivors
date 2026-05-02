@@ -2,7 +2,6 @@ using Arch.Core;
 using Arch.System;
 using Components.Basic;
 using Engine.Animations;
-using Utils;
 
 namespace Systems.Animation;
 
@@ -10,10 +9,10 @@ partial class AnimSys : BaseSystem<World, float>
 {
     private readonly SoundSys soundSys;
 
-    public AnimSys(World world)
+    public AnimSys(World world, SoundSys soundSys)
         : base(world)
     {
-        soundSys = ServiceLocator.Get<SoundSys>();
+        this.soundSys = soundSys;
     }
 
     [Query]

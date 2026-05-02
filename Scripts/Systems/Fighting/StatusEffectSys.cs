@@ -5,16 +5,18 @@ using Components.Fighting;
 
 partial class StatusEffectSys : BaseSystem<World, float>
 {
-    private const float APPLY_TIME = 1.0f; // all effects are applied 400 ms
-    private const float MAX_DURATION = 5.0f;
-    private const int MAX_DPS = 100;
+    private StatusEffectHandler _effectHandler;
+    private const float APPLY_TIME = 1.0f;
 
-    public StatusEffectSys(World world)
-        : base(world) { }
+    public StatusEffectSys(StatusEffectHandler effectHandler, World world)
+        : base(world)
+    {
+        _effectHandler = effectHandler;
+    }
 
     [Query]
     [None(typeof(DeathComp))]
-    private void ApplyNewEffects(ref StatusEffectComp effects)
+    private void ApplyNewEffects(Entity entity, ref StatusEffectComp effects)
     {
         for (int i = 0; i < effects.newEffects.Count; i++)
         {
@@ -27,12 +29,12 @@ partial class StatusEffectSys : BaseSystem<World, float>
             if (index < 0)
             {
                 effects.runningEffects.Add(newEff);
+                _effectHandler.OnEffectAdd(entity, ref newEff);
                 continue;
             }
 
             ref StatusEffect oldEff = ref effects.runningEffects[index];
-            oldEff.duration = Math.Clamp(oldEff.duration + newEff.duration, 0.0f, MAX_DURATION);
-            oldEff.val = Math.Clamp(oldEff.val + newEff.val, 0, MAX_DPS);
+            _effectHandler.CombineEffects(ref oldEff, ref newEff);
         }
 
         effects.newEffects.Reset();
@@ -42,6 +44,7 @@ partial class StatusEffectSys : BaseSystem<World, float>
     [None(typeof(DeathComp))]
     private void UpdateEffects(
         [Data] in float dt,
+        Entity entity,
         ref StatusEffectComp effects,
         ref DamageComp damage
     )
@@ -56,14 +59,58 @@ partial class StatusEffectSys : BaseSystem<World, float>
         while (i < effects.runningEffects.Count)
         {
             ref StatusEffect effect = ref effects.runningEffects[i];
-            int effDamage = (int)MathF.Floor(effect.val * APPLY_TIME);
-            damage.hits.Add(new Hit(effDamage, effect.type));
+
+            // apply hit if effect is simple
+            if (LongStatEffType.SimpleEffects.CheckFlag(effect.type))
+            {
+                int effDamage = (int)MathF.Floor(effect.val * APPLY_TIME);
+                damage.hits.Add(new Hit(effDamage, effect.type));
+            }
 
             effect.duration -= APPLY_TIME;
             if (effect.duration < 0.0f)
+            {
                 effects.runningEffects.SwapRemove(i);
+                _effectHandler.OnEffectRemove(entity, ref effect);
+            }
             else
+            {
                 i++;
+            }
         }
     }
+
+    [Query]
+    private void HandleDeath(in DeathComp death, ref StatusEffectComp effects)
+    {
+        if (!death.isDead)
+            return;
+
+        effects.newEffects.Dispose();
+        effects.runningEffects.Dispose();
+    }
+}
+
+// нужен отдельный класс который отвечает за применение и удаление эффектов, а так же за их комбинирование
+// например эффект ускорения комбинируется не сложением, а выбором максимального значения
+// эффект ярости увеличивает урон тоже только по максимальному значению
+
+class StatusEffectHandler
+{
+    private const float MAX_DURATION = 5.0f;
+    private const float MAX_DPS = 100;
+
+    public void CombineEffects(ref StatusEffect first, ref StatusEffect second)
+    {
+        // if effects are simple
+        if (LongStatEffType.SimpleEffects.CheckFlag(first.type))
+        {
+            first.duration = Math.Clamp(first.duration + second.duration, 0.0f, MAX_DURATION);
+            first.val = Math.Clamp(first.val + second.val, 0.0f, MAX_DPS);
+        }
+    }
+
+    public void OnEffectAdd(Entity entity, ref StatusEffect effect) { }
+
+    public void OnEffectRemove(Entity entity, ref StatusEffect effect) { }
 }

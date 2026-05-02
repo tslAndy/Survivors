@@ -5,6 +5,7 @@ namespace Engine.Sounds;
 
 class SoundManager : ResourceManager<Sound>
 {
-    public SoundManager()
-        : base(path => Raylib.LoadSound(path), sound => Raylib.UnloadSound(sound)) { }
+    protected override Sound Load(string path) => Raylib.LoadSound(path);
+
+    protected override void Unload(Sound resource) => Raylib.UnloadSound(resource);
 }

@@ -16,10 +16,10 @@ partial class SpriteDrawSys : BaseSystem<World, float>
     private readonly CachedList<LayerItem>[] _layers;
     private readonly IComparer<LayerItem> _comparer;
 
-    public SpriteDrawSys(World world)
+    public SpriteDrawSys(World world, Camera cam)
         : base(world)
     {
-        _cam = ServiceLocator.Get<Camera>();
+        _cam = cam;
         _layers = new CachedList<LayerItem>[MAX_LAYERS];
         _comparer = Comparer<LayerItem>.Create((a, b) => a.y.CompareTo(b.y));
 

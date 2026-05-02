@@ -4,7 +4,6 @@ using Arch.System;
 using Components.Basic;
 using Engine.Common;
 using Raylib_cs;
-using Utils;
 
 namespace Systems.Drawing;
 
@@ -13,15 +12,15 @@ partial class TextDrawSys : BaseSystem<World, float>
     private readonly Font _font;
     private readonly Camera _cam;
 
-    public TextDrawSys(World world)
+    public TextDrawSys(World world, Camera cam)
         : base(world)
     {
         _font = Raylib.GetFontDefault();
-        _cam = ServiceLocator.Get<Camera>();
+        _cam = cam;
     }
 
     [Query]
-    private void DrawText(ref TextComp text, ref TransformComp trs)
+    private void DrawText(in TextComp text, in TransformComp trs)
     {
         float fontSize = text.fontSize * trs.scale * _cam.pixelsPerUnit;
         Vector2 size =

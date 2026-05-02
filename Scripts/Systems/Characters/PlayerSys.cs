@@ -10,10 +10,11 @@ using Engine.Input;
 using Systems.Physics;
 using Utils;
 
-namespace Systems.Player;
+namespace Systems.Characters;
 
 partial class PlayerSys : BaseSystem<World, float>
 {
+    private readonly InputHandler _inputHandler;
     private readonly TileCollSys _tileCollSys;
 
     private const float CORR_RATE = 0.4f;
@@ -22,10 +23,11 @@ partial class PlayerSys : BaseSystem<World, float>
     private readonly Hash WalkGroupHash = AnimAtlas.CountHash("Walk");
     private readonly Hash RunGroupHash = AnimAtlas.CountHash("Run");
 
-    public PlayerSys(World world)
+    public PlayerSys(World world, InputHandler inputHandler, TileCollSys tileCollSys)
         : base(world)
     {
-        _tileCollSys = ServiceLocator.Get<TileCollSys>();
+        _inputHandler = inputHandler;
+        _tileCollSys = tileCollSys;
     }
 
     [Query]
@@ -57,8 +59,8 @@ partial class PlayerSys : BaseSystem<World, float>
     [Query]
     private void UpdatePlayer(ref PlayerComp player, ref AnimComp animator, ref RigidComp rigid)
     {
-        Vector2 input = InputHandler.GetInput();
-        bool modifier = InputHandler.IsModifierPressed();
+        Vector2 input = _inputHandler.GetInput();
+        bool modifier = _inputHandler.IsModifierPressed();
 
         switch (player.state)
         {

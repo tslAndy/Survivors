@@ -1,15 +1,18 @@
 using Engine.ResourceManagement;
 using Raylib_cs;
-using Utils;
 
 namespace Engine.Sprites;
 
 class SpriteAtlasManager : ResourceManager<SpriteAtlas>
 {
-    public SpriteAtlasManager()
-        : base(Load, null) { }
+    private readonly TextureManager _textureManager;
 
-    private static SpriteAtlas Load(string path)
+    public SpriteAtlasManager(TextureManager textureManager)
+    {
+        _textureManager = textureManager;
+    }
+
+    protected override SpriteAtlas Load(string path)
     {
         Texture2D? texture = null;
 
@@ -32,7 +35,7 @@ class SpriteAtlasManager : ResourceManager<SpriteAtlas>
                     throw new Exception($"Texture already exists. Parsing {path}");
 
                 string texturePath = tokens[1];
-                texture = ServiceLocator.Get<TextureManager>().Get(texturePath);
+                texture = _textureManager.Get(texturePath);
             }
             else if (tokens[0] == "key")
             {

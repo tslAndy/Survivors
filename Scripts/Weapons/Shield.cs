@@ -1,9 +1,6 @@
 using System.Numerics;
 using Arch.Core;
-using Arch.System;
-using Components.Basic;
 using Components.Fighting;
-using Utils;
 
 namespace Weapons;
 
@@ -16,18 +13,15 @@ struct ShieldCallbacks
     public delegate void EffectCallback(Entity entity, ref StatusEffect effect);
 }
 
-struct ShieldComp
-{
-    public CachedList<Shield> shields;
-}
-
 class Shield
 {
     protected readonly ShieldCallbacks callbacks;
+    protected readonly WeaponContext context;
 
-    public Shield(ShieldCallbacks callbacks)
+    public Shield(ShieldCallbacks callbacks, WeaponContext context)
     {
         this.callbacks = callbacks;
+        this.context = context;
     }
 
     public void Update(
@@ -54,27 +48,4 @@ class Shield
     }
 
     protected virtual void OnUpdate(Entity entity, Vector2 position, float dt) { }
-}
-
-partial class ShieldSys : BaseSystem<World, float>
-{
-    public ShieldSys(World world)
-        : base(world) { }
-
-    [Query]
-    private void UpdateShield(
-        [Data] in float dt,
-        Entity entity,
-        ref ShieldComp shield,
-        ref TransformComp trs,
-        ref DamageComp damage,
-        ref StatusEffectComp effects
-    )
-    {
-        for (int i = 0; i < shield.shields.Count; i++)
-        {
-            ref Shield cur = ref shield.shields[i];
-            cur.Update(entity, ref damage, ref effects, trs.position, dt);
-        }
-    }
 }

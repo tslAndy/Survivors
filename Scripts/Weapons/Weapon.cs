@@ -2,13 +2,13 @@ using System.Numerics;
 using Arch.Core;
 using Arch.Core.Extensions;
 using Components.Fighting;
-using Systems.Physics;
-using Utils;
 
 namespace Weapons;
 
 struct WeaponConfig
 {
+    public int targetLayer;
+
     public int baseDamage,
         critDamage;
     public int critChance;
@@ -33,18 +33,15 @@ abstract class Weapon
 
     protected readonly WeaponConfig config;
     protected readonly WeaponCallbacks callbacks;
+    protected readonly WeaponContext context;
 
-    protected readonly int targetLayer;
-    protected readonly SpatialSys spatial;
-
-    protected Weapon(WeaponConfig config, WeaponCallbacks callbacks, int targetLayer)
+    protected Weapon(WeaponConfig config, WeaponCallbacks callbacks, WeaponContext context)
     {
         this.config = config;
         this.callbacks = callbacks;
-        this.targetLayer = targetLayer;
 
         this.time = 0.0f;
-        this.spatial = ServiceLocator.Get<SpatialSys>();
+        this.context = context;
     }
 
     public void Update(Entity entity, Vector2 position, float dt)

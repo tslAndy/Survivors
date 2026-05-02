@@ -14,9 +14,9 @@ partial class BulletSys : BaseSystem<World, float>
     [Query]
     private void Update(
         Entity entity,
-        ref BulletComp bulletComp,
-        ref CollComp coll,
-        ref TransformComp trs
+        in BulletComp bulletComp,
+        in CollComp coll,
+        in TransformComp trs
     )
     {
         bulletComp.weapon.UpdateBullet(

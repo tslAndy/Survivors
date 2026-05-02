@@ -1,16 +1,19 @@
 using Engine.ResourceManagement;
 using Engine.Sprites;
 using Raylib_cs;
-using Utils;
 
 namespace Engine.Tilemaps;
 
 class TilesetManager : ResourceManager<Tileset>
 {
-    public TilesetManager()
-        : base(Load, null) { }
+    private TextureManager _textureManager;
 
-    private static Tileset Load(string path)
+    public TilesetManager(TextureManager textureManager)
+    {
+        _textureManager = textureManager;
+    }
+
+    protected override Tileset Load(string path)
     {
         Texture2D? texture = null;
         int? tileSize = null;
@@ -29,7 +32,7 @@ class TilesetManager : ResourceManager<Tileset>
                     throw new Exception($"Texture already exists. Parsing {path}");
 
                 string texturePath = tokens[1];
-                texture = ServiceLocator.Get<TextureManager>().Get(texturePath);
+                texture = _textureManager.Get(texturePath);
             }
             else if (tokens[0] == "tilesize")
             {

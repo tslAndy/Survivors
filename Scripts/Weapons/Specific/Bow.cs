@@ -13,14 +13,20 @@ class Bow : BulletWeapon
         BulletConfig bulletConfig,
         WeaponConfig config,
         WeaponCallbacks callbacks,
-        int targetLayer
+        WeaponContext context
     )
-        : base(bulletConfig, config, callbacks, targetLayer) { }
+        : base(bulletConfig, config, callbacks, context) { }
 
     protected override void OnTimer(Entity entity, Vector2 position)
     {
         using CachedList<Entity> entityOverlap = CachedList<Entity>.Create();
-        spatial.GetOverlap(entity, position, config.detectRadius, targetLayer, entityOverlap);
+        context.spatial.GetOverlap(
+            entity,
+            position,
+            config.detectRadius,
+            config.targetLayer,
+            entityOverlap
+        );
         for (int i = 0; i < entityOverlap.Count; i++)
         {
             ref TransformComp enemyTrs = ref entityOverlap[i].Get<TransformComp>();
@@ -31,21 +37,26 @@ class Bow : BulletWeapon
     public override void UpdateBullet(Entity owner, Entity bullet, Vector2 position, float radius)
     {
         using CachedList<Entity> entityOverlap = CachedList<Entity>.Create();
-        spatial.GetOverlap(bullet, position, radius, targetLayer, entityOverlap);
+        context.spatial.GetOverlap(bullet, position, radius, config.targetLayer, entityOverlap);
 
         for (int i = 0; i < entityOverlap.Count; i++)
             Damage(owner, entityOverlap[i]);
 
         if (entityOverlap.Count != 0)
         {
-            commandBuffer.Destroy(bullet);
+            context.commandBuffer.Destroy(bullet);
         }
         else
         {
             using CachedList<TileColl> tileOverlap = CachedList<TileColl>.Create();
-            tileCollSys.GetOverlap(position, radius, default, tileOverlap);
+            context.tileCollSys.GetOverlap(
+                position,
+                radius,
+                context.layerMap["Walls"],
+                tileOverlap
+            );
             if (tileOverlap.Count != 0)
-                commandBuffer.Destroy(bullet);
+                context.commandBuffer.Destroy(bullet);
         }
     }
 }

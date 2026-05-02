@@ -5,6 +5,7 @@ namespace Engine.Sprites;
 
 class TextureManager : ResourceManager<Texture2D>
 {
-    public TextureManager()
-        : base(path => Raylib.LoadTexture(path), texture => Raylib.UnloadTexture(texture)) { }
+    protected override Texture2D Load(string path) => Raylib.LoadTexture(path);
+
+    protected override void Unload(Texture2D resource) => Raylib.UnloadTexture(resource);
 }
