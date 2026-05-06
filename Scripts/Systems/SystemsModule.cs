@@ -3,6 +3,7 @@ using Arch.Core;
 using Arch.System;
 using Autofac;
 using Systems.Animation;
+using Systems.Basic;
 using Systems.Characters;
 using Systems.Drawing;
 using Systems.Fighting;
@@ -15,6 +16,7 @@ class SystemsModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
+        builder.RegisterModule(new BasicModule());
         builder.RegisterModule(new DrawingModule());
         builder.RegisterModule(new AnimSysModule());
         builder.RegisterModule(new FightingModule());
@@ -27,6 +29,11 @@ class SystemsModule : Module
             {
                 Group<float> systems = new Group<float>(
                     "Base Systems",
+                    // health
+                    x.Resolve<HealthSys>(),
+                    x.Resolve<DeathSys>(),
+                    // other
+                    x.Resolve<TrsOwningSys>(),
                     //physics
                     x.Resolve<SpatialSys>(),
                     x.Resolve<TileCollSys>(),
@@ -34,8 +41,6 @@ class SystemsModule : Module
                     // player systems
                     x.Resolve<PlayerSys>(),
                     // fighting
-                    x.Resolve<HealthSys>(),
-                    x.Resolve<DeathSys>(),
                     x.Resolve<WeaponSys>(),
                     x.Resolve<ShieldSys>(),
                     x.Resolve<StatusEffectSys>(),

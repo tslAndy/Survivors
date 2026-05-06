@@ -12,10 +12,15 @@
     <PackageReference Include="Arch.AOT.SourceGenerator" Version="1.0.1" />
     <PackageReference Include="Arch.EventBus" Version="1.0.2" />
     <PackageReference Include="Arch.LowLevel" Version="1.1.5" />
+    <PackageReference Include="Arch.Relationships" Version="1.0.0" />
     <PackageReference Include="Arch.System" Version="1.1.0" />
     <PackageReference Include="Arch.System.SourceGenerator" Version="2.1.0" />
     <PackageReference Include="Autofac" Version="9.1.0" />
     <PackageReference Include="Raylib-cs" Version="7.0.2" />
   </ItemGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DefineConstants>TRACE;EVENTS</DefineConstants>
+    </PropertyGroup>
 
 </Project>

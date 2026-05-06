@@ -2,6 +2,7 @@ using System.Numerics;
 using Arch.Buffer;
 using Arch.Core;
 using Arch.Core.Extensions;
+using Arch.Relationships;
 using Arch.System;
 using Autofac;
 using Components.Basic;
@@ -92,7 +93,7 @@ class Game : IDisposable
             .Get("./Resources/AnimAtlases/Entities/Goblin.animAtlas");
         for (int i = 0; i < 1; i++)
         {
-            _world.Create<
+            Entity enemy = _world.Create<
                 SpriteComp,
                 AnimComp,
                 TransformComp,
@@ -129,6 +130,20 @@ class Game : IDisposable
                 },
                 new DropComp { amount = Random.Shared.Next(1, 5000) }
             );
+
+            Entity test = _world.Create<SpriteComp, TransformComp>(
+                new SpriteComp
+                {
+                    sprite = _scope
+                        .Resolve<SpriteAtlasManager>()
+                        .Get("./Resources/SpriteAtlases/Items/BattleEffects.spriteAtlas")[
+                        "fireball_1_1"
+                    ],
+                    drawOrder = 10,
+                }
+            );
+
+            enemy.AddRelationship<TrsOwn>(test, new TrsOwn());
         }
     }
 
