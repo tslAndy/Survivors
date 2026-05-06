@@ -6,15 +6,14 @@ using Arch.Relationships;
 using Arch.System;
 using Autofac;
 using Components.Basic;
+using Components.Characters;
 using Components.Fighting;
 using Components.Loot;
 using Components.Other;
 using Components.Physics;
-using Components.Player;
 using Engine;
 using Engine.Animations;
 using Engine.Common;
-using Engine.Sprites;
 using Engine.Tilemaps;
 using Raylib_cs;
 using Systems;
@@ -90,9 +89,10 @@ class Game : IDisposable
         AnimAtlas goblinAtlas = _scope
             .Resolve<AnimAtlasManager>()
             .Get("./Resources/AnimAtlases/Entities/Goblin.animAtlas");
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 30; i++)
         {
             Entity enemy = _world.Create<
+                CharMoveComp,
                 SpriteComp,
                 AnimComp,
                 TransformComp,
@@ -103,6 +103,7 @@ class Game : IDisposable
                 StatusEffectComp,
                 DropComp
             >(
+                new CharMoveComp { maxSpeed = 3.0f, speedFactor = 1.0f },
                 new SpriteComp { drawOrder = 1 },
                 new AnimComp
                 {
@@ -143,31 +144,48 @@ class Game : IDisposable
         WeaponConfig weaponConfig = new WeaponConfig
         {
             baseDamage = 10,
-            critDamage = 15,
+            critDamage = 10,
             critChance = 30,
             attackTime = 1.0f,
             detectRadius = 4.0f,
             targetLayer = _scope.Resolve<LayerMap>()["EnemyEnts"],
         };
 
-        weapons.Add(new MeleeWeapon(weaponConfig, default, _scope.Resolve<WorldContext>()));
+        WeaponCallbacks callbacks = new WeaponCallbacks
+        {
+            onBaseDamage = (attacker, target, ref damage) =>
+            {
+                // attacker
+                //     .Get<StatusEffectComp>()
+                //     .newEffects.Add(new StatusEffect(StatusEffectType.Haste, 10.0f, 5f));
+
+                target
+                    .Get<StatusEffectComp>()
+                    .newEffects.Add(new StatusEffect(StatusEffectType.Sensitivity, 3.0f, 3.0f));
+            },
+        };
+
+        weapons.Add(new MeleeWeapon(weaponConfig, callbacks, _scope.Resolve<WorldContext>()));
+
+        CachedList<Shield> shields = CachedList<Shield>.Create();
 
         Entity player = _world.Create<
             PlayerComp,
+            CharMoveComp,
             SpriteComp,
             AnimComp,
             TransformComp,
             RigidComp,
             CollComp,
+            ShieldComp,
             WeaponComp,
+            DamageComp,
+            HealthComp,
+            StatusEffectComp,
             LootCollComp
         >(
-            new PlayerComp
-            {
-                walkSpeed = 2.0f,
-                runSpeed = 3.0f,
-                state = PlayerState.Idle,
-            },
+            new PlayerComp { state = PlayerState.Idle },
+            new CharMoveComp { maxSpeed = 3.0f, speedFactor = 1.0f },
             new SpriteComp { drawOrder = 1 },
             new AnimComp
             {
@@ -178,8 +196,22 @@ class Game : IDisposable
             new TransformComp { position = new Vector2(15.0f, 10.0f), scale = 1.0f },
             new RigidComp { layer = _scope.Resolve<LayerMap>()["PlayerEnts"] },
             new CollComp { radius = 0.5f },
-            new WeaponComp { weapons = weapons },
-            new LootCollComp { radius = 15.0f, speed = 10.0f }
+            new ShieldComp { shields = shields, dpsFactor = 1.0f },
+            new WeaponComp { weapons = weapons, dpsFactor = 1.0f },
+            new DamageComp { hits = CachedList<Hit>.Create() },
+            new HealthComp { currentHP = 100, maxHP = 100 },
+            new StatusEffectComp
+            {
+                newEffects = CachedList<StatusEffect>.Create(),
+                runningEffects = CachedList<StatusEffect>.Create(),
+            },
+            new LootCollComp
+            {
+                radius = 15.0f,
+                speed = 10.0f,
+                incomeFactor = 1.0f,
+                radiusFactor = 1.0f,
+            }
         );
 
         AnimAtlas swingAtlas = _scope

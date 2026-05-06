@@ -2,8 +2,8 @@ using System.Numerics;
 using Arch.Core;
 using Arch.System;
 using Components.Basic;
+using Components.Characters;
 using Components.Physics;
-using Components.Player;
 using Engine.Animations;
 using Engine.Common;
 using Engine.Input;
@@ -57,7 +57,12 @@ partial class PlayerSys : BaseSystem<World, float>
     }
 
     [Query]
-    private void UpdatePlayer(ref PlayerComp player, ref AnimComp animator, ref RigidComp rigid)
+    private void UpdatePlayer(
+        ref PlayerComp player,
+        ref AnimComp animator,
+        ref RigidComp rigid,
+        ref CharMoveComp moveComp
+    )
     {
         Vector2 input = _inputHandler.GetInput();
         bool modifier = _inputHandler.IsModifierPressed();
@@ -69,11 +74,11 @@ partial class PlayerSys : BaseSystem<World, float>
                 return;
 
             case PlayerState.Walk:
-                Walk(input, modifier, ref player, ref animator, ref rigid);
+                Walk(input, modifier, ref player, ref animator, ref rigid, ref moveComp);
                 return;
 
             case PlayerState.Run:
-                Run(input, modifier, ref player, ref animator, ref rigid);
+                Run(input, modifier, ref player, ref animator, ref rigid, ref moveComp);
                 return;
 
             case PlayerState.Die:
@@ -113,7 +118,8 @@ partial class PlayerSys : BaseSystem<World, float>
         bool modifier,
         ref PlayerComp player,
         ref AnimComp animator,
-        ref RigidComp rigid
+        ref RigidComp rigid,
+        ref CharMoveComp moveComp
     )
     {
         if (input.LengthSquared() < 0.001f)
@@ -132,7 +138,7 @@ partial class PlayerSys : BaseSystem<World, float>
             return;
         }
 
-        rigid.velocity = input * player.walkSpeed;
+        rigid.velocity = 0.75f * moveComp.maxSpeed * moveComp.speedFactor * input;
 
         AnimDir animDir = input.AsAnimDir();
         if (animDir != animator.animDir)
@@ -148,7 +154,8 @@ partial class PlayerSys : BaseSystem<World, float>
         bool modifier,
         ref PlayerComp player,
         ref AnimComp animator,
-        ref RigidComp rigid
+        ref RigidComp rigid,
+        ref CharMoveComp moveComp
     )
     {
         if (input.LengthSquared() < 0.001f)
@@ -167,7 +174,7 @@ partial class PlayerSys : BaseSystem<World, float>
             return;
         }
 
-        rigid.velocity = input * player.runSpeed;
+        rigid.velocity = moveComp.maxSpeed * moveComp.speedFactor * input;
 
         AnimDir animDir = input.AsAnimDir();
         if (animDir != animator.animDir)

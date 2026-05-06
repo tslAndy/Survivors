@@ -19,14 +19,16 @@ partial class WeaponSys : BaseSystem<World, float>
         ref WeaponComp weapon
     )
     {
+        float dts = dt * weapon.dpsFactor;
+
         if (weapon.single != null)
         {
-            weapon.single.Update(entity, trs.position, dt);
+            weapon.single.Update(entity, trs.position, dts);
             return;
         }
 
         for (int i = 0; i < weapon.weapons.Count; i++)
-            weapon.weapons[i].Update(entity, trs.position, dt);
+            weapon.weapons[i].Update(entity, trs.position, dts);
     }
 
     [Query]

@@ -29,15 +29,22 @@ partial class DamageSys : BaseSystem<World, float>
         ref HealthComp health
     )
     {
-        int total = 0;
+        float total = 0.0f;
         for (int i = 0; i < damage.hits.Count; i++)
         {
             ref Hit hit = ref damage.hits[i];
-            health.currentHP -= hit.damage;
-            total += hit.damage;
+            total += hit.damage > 0 ? hit.damage * damage.damageFactor : hit.damage;
+            // if hit.damage > 0 it's damage, and should be scaled
+            // else it's a regeneration, should not be scaled
         }
+
+        int floored = (int)MathF.Floor(total);
         if (total != 0)
-            DamageNumSpawner.Spawn(World, trs.position, total);
+        {
+            health.currentHP -= floored;
+            DamageNumSpawner.Spawn(World, trs.position, floored);
+        }
+
         damage.hits.Reset();
     }
 
@@ -55,6 +62,9 @@ static class DamageNumSpawner
 
     public static void Spawn(World world, Vector2 position, int damage)
     {
+        bool positive = damage > 0;
+
+        damage = Math.Abs(damage);
         if (!_numCache.TryGetValue(damage, out string? numStr))
         {
             numStr = damage.ToString();
@@ -71,7 +81,7 @@ static class DamageNumSpawner
             {
                 text = numStr,
                 fontSize = BASE_FONT_SIZE,
-                color = Color.White,
+                color = positive ? Color.Red : Color.Green,
             },
             new TransformComp { position = position, scale = 1.0f },
             new RigidComp { velocity = new Vector2(0.0f, -1.0f) },

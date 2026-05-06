@@ -1,7 +1,10 @@
 using Arch.Core;
+using Arch.Core.Extensions;
 using Arch.System;
 using Components.Basic;
+using Components.Characters;
 using Components.Fighting;
+using Components.Loot;
 
 partial class StatusEffectSys : BaseSystem<World, float>
 {
@@ -91,10 +94,6 @@ partial class StatusEffectSys : BaseSystem<World, float>
     }
 }
 
-// нужен отдельный класс который отвечает за применение и удаление эффектов, а так же за их комбинирование
-// например эффект ускорения комбинируется не сложением, а выбором максимального значения
-// эффект ярости увеличивает урон тоже только по максимальному значению
-
 class StatusEffectHandler
 {
     private const float MAX_DURATION = 5.0f;
@@ -102,15 +101,89 @@ class StatusEffectHandler
 
     public void CombineEffects(ref StatusEffect first, ref StatusEffect second)
     {
-        // if effects are simple
         if (LongStatEffType.SimpleEffects.CheckFlag(first.type))
         {
             first.duration = Math.Clamp(first.duration + second.duration, 0.0f, MAX_DURATION);
             first.val = Math.Clamp(first.val + second.val, 0.0f, MAX_DPS);
         }
+        // effect is complex
+        else if (first.type != StatusEffectType.Curse)
+        {
+            first.duration = Math.Clamp(first.duration + second.duration, 0.0f, MAX_DURATION);
+        }
     }
 
-    public void OnEffectAdd(Entity entity, ref StatusEffect effect) { }
+    public void OnEffectAdd(Entity entity, ref StatusEffect effect)
+    {
+        switch (effect.type)
+        {
+            case StatusEffectType.Armor:
+            case StatusEffectType.Sensitivity:
+                entity.Get<DamageComp>().damageFactor = effect.val;
+                break;
 
-    public void OnEffectRemove(Entity entity, ref StatusEffect effect) { }
+            case StatusEffectType.Weaken:
+            case StatusEffectType.Rage:
+                entity.Get<WeaponComp>().dpsFactor = effect.val;
+                entity.Get<ShieldComp>().dpsFactor = effect.val;
+                break;
+
+            case StatusEffectType.Haste:
+            case StatusEffectType.Slowness:
+                entity.Get<CharMoveComp>().speedFactor = effect.val;
+                break;
+
+            case StatusEffectType.Greed:
+            case StatusEffectType.Poverty:
+                entity.Get<LootCollComp>().incomeFactor = effect.val;
+                break;
+
+            case StatusEffectType.ShortHand:
+            case StatusEffectType.LongHand:
+                entity.Get<LootCollComp>().radiusFactor = effect.val;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void OnEffectRemove(Entity entity, ref StatusEffect effect)
+    {
+        switch (effect.type)
+        {
+            case StatusEffectType.Armor:
+            case StatusEffectType.Sensitivity:
+                entity.Get<DamageComp>().damageFactor = 1.0f;
+                break;
+
+            case StatusEffectType.Weaken:
+            case StatusEffectType.Rage:
+                entity.Get<WeaponComp>().dpsFactor = 1.0f;
+                entity.Get<ShieldComp>().dpsFactor = 1.0f;
+                break;
+
+            case StatusEffectType.Haste:
+            case StatusEffectType.Slowness:
+                entity.Get<CharMoveComp>().speedFactor = 1.0f;
+                break;
+
+            case StatusEffectType.Curse:
+                entity.Get<DamageComp>().hits.Add(new Hit(1_000_000, StatusEffectType.Curse));
+                break;
+
+            case StatusEffectType.Greed:
+            case StatusEffectType.Poverty:
+                entity.Get<LootCollComp>().incomeFactor = 1.0f;
+                break;
+
+            case StatusEffectType.ShortHand:
+            case StatusEffectType.LongHand:
+                entity.Get<LootCollComp>().radiusFactor = 1.0f;
+                break;
+
+            default:
+                break;
+        }
+    }
 }

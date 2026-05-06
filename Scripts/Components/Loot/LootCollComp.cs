@@ -2,8 +2,11 @@ namespace Components.Loot;
 
 struct LootCollComp
 {
+    public int amount;
+
     public float radius,
         speed;
 
-    public int amount;
+    public float incomeFactor,
+        radiusFactor;
 }

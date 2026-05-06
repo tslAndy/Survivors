@@ -20,14 +20,16 @@ partial class ShieldSys : BaseSystem<World, float>
         ref StatusEffectComp effects
     )
     {
+        float dts = dt * shield.dpsFactor;
+
         if (shield.single != null)
         {
-            shield.single.Update(entity, ref damage, ref effects, trs.position, dt);
+            shield.single.Update(entity, ref damage, ref effects, trs.position, dts);
             return;
         }
 
         for (int i = 0; i < shield.shields.Count; i++)
-            shield.shields[i].Update(entity, ref damage, ref effects, trs.position, dt);
+            shield.shields[i].Update(entity, ref damage, ref effects, trs.position, dts);
     }
 
     [Query]

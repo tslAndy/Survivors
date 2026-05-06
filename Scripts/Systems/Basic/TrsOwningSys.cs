@@ -39,7 +39,6 @@ partial class TrsOwningSys : BaseSystem<World, float>
         if (!death.isDead)
             return;
 
-        Console.WriteLine("heeeelooooo");
         if (!entity.HasRelationship<TrsOwn>())
             return;
 

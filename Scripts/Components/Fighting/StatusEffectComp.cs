@@ -37,20 +37,28 @@ enum StatusEffectType : byte
 
     // special effects
 
+    // defense
+    Armor,
+    Sensitivity, // extra damage from hit
+
     // attack
-    Armor, // полная неуязвимость
-    Rage, // увеличение скорости атаки, влияет на оружие (на аниматор оружия нет). на сам урон не влияет
-    Weaken, // уменьшение скорости атаки. на сам урон не влияет
+    Rage,
+    Weaken,
 
     // speed
-    Slowness, // замедляет движение, на оружие не влияет. на аниматор персонажа не влияет
-    Freeze, // ни движение ни оружие не работают
-    Haste, // повышенная скорости движения
-    Stuck, // оружие работает, движение нет
+    Slowness,
+    Haste,
+    Stuck,
 
     // other
-    Blessed, // оружие проеряет, если установлен этот модификатор, то крит
-    Curse, // после отметки умирает через 5 секунд
+    Curse,
+
+    // money
+    Poverty,
+    Greed,
+
+    ShortHand,
+    LongHand,
 }
 
 enum LongStatEffType : long
@@ -63,24 +71,31 @@ enum LongStatEffType : long
     Regen = 1 << StatusEffectType.Regen,
 
     // status effects
-    // attack
+    // defend
     Armor = 1 << StatusEffectType.Armor,
+    Sensitivity = 1 << StatusEffectType.Sensitivity,
+
+    // attack
     Rage = 1 << StatusEffectType.Rage,
     Weaken = 1 << StatusEffectType.Weaken,
 
     // speed
     Slowness = 1 << StatusEffectType.Slowness,
-    Freeze = 1 << StatusEffectType.Freeze,
     Haste = 1 << StatusEffectType.Haste,
     Stuck = 1 << StatusEffectType.Stuck,
 
     // other
-    Blessed = 1 << StatusEffectType.Bleed,
     Curse = 1 << StatusEffectType.Curse,
+
+    // money
+    Greed = 1 << StatusEffectType.Greed,
+    Poverty = 1 << StatusEffectType.Poverty,
+
+    ShortHand = 1 << StatusEffectType.ShortHand,
+    LongHand = 1 << StatusEffectType.LongHand,
 
     // combined
     SimpleEffects = Burn | Bleed | Poison | Shock | Regen,
-    ComplexEffects = Armor | Blessed | Curse | Freeze | Haste | Rage | Slowness | Weaken,
 }
 
 static class LongStatEffTypeExtensions

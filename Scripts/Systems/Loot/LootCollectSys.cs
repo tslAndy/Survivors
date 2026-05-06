@@ -31,14 +31,19 @@ partial class LootCollectSys : BaseSystem<World, float>
     )
     {
         using CachedList<Entity> overlap = CachedList<Entity>.Create();
-        _spatial.GetOverlap(entity, trs.position, lootColl.radius, _lootLayer, overlap);
+        _spatial.GetOverlap(
+            entity,
+            trs.position,
+            lootColl.radius * lootColl.radiusFactor,
+            _lootLayer,
+            overlap
+        );
 
+        float totalAmount = 0.0f;
         for (int i = 0; i < overlap.Count; i++)
         {
             Entity targ = overlap[i];
-
             ref TransformComp targTrs = ref targ.Get<TransformComp>();
-
             if (Vector2.DistanceSquared(trs.position, targTrs.position) > 0.0001f)
             {
                 targTrs.position +=
@@ -47,11 +52,14 @@ partial class LootCollectSys : BaseSystem<World, float>
             }
 
             Components<LootComp, TimerDestroyComp> comps = targ.Get<LootComp, TimerDestroyComp>();
-            ref LootComp targLoot = ref comps.t0;
-            ref TimerDestroyComp targTimerDestroy = ref comps.t1;
 
-            lootColl.amount += targLoot.amount;
+            ref LootComp targLoot = ref comps.t0;
+            totalAmount += targLoot.amount;
+
+            ref TimerDestroyComp targTimerDestroy = ref comps.t1;
             targTimerDestroy.time = 0.0f;
         }
+
+        lootColl.amount += (int)MathF.Floor(totalAmount * lootColl.incomeFactor);
     }
 }

@@ -7,6 +7,7 @@ struct WeaponComp
 {
     public CachedList<Weapon> weapons;
     public Weapon single;
+    public float dpsFactor;
 }
 /*
  * Если игрок, то список содержит много компонентов

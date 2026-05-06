@@ -1,10 +1,8 @@
-namespace Components.Player;
+namespace Components.Characters;
 
 struct PlayerComp
 {
     public PlayerState state;
-    public float walkSpeed,
-        runSpeed;
 }
 
 enum PlayerState

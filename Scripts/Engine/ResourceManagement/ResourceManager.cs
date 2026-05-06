@@ -26,7 +26,6 @@ abstract class ResourceManager<T> : IDisposable
 
     public void Dispose()
     {
-        Console.WriteLine("fuck you");
         foreach (T resource in _resources.Values)
             Unload(resource);
     }

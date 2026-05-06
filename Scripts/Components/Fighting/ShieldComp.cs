@@ -7,6 +7,8 @@ struct ShieldComp
 {
     public CachedList<Shield> shields;
     public Shield single;
+
+    public float dpsFactor;
 }
 
 /*
