@@ -36,15 +36,21 @@ enum StatusEffectType : byte
     Regen,
 
     // special effects
+
+    // attack
     Armor,
-    Blessed,
-    Curse,
+    Rage,
+    Weaken,
+
+    // speed
+    Slowness,
     Freeze,
     Haste,
+
+    // other
+    Blessed,
+    Curse,
     Invisibility,
-    Rage,
-    Slowness,
-    Weaken,
 }
 
 enum LongStatEffType : long
@@ -57,15 +63,20 @@ enum LongStatEffType : long
     Regen = 1 << StatusEffectType.Regen,
 
     // status effects
+    // attack
     Armor = 1 << StatusEffectType.Armor,
-    Blessed = 1 << StatusEffectType.Bleed,
-    Curse = 1 << StatusEffectType.Curse,
+    Rage = 1 << StatusEffectType.Rage,
+    Weaken = 1 << StatusEffectType.Weaken,
+
+    // speed
+    Slowness = 1 << StatusEffectType.Slowness,
     Freeze = 1 << StatusEffectType.Freeze,
     Haste = 1 << StatusEffectType.Haste,
+
+    // other
+    Blessed = 1 << StatusEffectType.Bleed,
+    Curse = 1 << StatusEffectType.Curse,
     Invisibility = 1 << StatusEffectType.Invisibility,
-    Rage = 1 << StatusEffectType.Rage,
-    Slowness = 1 << StatusEffectType.Slowness,
-    Weaken = 1 << StatusEffectType.Weaken,
 
     // combined
     SimpleEffects = Burn | Bleed | Poison | Shock | Regen,

@@ -1,12 +1,13 @@
 using System.Numerics;
 using Arch.Core;
+using Systems;
 using Utils;
 
 namespace Weapons.Specific;
 
 class MeleeWeapon : Weapon
 {
-    public MeleeWeapon(WeaponConfig config, WeaponCallbacks callbacks, WeaponContext context)
+    public MeleeWeapon(WeaponConfig config, WeaponCallbacks callbacks, WorldContext context)
         : base(config, callbacks, context) { }
 
     protected override void OnTimer(Entity entity, Vector2 position)

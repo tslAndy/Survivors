@@ -35,7 +35,6 @@ class Game : IDisposable
         ContainerBuilder builder = new ContainerBuilder();
         builder.RegisterModule(new EngineModule());
         builder.RegisterModule(new SystemsModule());
-        builder.RegisterModule(new WeaponsModule());
 
         IContainer container = builder.Build();
         _scope = container.BeginLifetimeScope();
@@ -130,20 +129,6 @@ class Game : IDisposable
                 },
                 new DropComp { amount = Random.Shared.Next(1, 5000) }
             );
-
-            Entity test = _world.Create<SpriteComp, TransformComp>(
-                new SpriteComp
-                {
-                    sprite = _scope
-                        .Resolve<SpriteAtlasManager>()
-                        .Get("./Resources/SpriteAtlases/Items/BattleEffects.spriteAtlas")[
-                        "fireball_1_1"
-                    ],
-                    drawOrder = 10,
-                }
-            );
-
-            enemy.AddRelationship<TrsOwn>(test, new TrsOwn());
         }
     }
 
@@ -165,41 +150,7 @@ class Game : IDisposable
             targetLayer = _scope.Resolve<LayerMap>()["EnemyEnts"],
         };
 
-        weapons.Add(
-            _scope.Resolve<MeleeWeapon>(
-                new TypedParameter(typeof(WeaponConfig), weaponConfig),
-                new TypedParameter(typeof(WeaponCallbacks), default),
-                new TypedParameter(typeof(WeaponContext), _scope.Resolve<WeaponContext>())
-            )
-        );
-
-        // BulletConfig bulletConfig = new BulletConfig
-        // {
-        //     radius = 0.125f,
-        //     speed = 15.0f,
-        //     layer = _scope.Resolve<LayerMap>()["PlayerBullets"],
-        //     sprite = _scope
-        //         .Resolve<SpriteAtlasManager>()
-        //         .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")["arrow_1"],
-        // };
-
-        // WeaponCallbacks callbacks = new WeaponCallbacks
-        // {
-        // onBaseDamage = (Entity attacker, Entity target, ref float baseDamage) =>
-        // {
-        //     Console.WriteLine("hehehe");
-        //     target
-        //         .Get<StatusEffectComp>()
-        //         .newEffects.Add(new StatusEffect(StatusEffectType.Burn, 10.0f, 5.0f));
-        // },
-        // };
-        // Bow bow = _scope.Resolve<Bow>(
-        //     new TypedParameter(typeof(BulletConfig), bulletConfig),
-        //     new TypedParameter(typeof(WeaponConfig), weaponConfig),
-        //     new TypedParameter(typeof(WeaponCallbacks), callbacks)
-        // );
-
-        // weapons.Add(bow);
+        weapons.Add(new MeleeWeapon(weaponConfig, default, _scope.Resolve<WorldContext>()));
 
         Entity player = _world.Create<
             PlayerComp,
@@ -230,6 +181,17 @@ class Game : IDisposable
             new WeaponComp { weapons = weapons },
             new LootCollComp { radius = 15.0f, speed = 10.0f }
         );
+
+        AnimAtlas swingAtlas = _scope
+            .Resolve<AnimAtlasManager>()
+            .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas");
+        Entity swing = _world.Create<TransformComp, SpriteComp, AnimComp>(
+            new TransformComp(),
+            new SpriteComp { drawOrder = 2 },
+            new AnimComp { anim = swingAtlas["Swing_A"], atlas = swingAtlas }
+        );
+
+        player.AddRelationship<TrsOwn>(swing);
     }
 
     public void Dispose()

@@ -3,9 +3,9 @@ using Arch.Core;
 using Engine.Common;
 using Systems.Physics;
 
-namespace Weapons;
+namespace Systems;
 
-class WeaponContext
+class WorldContext
 {
     public readonly World world;
     public readonly SpatialSys spatial;
@@ -13,7 +13,7 @@ class WeaponContext
     public readonly CommandBuffer commandBuffer;
     public readonly LayerMap layerMap;
 
-    public WeaponContext(
+    public WorldContext(
         World world,
         SpatialSys spatial,
         TileCollSys tileCollSys,

@@ -2,6 +2,7 @@ using System.Numerics;
 using Arch.Core;
 using Arch.Core.Extensions;
 using Components.Fighting;
+using Systems;
 
 namespace Weapons;
 
@@ -34,9 +35,9 @@ abstract class Weapon
 
     protected readonly WeaponConfig config;
     protected readonly WeaponCallbacks callbacks;
-    protected readonly WeaponContext context;
+    protected readonly WorldContext context;
 
-    protected Weapon(WeaponConfig config, WeaponCallbacks callbacks, WeaponContext context)
+    protected Weapon(WeaponConfig config, WeaponCallbacks callbacks, WorldContext context)
     {
         this.config = config;
         this.callbacks = callbacks;

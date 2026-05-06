@@ -62,5 +62,6 @@ class SystemsModule : Module
 
         builder.Register<World>(_ => World.Create()).InstancePerLifetimeScope();
         builder.RegisterType<CommandBuffer>().InstancePerLifetimeScope();
+        builder.RegisterType<WorldContext>().InstancePerLifetimeScope();
     }
 }

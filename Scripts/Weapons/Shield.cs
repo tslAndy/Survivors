@@ -1,6 +1,7 @@
 using System.Numerics;
 using Arch.Core;
 using Components.Fighting;
+using Systems;
 
 namespace Weapons;
 
@@ -16,9 +17,9 @@ struct ShieldCallbacks
 class Shield
 {
     protected readonly ShieldCallbacks callbacks;
-    protected readonly WeaponContext context;
+    protected readonly WorldContext context;
 
-    public Shield(ShieldCallbacks callbacks, WeaponContext context)
+    public Shield(ShieldCallbacks callbacks, WorldContext context)
     {
         this.callbacks = callbacks;
         this.context = context;
