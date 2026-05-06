@@ -107,7 +107,7 @@ class Game : IDisposable
                 new AnimComp
                 {
                     atlas = goblinAtlas,
-                    anim = goblinAtlas["IdleDown"],
+                    anim = goblinAtlas["Idle_Down"],
                     animDir = AnimDir.Down,
                 },
                 new TransformComp
@@ -146,37 +146,45 @@ class Game : IDisposable
             critDamage = 15,
             critChance = 30,
             attackTime = 1.0f,
-            detectRadius = 10.0f,
+            detectRadius = 4.0f,
             targetLayer = _scope.Resolve<LayerMap>()["EnemyEnts"],
         };
 
-        BulletConfig bulletConfig = new BulletConfig
-        {
-            radius = 0.125f,
-            speed = 15.0f,
-            layer = _scope.Resolve<LayerMap>()["PlayerBullets"],
-            sprite = _scope
-                .Resolve<SpriteAtlasManager>()
-                .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")["arrow_1"],
-        };
-
-        WeaponCallbacks callbacks = new WeaponCallbacks
-        {
-            onBaseDamage = (Entity attacker, Entity target, ref float baseDamage) =>
-            {
-                Console.WriteLine("hehehe");
-                target
-                    .Get<StatusEffectComp>()
-                    .newEffects.Add(new StatusEffect(StatusEffectType.Burn, 10.0f, 5.0f));
-            },
-        };
-        Bow bow = _scope.Resolve<Bow>(
-            new TypedParameter(typeof(BulletConfig), bulletConfig),
-            new TypedParameter(typeof(WeaponConfig), weaponConfig),
-            new TypedParameter(typeof(WeaponCallbacks), callbacks)
+        weapons.Add(
+            _scope.Resolve<MeleeWeapon>(
+                new TypedParameter(typeof(WeaponConfig), weaponConfig),
+                new TypedParameter(typeof(WeaponCallbacks), default),
+                new TypedParameter(typeof(WeaponContext), _scope.Resolve<WeaponContext>())
+            )
         );
 
-        weapons.Add(bow);
+        // BulletConfig bulletConfig = new BulletConfig
+        // {
+        //     radius = 0.125f,
+        //     speed = 15.0f,
+        //     layer = _scope.Resolve<LayerMap>()["PlayerBullets"],
+        //     sprite = _scope
+        //         .Resolve<SpriteAtlasManager>()
+        //         .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")["arrow_1"],
+        // };
+
+        // WeaponCallbacks callbacks = new WeaponCallbacks
+        // {
+        // onBaseDamage = (Entity attacker, Entity target, ref float baseDamage) =>
+        // {
+        //     Console.WriteLine("hehehe");
+        //     target
+        //         .Get<StatusEffectComp>()
+        //         .newEffects.Add(new StatusEffect(StatusEffectType.Burn, 10.0f, 5.0f));
+        // },
+        // };
+        // Bow bow = _scope.Resolve<Bow>(
+        //     new TypedParameter(typeof(BulletConfig), bulletConfig),
+        //     new TypedParameter(typeof(WeaponConfig), weaponConfig),
+        //     new TypedParameter(typeof(WeaponCallbacks), callbacks)
+        // );
+
+        // weapons.Add(bow);
 
         Entity player = _world.Create<
             PlayerComp,
@@ -198,7 +206,7 @@ class Game : IDisposable
             new AnimComp
             {
                 atlas = playerAnimAtlas,
-                anim = playerAnimAtlas["IdleUp"],
+                anim = playerAnimAtlas["Idle_Up"],
                 animDir = AnimDir.Up,
             },
             new TransformComp { position = new Vector2(15.0f, 10.0f), scale = 1.0f },

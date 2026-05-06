@@ -3,7 +3,7 @@ spriteAtlas ./Resources/SpriteAtlases/Entities/Player.spriteAtlas
 ##-----------------------IDLE---------------------##
 group Idle
 
-anim IdleUp 
+anim Idle_Up 
 frametime 200
 repeat true
 key idle_up_1
@@ -12,7 +12,7 @@ key idle_up_3
 key idle_up_4
 endkey
 
-anim IdleDown 
+anim Idle_Down 
 frametime 200
 repeat true
 key idle_down_1
@@ -21,7 +21,7 @@ key idle_down_3
 key idle_down_4
 endkey
 
-anim IdleLeft 
+anim Idle_Left 
 frametime 200
 repeat true
 key idle_left_1
@@ -30,7 +30,7 @@ key idle_left_3
 key idle_left_4
 endkey
 
-anim IdleRight 
+anim Idle_Right 
 frametime 200
 repeat true
 key idle_right_1
@@ -43,7 +43,7 @@ endgroup
 ##-----------------------WALK---------------------##
 group Walk 
 
-anim WalkUp 
+anim Walk_Up 
 frametime 200
 repeat true
 key walk_up_1
@@ -52,7 +52,7 @@ key walk_up_3
 key walk_up_4
 endkey
 
-anim WalkDown 
+anim Walk_Down 
 frametime 200
 repeat true
 key walk_down_1
@@ -61,7 +61,7 @@ key walk_down_3
 key walk_down_4
 endkey
 
-anim WalkLeft 
+anim Walk_Left 
 frametime 200
 repeat true
 key walk_left_1
@@ -70,7 +70,7 @@ key walk_left_3
 key walk_left_4
 endkey
 
-anim WalkRight 
+anim Walk_Right 
 frametime 200
 repeat true
 key walk_right_1
@@ -83,7 +83,7 @@ endgroup
 ##-----------------------RUN---------------------##
 group Run
 
-anim RunUp 
+anim Run_Up 
 frametime 200
 repeat true
 key run_up_1
@@ -92,7 +92,7 @@ key run_up_3
 key run_up_4
 endkey
 
-anim RunDown 
+anim Run_Down 
 frametime 200
 repeat true
 key run_down_1
@@ -101,7 +101,7 @@ key run_down_3
 key run_down_4
 endkey
 
-anim RunLeft 
+anim Run_Left 
 frametime 200
 repeat true
 key run_left_1
@@ -110,7 +110,7 @@ key run_left_3
 key run_left_4
 endkey
 
-anim RunRight 
+anim Run_Right 
 frametime 200
 repeat true
 key run_right_1
@@ -123,40 +123,48 @@ endgroup
 ##-----------------------DIE---------------------##
 group Die
 
-anim DieUp 
+anim Die_Up 
 frametime 200
 repeat false
+
 key die_up_1
 key die_up_2
 key die_up_3
 key die_up_4
+
 endkey
 
-anim DieDown 
+anim Die_Down 
 frametime 200
 repeat false
+
 key die_down_1
 key die_down_2
 key die_down_3
 key die_down_4
+
 endkey
 
-anim DieLeft 
+anim Die_Left 
 frametime 200
 repeat false
+
 key die_left_1
 key die_left_2
 key die_left_3
 key die_left_4
+
 endkey
 
-anim DieRight 
+anim Die_Right 
 frametime 200
 repeat false
+
 key die_right_1
 key die_right_2
 key die_right_3
 key die_right_4
+
 endkey
 
 endgroup

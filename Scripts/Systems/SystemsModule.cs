@@ -33,12 +33,10 @@ class SystemsModule : Module
                     x.Resolve<RigidSys>(),
                     // player systems
                     x.Resolve<PlayerSys>(),
-                    x.Resolve<EnemyMoveSys>(),
                     // fighting
                     x.Resolve<HealthSys>(),
                     x.Resolve<DeathSys>(),
                     x.Resolve<WeaponSys>(),
-                    x.Resolve<BulletSys>(),
                     x.Resolve<ShieldSys>(),
                     x.Resolve<StatusEffectSys>(),
                     x.Resolve<DamageSys>(),

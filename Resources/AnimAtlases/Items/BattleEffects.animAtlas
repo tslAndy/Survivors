@@ -1,0 +1,614 @@
+spriteAtlas ./Resources/SpriteAtlases/Items/BattleEffects.spriteAtlas
+
+##-----------------------CAST_A---------------------##
+
+anim Cast_A
+frametime 200
+repeat true
+
+key cast_1_1
+key cast_1_2
+key cast_1_3
+key cast_1_4
+key cast_1_5
+key cast_1_6
+key cast_1_7
+key cast_1_8
+key cast_1_9
+key cast_1_10
+key cast_1_11
+key cast_1_12
+key cast_1_13
+key cast_1_14
+key cast_1_15
+key cast_1_16
+
+endkey
+
+##-----------------------CAST_B---------------------##
+
+anim Cast_B
+frametime 200
+repeat true
+
+key cast_2_1
+key cast_2_2
+key cast_2_3
+key cast_2_4
+key cast_2_5
+key cast_2_6
+key cast_2_7
+key cast_2_8
+key cast_2_9
+key cast_2_10
+key cast_2_11
+key cast_2_12
+key cast_2_13
+key cast_2_14
+key cast_2_15
+key cast_2_16
+
+endkey
+
+##-----------------------CAST_C---------------------##
+
+anim Cast_C
+frametime 200
+repeat true
+
+key cast_3_1
+key cast_3_2
+key cast_3_3
+key cast_3_4
+key cast_3_5
+key cast_3_6
+key cast_3_7
+key cast_3_8
+key cast_3_9
+key cast_3_10
+key cast_3_11
+key cast_3_12
+key cast_3_13
+key cast_3_14
+key cast_3_15
+key cast_3_16
+
+endkey
+
+##-----------------------CAST_D---------------------##
+
+anim Cast_D
+frametime 200
+repeat true
+
+key cast_4_1
+key cast_4_2
+key cast_4_3
+key cast_4_4
+key cast_4_5
+key cast_4_6
+key cast_4_7
+key cast_4_8
+key cast_4_9
+key cast_4_10
+key cast_4_11
+key cast_4_12
+key cast_4_13
+key cast_4_14
+key cast_4_15
+key cast_4_16
+
+endkey
+
+##-----------------------CAST_E---------------------##
+
+anim Cast_E 
+frametime 200
+repeat true
+
+key cast_5_1
+key cast_5_2
+key cast_5_3
+key cast_5_4
+key cast_5_5
+key cast_5_6
+key cast_5_7
+key cast_5_8
+key cast_5_9
+key cast_5_10
+key cast_5_11
+key cast_5_12
+key cast_5_13
+key cast_5_14
+key cast_5_15
+key cast_5_16
+
+endkey
+
+##-----------------------SHIELD_A---------------------##
+
+anim Shield_A
+frametime 200
+repeat true
+
+key shield_1_1
+key shield_1_2
+key shield_1_3
+key shield_1_4
+
+endkey
+
+##-----------------------SHIELD_B---------------------##
+
+anim Shield_B
+frametime 200
+repeat true
+
+key shield_2_1
+key shield_2_2
+key shield_2_3
+key shield_2_4
+
+endkey
+
+##-----------------------SHIELD_C---------------------##
+
+anim Shield_C
+frametime 200
+repeat true
+
+key shield_3_1
+key shield_3_2
+key shield_3_3
+key shield_3_4
+
+endkey
+
+##-----------------------SHIELD_D---------------------##
+
+anim Shield_D
+frametime 200
+repeat true
+
+key shield_4_1
+key shield_4_2
+key shield_4_3
+key shield_4_4
+
+endkey
+
+##-----------------------SWING_A---------------------##
+
+anim Swing_A
+frametime 200
+repeat true
+
+key swing_1_1
+key swing_1_2
+key swing_1_3
+key swing_1_4
+key swing_1_5
+
+endkey
+
+##-----------------------SWING_B---------------------##
+
+anim Swing_B
+frametime 200
+repeat true
+
+key swing_2_1
+key swing_2_2
+key swing_2_3
+key swing_2_4
+key swing_2_5
+
+endkey
+
+##-----------------------SWING_C---------------------##
+
+anim Swing_C
+frametime 200
+repeat true
+
+key swing_3_1
+key swing_3_2
+key swing_3_3
+key swing_3_4
+key swing_3_5
+
+endkey
+
+##-----------------------SWING_D---------------------##
+
+anim Swing_D
+frametime 200
+repeat true
+
+key swing_4_1
+key swing_4_2
+key swing_4_3
+key swing_4_4
+key swing_4_5
+
+endkey
+
+##-----------------------SWING_E---------------------##
+
+anim Swing_E
+frametime 200
+repeat true
+
+key swing_5_1
+key swing_5_2
+key swing_5_3
+key swing_5_4
+key swing_5_5
+key swing_5_6
+
+endkey
+
+##-----------------------FIREBALL_A---------------------##
+
+anim Fireball_A
+frametime 200
+repeat true
+
+key fireball_1_1
+key fireball_1_2
+key fireball_1_3
+key fireball_1_4
+key fireball_1_5
+key fireball_1_6
+key fireball_1_7
+key fireball_1_8
+key fireball_1_9
+key fireball_1_10
+key fireball_1_11
+key fireball_1_12
+key fireball_1_13
+key fireball_1_14
+key fireball_1_15
+key fireball_1_16
+
+endkey
+
+##-----------------------FIREBALL_B---------------------##
+
+anim Fireball_B
+frametime 200
+repeat true
+
+key fireball_2_1
+key fireball_2_2
+key fireball_2_3
+key fireball_2_4
+key fireball_2_5
+key fireball_2_6
+key fireball_2_7
+key fireball_2_8
+key fireball_2_9
+key fireball_2_10
+key fireball_2_11
+key fireball_2_12
+key fireball_2_13
+key fireball_2_14
+key fireball_2_15
+key fireball_2_16
+
+endkey
+
+##-----------------------FIREBALL_C---------------------##
+
+anim Fireball_C
+frametime 200
+repeat true
+
+key fireball_3_1
+key fireball_3_2
+key fireball_3_3
+key fireball_3_4
+key fireball_3_5
+key fireball_3_6
+key fireball_3_7
+key fireball_3_8
+key fireball_3_9
+key fireball_3_10
+key fireball_3_11
+key fireball_3_12
+key fireball_3_13
+key fireball_3_14
+key fireball_3_15
+key fireball_3_16
+
+endkey
+
+##-----------------------FIREBALL_D---------------------##
+
+anim Fireball_D
+frametime 200
+repeat true
+
+key fireball_4_1
+key fireball_4_2
+key fireball_4_3
+key fireball_4_4
+key fireball_4_5
+key fireball_4_6
+key fireball_4_7
+key fireball_4_8
+key fireball_4_9
+key fireball_4_10
+key fireball_4_11
+key fireball_4_12
+key fireball_4_13
+key fireball_4_14
+key fireball_4_15
+ 
+endkey
+
+##-----------------------FIREBALL_E---------------------##
+
+anim Fireball_E
+frametime 200
+repeat true
+
+key fireball_5_1
+key fireball_5_2
+key fireball_5_3
+key fireball_5_4
+key fireball_5_5
+key fireball_5_6
+key fireball_5_7
+key fireball_5_8
+key fireball_5_9
+key fireball_5_10
+key fireball_5_11
+key fireball_5_12
+key fireball_5_13
+key fireball_5_14
+key fireball_5_15
+
+endkey
+
+##-----------------------FIREBALL_F---------------------##
+
+anim Fireball_F
+frametime 200
+repeat true
+
+key fireball_6_1
+key fireball_6_2
+key fireball_6_3
+key fireball_6_4
+key fireball_6_5
+key fireball_6_6
+key fireball_6_7
+key fireball_6_8
+key fireball_6_9
+key fireball_6_10
+key fireball_6_11
+key fireball_6_12
+key fireball_6_13
+key fireball_6_14
+key fireball_6_15
+
+endkey
+
+##-----------------------FIREBALL_G---------------------##
+
+anim Fireball_G
+frametime 200
+repeat true
+
+key fireball_7_1
+key fireball_7_2
+key fireball_7_3
+key fireball_7_4
+key fireball_7_5
+key fireball_7_6
+key fireball_7_7
+key fireball_7_8
+key fireball_7_9
+key fireball_7_10
+key fireball_7_11
+key fireball_7_12
+key fireball_7_13
+key fireball_7_14
+key fireball_7_15
+
+endkey
+
+##-----------------------FIREBALL_H---------------------##
+
+anim Fireball_H
+frametime 200
+repeat true
+
+key fireball_8_1
+key fireball_8_2
+key fireball_8_3
+key fireball_8_4
+key fireball_8_5
+key fireball_8_6
+key fireball_8_7
+key fireball_8_8
+key fireball_8_9
+key fireball_8_10
+key fireball_8_11
+key fireball_8_12
+key fireball_8_13
+key fireball_8_14
+key fireball_8_15
+
+endkey
+
+##-----------------------FIREBALL_I---------------------##
+
+anim Fireball_I
+frametime 200
+repeat true
+
+key fireball_9_1
+key fireball_9_2
+key fireball_9_3
+key fireball_9_4
+key fireball_9_5
+key fireball_9_6
+key fireball_9_7
+key fireball_9_8
+key fireball_9_9
+key fireball_9_10
+key fireball_9_11
+key fireball_9_12
+key fireball_9_13
+key fireball_9_14
+key fireball_9_15
+
+endkey
+
+##-----------------------FIREBALL_J---------------------##
+
+anim Fireball_J
+frametime 200
+repeat true
+
+key fireball_10_1
+key fireball_10_2
+key fireball_10_3
+key fireball_10_4
+key fireball_10_5
+key fireball_10_6
+key fireball_10_7
+key fireball_10_8
+key fireball_10_9
+key fireball_10_10
+key fireball_10_11
+key fireball_10_12
+key fireball_10_13
+key fireball_10_14
+key fireball_10_15
+
+endkey
+
+##-----------------------EXPOSION_A---------------------##
+
+anim Explosion_A
+frametime 200
+repeat false
+
+key explosion_1_1
+key explosion_1_2
+key explosion_1_3
+key explosion_1_4
+key explosion_1_5
+key explosion_1_6
+key explosion_1_7
+
+endkey
+
+##-----------------------EXPOSION_B---------------------##
+
+anim Explosion_B
+frametime 200
+repeat false
+
+key explosion_2_1
+key explosion_2_2
+key explosion_2_3
+key explosion_2_4
+key explosion_2_5
+key explosion_2_6
+key explosion_2_7
+key explosion_2_8
+key explosion_2_9
+key explosion_2_10
+key explosion_2_11
+key explosion_2_12
+key explosion_2_13
+key explosion_2_14
+
+endkey
+
+##-----------------------EXPOSION_C---------------------##
+
+anim Explosion_C
+frametime 200
+repeat false
+
+key explosion_3_1
+key explosion_3_2
+key explosion_3_3
+key explosion_3_4
+key explosion_3_5
+key explosion_3_6
+key explosion_3_7
+key explosion_3_8
+key explosion_3_9
+key explosion_3_10
+
+endkey
+
+##-----------------------EXPOSION_D---------------------##
+
+anim Explosion_D
+frametime 200
+repeat false
+
+key explosion_4_1
+key explosion_4_2
+key explosion_4_3
+key explosion_4_4
+key explosion_4_5
+key explosion_4_6
+key explosion_4_7
+key explosion_4_8
+key explosion_4_9
+
+endkey
+
+##-----------------------EXPOSION_E---------------------##
+
+anim Explosion_E
+frametime 200
+repeat false
+
+key explosion_5_1
+key explosion_5_2
+key explosion_5_3
+key explosion_5_4
+key explosion_5_5
+key explosion_5_6
+key explosion_5_7
+key explosion_5_8
+key explosion_5_9
+key explosion_5_10
+key explosion_5_11
+key explosion_5_12
+key explosion_5_13
+key explosion_5_14
+key explosion_5_15
+key explosion_5_16
+
+endkey
+
+##-----------------------EXPOSION_F---------------------##
+
+anim Explosion_F
+frametime 200
+repeat false
+
+key explosion_6_1
+key explosion_6_2
+key explosion_6_3
+key explosion_6_4
+key explosion_6_5
+key explosion_6_6
+key explosion_6_7
+key explosion_6_8
+key explosion_6_9
+key explosion_6_10
+key explosion_6_11
+key explosion_6_12
+
+endkey

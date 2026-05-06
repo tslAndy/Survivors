@@ -29,7 +29,8 @@ struct WeaponCallbacks
 
 abstract class Weapon
 {
-    private float time;
+    private float _time;
+    public float time => _time;
 
     protected readonly WeaponConfig config;
     protected readonly WeaponCallbacks callbacks;
@@ -40,7 +41,7 @@ abstract class Weapon
         this.config = config;
         this.callbacks = callbacks;
 
-        this.time = 0.0f;
+        this._time = 0.0f;
         this.context = context;
     }
 
@@ -48,11 +49,11 @@ abstract class Weapon
     {
         OnUpdate(entity, position, dt);
 
-        time += dt;
-        if (time < config.attackTime)
+        _time += dt;
+        if (_time < config.attackTime)
             return;
 
-        time -= config.attackTime;
+        _time -= config.attackTime;
         OnTimer(entity, position);
     }
 
