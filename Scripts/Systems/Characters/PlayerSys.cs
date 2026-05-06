@@ -15,7 +15,7 @@ namespace Systems.Characters;
 partial class PlayerSys : BaseSystem<World, float>
 {
     private readonly InputHandler _inputHandler;
-    private readonly TileCollSys _tileCollSys;
+    private readonly WorldContext _context;
 
     private const float CORR_RATE = 0.4f;
 
@@ -23,11 +23,11 @@ partial class PlayerSys : BaseSystem<World, float>
     private readonly Hash WalkGroupHash = AnimAtlas.CountHash("Walk");
     private readonly Hash RunGroupHash = AnimAtlas.CountHash("Run");
 
-    public PlayerSys(World world, InputHandler inputHandler, TileCollSys tileCollSys)
+    public PlayerSys(World world, InputHandler inputHandler, WorldContext context)
         : base(world)
     {
         _inputHandler = inputHandler;
-        _tileCollSys = tileCollSys;
+        _context = context;
     }
 
     [Query]
@@ -39,7 +39,7 @@ partial class PlayerSys : BaseSystem<World, float>
     )
     {
         using CachedList<TileColl> tileColls = CachedList<TileColl>.Create();
-        _tileCollSys.GetOverlap(trs.position, trs.scale * coll.radius, default, tileColls);
+        _context.tileCollSys.GetOverlap(trs.position, trs.scale * coll.radius, default, tileColls);
 
         if (tileColls.Count == 0)
             return;

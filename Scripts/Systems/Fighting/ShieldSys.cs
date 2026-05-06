@@ -2,7 +2,6 @@ using Arch.Core;
 using Arch.System;
 using Components.Basic;
 using Components.Fighting;
-using Weapons;
 
 namespace Systems.Fighting;
 
@@ -21,17 +20,20 @@ partial class ShieldSys : BaseSystem<World, float>
         ref StatusEffectComp effects
     )
     {
-        for (int i = 0; i < shield.shields.Count; i++)
+        if (shield.single != null)
         {
-            ref Shield cur = ref shield.shields[i];
-            cur.Update(entity, ref damage, ref effects, trs.position, dt);
+            shield.single.Update(entity, ref damage, ref effects, trs.position, dt);
+            return;
         }
+
+        for (int i = 0; i < shield.shields.Count; i++)
+            shield.shields[i].Update(entity, ref damage, ref effects, trs.position, dt);
     }
 
     [Query]
     private void HandleDeath(in DeathComp death, ref ShieldComp shield)
     {
         if (death.isDead)
-            shield.shields.Dispose();
+            shield.shields?.Dispose();
     }
 }

@@ -38,19 +38,19 @@ enum StatusEffectType : byte
     // special effects
 
     // attack
-    Armor,
-    Rage,
-    Weaken,
+    Armor, // полная неуязвимость
+    Rage, // увеличение скорости атаки, влияет на оружие (на аниматор оружия нет). на сам урон не влияет
+    Weaken, // уменьшение скорости атаки. на сам урон не влияет
 
     // speed
-    Slowness,
-    Freeze,
-    Haste,
+    Slowness, // замедляет движение, на оружие не влияет. на аниматор персонажа не влияет
+    Freeze, // ни движение ни оружие не работают
+    Haste, // повышенная скорости движения
+    Stuck, // оружие работает, движение нет
 
     // other
-    Blessed,
-    Curse,
-    Invisibility,
+    Blessed, // оружие проеряет, если установлен этот модификатор, то крит
+    Curse, // после отметки умирает через 5 секунд
 }
 
 enum LongStatEffType : long
@@ -72,16 +72,15 @@ enum LongStatEffType : long
     Slowness = 1 << StatusEffectType.Slowness,
     Freeze = 1 << StatusEffectType.Freeze,
     Haste = 1 << StatusEffectType.Haste,
+    Stuck = 1 << StatusEffectType.Stuck,
 
     // other
     Blessed = 1 << StatusEffectType.Bleed,
     Curse = 1 << StatusEffectType.Curse,
-    Invisibility = 1 << StatusEffectType.Invisibility,
 
     // combined
     SimpleEffects = Burn | Bleed | Poison | Shock | Regen,
-    ComplexEffects =
-        Armor | Blessed | Curse | Freeze | Haste | Invisibility | Rage | Slowness | Weaken,
+    ComplexEffects = Armor | Blessed | Curse | Freeze | Haste | Rage | Slowness | Weaken,
 }
 
 static class LongStatEffTypeExtensions

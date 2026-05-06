@@ -19,6 +19,12 @@ partial class WeaponSys : BaseSystem<World, float>
         ref WeaponComp weapon
     )
     {
+        if (weapon.single != null)
+        {
+            weapon.single.Update(entity, trs.position, dt);
+            return;
+        }
+
         for (int i = 0; i < weapon.weapons.Count; i++)
             weapon.weapons[i].Update(entity, trs.position, dt);
     }
@@ -26,9 +32,7 @@ partial class WeaponSys : BaseSystem<World, float>
     [Query]
     private void HandleDeath(in DeathComp death, ref WeaponComp weapon)
     {
-        if (!death.isDead)
-            return;
-
-        weapon.weapons.Dispose();
+        if (death.isDead)
+            weapon.weapons?.Dispose();
     }
 }
