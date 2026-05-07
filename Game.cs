@@ -1,7 +1,6 @@
 using System.Numerics;
 using Arch.Buffer;
 using Arch.Core;
-using Arch.Core.Extensions;
 using Arch.Relationships;
 using Arch.System;
 using Autofac;
@@ -17,9 +16,9 @@ using Engine.Common;
 using Engine.Tilemaps;
 using Raylib_cs;
 using Systems;
+using Systems.Characters;
 using Utils;
 using Weapons;
-using Weapons.Specific;
 
 class Game : IDisposable
 {
@@ -35,6 +34,7 @@ class Game : IDisposable
         builder.RegisterModule(new EngineModule());
         builder.RegisterModule(new SystemsModule());
         builder.RegisterModule(new WeaponsModule());
+        builder.RegisterModule(new EntitiesModule());
 
         IContainer container = builder.Build();
         _scope = container.BeginLifetimeScope();
@@ -44,23 +44,16 @@ class Game : IDisposable
         _systems = _scope.Resolve<Group<float>>();
 
         LoadTilemaps();
-        CreateEnemies();
-        CreatePlayer();
-    }
 
-    private float t;
+        _scope.ResolveNamed<Entity>("player");
+        for (int i = 0; i < 100; i++)
+            _scope.ResolveNamed<Entity>("goblin");
+    }
 
     public void Update()
     {
         _systems.Update(Raylib.GetFrameTime());
         _commandBuffer.Playback(_world, true);
-
-        t += Raylib.GetFrameTime();
-        if (t > 2.0f)
-        {
-            t = 0.0f;
-            CreateEnemies();
-        }
     }
 
     private void LoadTilemaps()
@@ -83,121 +76,135 @@ class Game : IDisposable
         );
     }
 
-    private void CreateEnemies()
-    {
-        int enemyLayer = _scope.Resolve<LayerMap>()["EnemyEnts"];
-
-        AnimAtlas goblinAtlas = _scope
-            .Resolve<AnimAtlasManager>()
-            .Get("./Resources/AnimAtlases/Entities/Goblin.animAtlas");
-        for (int i = 0; i < 30; i++)
-        {
-            Entity enemy = _world.Create<
-                MoveComp,
-                SpriteComp,
-                AnimComp,
-                TransformComp,
-                RigidComp,
-                CollComp,
-                HealthComp,
-                DamageComp,
-                StatusEffectComp,
-                DropComp
-            >(
-                new MoveComp { maxSpeed = 3.0f, speedFactor = 1.0f },
-                new SpriteComp { drawOrder = 1 },
-                new AnimComp
-                {
-                    atlas = goblinAtlas,
-                    anim = goblinAtlas["Idle_Down"],
-                    animDir = AnimDir.Down,
-                    timeScale = 1.0f,
-                },
-                new TransformComp
-                {
-                    position = new Vector2(
-                        2.0f + Random.Shared.NextSingle() * 26.0f,
-                        2.0f + Random.Shared.NextSingle() * 16.0f
-                    ),
-                    scale = 1.0f,
-                },
-                new RigidComp { layer = enemyLayer },
-                new CollComp { radius = 0.5f },
-                new HealthComp { currentHP = 100, maxHP = 100 },
-                new DamageComp { hits = CachedList<Hit>.Create(), damageFactor = 1.0f },
-                new StatusEffectComp
-                {
-                    newEffects = CachedList<StatusEffect>.Create(),
-                    runningEffects = CachedList<StatusEffect>.Create(),
-                },
-                new DropComp { amount = Random.Shared.Next(1, 5000) }
-            );
-        }
-    }
-
-    private void CreatePlayer()
-    {
-        AnimAtlas playerAnimAtlas = _scope
-            .Resolve<AnimAtlasManager>()
-            .Get("./Resources/AnimAtlases/Entities/Player.animAtlas");
-
-        CachedList<WeaponElem> weapons = CachedList<WeaponElem>.Create();
-        CachedList<ShieldElem> shields = CachedList<ShieldElem>.Create();
-
-        Entity player = _world.Create<
-            PlayerComp,
-            MoveComp,
-            SpriteComp,
-            AnimComp,
-            TransformComp,
-            RigidComp,
-            CollComp,
-            ShieldComp,
-            WeaponComp,
-            DamageComp,
-            HealthComp,
-            StatusEffectComp,
-            LootCollComp
-        >(
-            new PlayerComp { state = PlayerState.Idle },
-            new MoveComp { maxSpeed = 3.0f, speedFactor = 1.0f },
-            new SpriteComp { drawOrder = 1 },
-            new AnimComp
-            {
-                atlas = playerAnimAtlas,
-                anim = playerAnimAtlas["Idle_Up"],
-                animDir = AnimDir.Up,
-                timeScale = 1.0f,
-            },
-            new TransformComp { position = new Vector2(15.0f, 10.0f), scale = 1.0f },
-            new RigidComp { layer = _scope.Resolve<LayerMap>()["PlayerEnts"] },
-            new CollComp { radius = 0.5f },
-            new ShieldComp { shields = shields, dpsFactor = 1.0f },
-            new WeaponComp { weapons = weapons, dpsFactor = 1.0f },
-            new DamageComp { hits = CachedList<Hit>.Create() },
-            new HealthComp { currentHP = 100, maxHP = 100 },
-            new StatusEffectComp
-            {
-                newEffects = CachedList<StatusEffect>.Create(),
-                runningEffects = CachedList<StatusEffect>.Create(),
-            },
-            new LootCollComp
-            {
-                radius = 15.0f,
-                speed = 10.0f,
-                incomeFactor = 1.0f,
-                radiusFactor = 1.0f,
-            }
-        );
-
-        WeaponElem weaponElem = _scope.ResolveNamed<WeaponElem>("simpleSword");
-        weapons.Add(weaponElem);
-        if (weaponElem.entity != null)
-            player.AddRelationship<TrsOwn>(weaponElem.entity.Value);
-    }
-
     public void Dispose()
     {
         _scope.Dispose();
+    }
+}
+
+class EntitiesModule : Module
+{
+    protected override void Load(ContainerBuilder builder)
+    {
+        builder
+            .Register<Entity>(x =>
+            {
+                AnimAtlas playerAnimAtlas = x.Resolve<AnimAtlasManager>()
+                    .Get("./Resources/AnimAtlases/Entities/Player.animAtlas");
+
+                CachedList<WeaponElem> weapons = CachedList<WeaponElem>.Create();
+                CachedList<ShieldElem> shields = CachedList<ShieldElem>.Create();
+
+                Entity player = x.Resolve<World>()
+                    .Create<
+                        PlayerComp,
+                        MoveComp,
+                        SpriteComp,
+                        AnimComp,
+                        TransformComp,
+                        RigidComp,
+                        CollComp,
+                        ShieldComp,
+                        WeaponComp,
+                        DamageComp,
+                        HealthComp,
+                        StatusEffectComp,
+                        LootCollComp
+                    >(
+                        new PlayerComp { state = PlayerState.Idle },
+                        new MoveComp { maxSpeed = 3.0f, speedFactor = 1.0f },
+                        new SpriteComp { drawOrder = 1 },
+                        new AnimComp
+                        {
+                            atlas = playerAnimAtlas,
+                            anim = playerAnimAtlas["Idle_Up"],
+                            animDir = AnimDir.Up,
+                            timeScale = 1.0f,
+                        },
+                        new TransformComp { position = new Vector2(15.0f, 10.0f), scale = 1.0f },
+                        new RigidComp { layer = x.Resolve<LayerMap>()["PlayerEnts"] },
+                        new CollComp { radius = 0.5f },
+                        new ShieldComp { shields = shields, dpsFactor = 1.0f },
+                        new WeaponComp { weapons = weapons, dpsFactor = 1.0f },
+                        new DamageComp { hits = CachedList<Hit>.Create() },
+                        new HealthComp { currentHP = 100, maxHP = 100 },
+                        new StatusEffectComp
+                        {
+                            newEffects = CachedList<StatusEffect>.Create(),
+                            runningEffects = CachedList<StatusEffect>.Create(),
+                        },
+                        new LootCollComp
+                        {
+                            radius = 15.0f,
+                            speed = 10.0f,
+                            incomeFactor = 1.0f,
+                            radiusFactor = 1.0f,
+                        }
+                    );
+
+                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleSword");
+                weapons.Add(weaponElem);
+                if (weaponElem.entity != null)
+                    player.AddRelationship<TrsOwn>(weaponElem.entity.Value);
+
+                return player;
+            })
+            .Named<Entity>("player")
+            .InstancePerLifetimeScope();
+
+        builder
+            .Register<Entity>(x =>
+            {
+                AnimAtlas goblinAtlas = x.Resolve<AnimAtlasManager>()
+                    .Get("./Resources/AnimAtlases/Entities/Goblin.animAtlas");
+
+                Entity enemy = x.Resolve<World>()
+                    .Create<
+                        EnemyComp,
+                        MoveComp,
+                        SpriteComp,
+                        AnimComp,
+                        TransformComp,
+                        RigidComp,
+                        CollComp,
+                        HealthComp,
+                        DamageComp,
+                        StatusEffectComp,
+                        DropComp
+                    >(
+                        new EnemyComp { behaviour = x.Resolve<GoblinBehaviour>() },
+                        new MoveComp { maxSpeed = 1.0f, speedFactor = 1.0f },
+                        new SpriteComp { drawOrder = 1 },
+                        new AnimComp
+                        {
+                            atlas = goblinAtlas,
+                            anim = goblinAtlas["Idle_Down"],
+                            animDir = AnimDir.Down,
+                            timeScale = 1.0f,
+                        },
+                        new TransformComp
+                        {
+                            position = new Vector2(
+                                2.0f + Random.Shared.NextSingle() * 26.0f,
+                                2.0f + Random.Shared.NextSingle() * 16.0f
+                            ),
+                            scale = 1.0f,
+                        },
+                        new RigidComp { layer = x.Resolve<LayerMap>()["EnemyEnts"] },
+                        new CollComp { radius = 0.5f },
+                        new HealthComp { currentHP = 100, maxHP = 100 },
+                        new DamageComp { hits = CachedList<Hit>.Create(), damageFactor = 1.0f },
+                        new StatusEffectComp
+                        {
+                            newEffects = CachedList<StatusEffect>.Create(),
+                            runningEffects = CachedList<StatusEffect>.Create(),
+                        },
+                        new DropComp { amount = Random.Shared.Next(1, 5000) }
+                    );
+
+                return enemy;
+            })
+            .Named<Entity>("goblin")
+            .InstancePerDependency();
     }
 }

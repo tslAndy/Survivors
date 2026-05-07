@@ -7,5 +7,9 @@ class CharactersModule : Module
     protected override void Load(ContainerBuilder builder)
     {
         builder.RegisterType<PlayerSys>().InstancePerLifetimeScope();
+        builder.RegisterType<EnemySys>().InstancePerLifetimeScope();
+
+        // enemy behaviours
+        builder.RegisterType<GoblinBehaviour>().InstancePerLifetimeScope();
     }
 }

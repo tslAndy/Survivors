@@ -36,7 +36,8 @@ class SystemsModule : Module
                     x.Resolve<SpatialSys>(),
                     x.Resolve<TileCollSys>(),
                     x.Resolve<RigidSys>(),
-                    // player systems
+                    // character systems
+                    x.Resolve<EnemySys>(),
                     x.Resolve<PlayerSys>(),
                     // fighting
                     x.Resolve<WeaponSys>(),
