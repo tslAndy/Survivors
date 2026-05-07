@@ -27,6 +27,90 @@ partial class SpatialSys : BaseSystem<World, float>
 
     public void GetOverlap(
         Entity entity,
+        Vector2 rayStart,
+        Vector2 rayEnd,
+        int layer,
+        CachedList<Entity> result
+    )
+    {
+        Vector2 rayNorm = Vector2.Normalize(rayEnd - rayStart);
+        rayNorm = new Vector2(-rayNorm.Y, rayNorm.X);
+
+        int minX = (int)MathF.Floor(rayStart.X);
+        int minY = (int)MathF.Floor(rayStart.Y);
+        int maxX = (int)MathF.Floor(rayEnd.X);
+        int maxY = (int)MathF.Floor(rayEnd.Y);
+
+        for (int gridLevel = 0; gridLevel < MAX_LEVELS; gridLevel++)
+        {
+            int xStart = (minX >> gridLevel) - 1;
+            int yStart = (minY >> gridLevel) - 1;
+            int xEnd = (maxX >> gridLevel) + 2;
+            int yEnd = (maxY >> gridLevel) + 2;
+
+            int cellSize = 1 << gridLevel;
+            float cellRadius = 1.22222f * cellSize;
+
+            for (int y = yStart; y < yEnd; y++)
+            {
+                for (int x = xStart; x < xEnd; x++)
+                {
+                    Key key = new Key(x, y, gridLevel);
+
+                    if (!_map.TryGetValue(key, out CachedList<Entity>? list))
+                        continue;
+
+                    Vector2 cellCenter = cellSize * new Vector2(x + 0.5f, y + 0.5f);
+                    if (
+                        !GeomUtil.RayCircleIntersect(
+                            cellCenter,
+                            cellRadius,
+                            rayStart,
+                            rayEnd,
+                            rayNorm
+                        )
+                    )
+                    {
+                        continue;
+                    }
+
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        Entity other = list[i];
+                        if (other == entity)
+                            continue;
+
+                        ref RigidComp otherRigid = ref other.Get<RigidComp>();
+                        if (layer != otherRigid.layer)
+                            continue;
+
+                        Components<CollComp, TransformComp> comps = other.Get<
+                            CollComp,
+                            TransformComp
+                        >();
+                        ref CollComp otherColl = ref comps.t0;
+                        ref TransformComp otherTrs = ref comps.t1;
+
+                        Vector2 otherPosition = otherTrs.position;
+                        float otherRadius = otherColl.radius * otherTrs.scale;
+                        if (
+                            GeomUtil.RayCircleIntersect(
+                                otherPosition,
+                                otherRadius,
+                                rayStart,
+                                rayEnd,
+                                rayNorm
+                            )
+                        )
+                            result.Add(other);
+                    }
+                }
+            }
+        }
+    }
+
+    public void GetOverlap(
+        Entity entity,
         Vector2 position,
         float radius,
         int layer,

@@ -54,6 +54,7 @@ class SystemsModule : Module
                     x.Resolve<AnimSys>(),
                     x.Resolve<TilemapDrawSys>(),
                     x.Resolve<SpriteDrawSys>(),
+                    x.Resolve<LineDrawSys>(),
                     x.Resolve<TextDrawSys>(),
                     x.Resolve<SoundSys>()
                 );

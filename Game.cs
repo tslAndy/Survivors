@@ -95,6 +95,7 @@ class EntitiesModule : Module
 
                 CachedList<WeaponElem> weapons = CachedList<WeaponElem>.Create();
                 CachedList<ShieldElem> shields = CachedList<ShieldElem>.Create();
+                CachedList<Line> lines = CachedList<Line>.Create();
 
                 Entity player = x.Resolve<World>()
                     .Create<
@@ -143,7 +144,7 @@ class EntitiesModule : Module
                         }
                     );
 
-                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleBow");
+                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleSword");
                 weapons.Add(weaponElem);
                 if (weaponElem.entity != null)
                     player.AddRelationship<TrsOwn>(weaponElem.entity.Value);

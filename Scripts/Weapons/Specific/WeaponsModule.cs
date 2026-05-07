@@ -73,7 +73,7 @@ class WeaponsModule : Module
                         new SpriteComp { drawOrder = 2 },
                         new AnimComp
                         {
-                            anim = swingAtlas["Swing_A"],
+                            anim = swingAtlas["Swing_1"],
                             atlas = swingAtlas,
                             timeScale = 1.0f,
                         }

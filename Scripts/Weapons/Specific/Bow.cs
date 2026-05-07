@@ -64,37 +64,7 @@ class Bow : BulletWeapon, IBulletWeapon
             context.layerMap["Walls"],
             tileOverlap
         );
-        if (overlap.Count != 0)
+        if (tileOverlap.Count != 0)
             context.commandBuffer.Destroy(bullet);
-    }
-
-    protected override void InstantiateBullet(Entity entity, Vector2 position, Vector2 direction)
-    {
-        TransformComp trs = new TransformComp
-        {
-            position = position,
-            rotation = Single.RadiansToDegrees(MathF.Atan2(direction.Y, direction.X)),
-            scale = 1.0f,
-        };
-
-        RigidComp rigid = new RigidComp { velocity = bulletConfig.velocity * direction };
-        CollComp coll = new CollComp { radius = bulletConfig.radius };
-        BulletComp bullet = new BulletComp { owner = entity, weapon = this };
-
-        AnimComp anim = new AnimComp { timeScale = 1.0f };
-        SpriteComp sprite = new SpriteComp { drawOrder = bulletConfig.drawOrder };
-        if (bulletConfig.sprite != null)
-            sprite.sprite = bulletConfig.sprite;
-        else if (bulletConfig.anim != null)
-            anim.anim = bulletConfig.anim;
-
-        context.world.Create<AnimComp, SpriteComp, TransformComp, RigidComp, CollComp, BulletComp>(
-            anim,
-            sprite,
-            trs,
-            rigid,
-            coll,
-            bullet
-        );
     }
 }

@@ -6,8 +6,9 @@ class DrawingModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        builder.RegisterType<SpriteDrawSys>().InstancePerLifetimeScope();
-        builder.RegisterType<TextDrawSys>().InstancePerLifetimeScope();
         builder.RegisterType<TilemapDrawSys>().InstancePerLifetimeScope();
+        builder.RegisterType<SpriteDrawSys>().InstancePerLifetimeScope();
+        builder.RegisterType<LineDrawSys>().InstancePerLifetimeScope();
+        builder.RegisterType<TextDrawSys>().InstancePerLifetimeScope();
     }
 }
