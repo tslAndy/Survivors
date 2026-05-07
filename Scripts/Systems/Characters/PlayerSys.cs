@@ -69,7 +69,7 @@ partial class PlayerSys : BaseSystem<World, float>
         ref PlayerComp player,
         ref AnimComp animator,
         ref RigidComp rigid,
-        ref CharMoveComp moveComp
+        ref MoveComp moveComp
     )
     {
         Vector2 input = _inputHandler.GetInput();
@@ -100,7 +100,7 @@ partial class PlayerSys : BaseSystem<World, float>
         ref PlayerComp player,
         ref AnimComp animator,
         ref RigidComp rigid,
-        ref CharMoveComp moveComp
+        ref MoveComp moveComp
     )
     {
         rigid.velocity = Vector2.Zero;
@@ -126,7 +126,7 @@ partial class PlayerSys : BaseSystem<World, float>
         ref PlayerComp player,
         ref AnimComp animator,
         ref RigidComp rigid,
-        ref CharMoveComp moveComp
+        ref MoveComp moveComp
     )
     {
         if (input.LengthSquared() < 0.001f)
@@ -156,7 +156,7 @@ partial class PlayerSys : BaseSystem<World, float>
         ref PlayerComp player,
         ref AnimComp animator,
         ref RigidComp rigid,
-        ref CharMoveComp moveComp
+        ref MoveComp moveComp
     )
     {
         if (input.LengthSquared() < 0.001f)

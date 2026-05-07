@@ -8,7 +8,6 @@ class FightingModule : Module
     {
         builder.RegisterType<WeaponSys>().InstancePerLifetimeScope();
         builder.RegisterType<ShieldSys>().InstancePerLifetimeScope();
-        builder.RegisterType<StatusEffectHandler>().InstancePerLifetimeScope();
         builder.RegisterType<StatusEffectSys>().InstancePerLifetimeScope();
         builder.RegisterType<DamageSys>().InstancePerLifetimeScope();
         builder.RegisterType<HealthSys>().InstancePerLifetimeScope();

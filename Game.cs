@@ -34,6 +34,7 @@ class Game : IDisposable
         ContainerBuilder builder = new ContainerBuilder();
         builder.RegisterModule(new EngineModule());
         builder.RegisterModule(new SystemsModule());
+        builder.RegisterModule(new WeaponsModule());
 
         IContainer container = builder.Build();
         _scope = container.BeginLifetimeScope();
@@ -92,7 +93,7 @@ class Game : IDisposable
         for (int i = 0; i < 30; i++)
         {
             Entity enemy = _world.Create<
-                CharMoveComp,
+                MoveComp,
                 SpriteComp,
                 AnimComp,
                 TransformComp,
@@ -103,7 +104,7 @@ class Game : IDisposable
                 StatusEffectComp,
                 DropComp
             >(
-                new CharMoveComp { maxSpeed = 3.0f, speedFactor = 1.0f },
+                new MoveComp { maxSpeed = 3.0f, speedFactor = 1.0f },
                 new SpriteComp { drawOrder = 1 },
                 new AnimComp
                 {
@@ -141,57 +142,11 @@ class Game : IDisposable
             .Get("./Resources/AnimAtlases/Entities/Player.animAtlas");
 
         CachedList<WeaponElem> weapons = CachedList<WeaponElem>.Create();
-
-        WeaponConfig weaponConfig = new WeaponConfig
-        {
-            baseDamage = 10,
-            critDamage = 10,
-            critChance = 30,
-            attackTime = 0.75f,
-            detectRadius = 4.0f,
-            targetLayer = _scope.Resolve<LayerMap>()["EnemyEnts"],
-        };
-
-        WeaponCallbacks callbacks = new WeaponCallbacks
-        {
-            onBaseDamage = (attacker, target, ref damage) =>
-            {
-                attacker
-                    .Get<StatusEffectComp>()
-                    .newEffects.Add(new StatusEffect(StatusEffectType.Rage, 10.0f, 3.0f));
-
-                attacker
-                    .Get<StatusEffectComp>()
-                    .newEffects.Add(new StatusEffect(StatusEffectType.Haste, 10.0f, 5.0f));
-                //
-                // target
-                //     .Get<StatusEffectComp>()
-                //     .newEffects.Add(new StatusEffect(StatusEffectType.Sensitivity, 3.0f, 3.0f));
-            },
-        };
-
-        AnimAtlas swingAtlas = _scope
-            .Resolve<AnimAtlasManager>()
-            .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas");
-        Entity swing = _world.Create<TransformComp, SpriteComp, AnimComp>(
-            new TransformComp(),
-            new SpriteComp { drawOrder = 2 },
-            new AnimComp
-            {
-                anim = swingAtlas["Swing_A"],
-                atlas = swingAtlas,
-                timeScale = 1.0f,
-            }
-        );
-
-        Weapon weapon = new MeleeWeapon(weaponConfig, callbacks, _scope.Resolve<WorldContext>());
-        weapons.Add(new WeaponElem(weapon, swing));
-
         CachedList<ShieldElem> shields = CachedList<ShieldElem>.Create();
 
         Entity player = _world.Create<
             PlayerComp,
-            CharMoveComp,
+            MoveComp,
             SpriteComp,
             AnimComp,
             TransformComp,
@@ -205,7 +160,7 @@ class Game : IDisposable
             LootCollComp
         >(
             new PlayerComp { state = PlayerState.Idle },
-            new CharMoveComp { maxSpeed = 3.0f, speedFactor = 1.0f },
+            new MoveComp { maxSpeed = 3.0f, speedFactor = 1.0f },
             new SpriteComp { drawOrder = 1 },
             new AnimComp
             {
@@ -235,7 +190,10 @@ class Game : IDisposable
             }
         );
 
-        player.AddRelationship<TrsOwn>(swing);
+        WeaponElem weaponElem = _scope.ResolveNamed<WeaponElem>("simpleSword");
+        weapons.Add(weaponElem);
+        if (weaponElem.entity != null)
+            player.AddRelationship<TrsOwn>(weaponElem.entity.Value);
     }
 
     public void Dispose()

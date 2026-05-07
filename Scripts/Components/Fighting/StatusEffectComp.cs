@@ -35,11 +35,10 @@ enum StatusEffectType : byte
     Shock,
     Regen,
 
-    // special effects
-
     // defense
     Armor,
-    Sensitivity, // extra damage from hit
+    Delicacy,
+    Curse,
 
     // attack
     Rage,
@@ -50,13 +49,9 @@ enum StatusEffectType : byte
     Haste,
     Stuck,
 
-    // other
-    Curse,
-
     // money
     Poverty,
     Greed,
-
     ShortHand,
     LongHand,
 }
@@ -71,9 +66,10 @@ enum LongStatEffType : long
     Regen = 1 << StatusEffectType.Regen,
 
     // status effects
-    // defend
+    // defense
     Armor = 1 << StatusEffectType.Armor,
-    Sensitivity = 1 << StatusEffectType.Sensitivity,
+    Delicacy = 1 << StatusEffectType.Delicacy,
+    Curse = 1 << StatusEffectType.Curse,
 
     // attack
     Rage = 1 << StatusEffectType.Rage,
@@ -84,13 +80,9 @@ enum LongStatEffType : long
     Haste = 1 << StatusEffectType.Haste,
     Stuck = 1 << StatusEffectType.Stuck,
 
-    // other
-    Curse = 1 << StatusEffectType.Curse,
-
     // money
     Greed = 1 << StatusEffectType.Greed,
     Poverty = 1 << StatusEffectType.Poverty,
-
     ShortHand = 1 << StatusEffectType.ShortHand,
     LongHand = 1 << StatusEffectType.LongHand,
 

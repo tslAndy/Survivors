@@ -21,7 +21,7 @@ struct Hit
     // if damage from status effect
     public StatusEffectType effectType;
 
-    public Hit(Entity source, int damage, bool isCrit)
+    public Hit(Entity source, int damage)
     {
         this.source = source;
         this.damage = damage;

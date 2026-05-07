@@ -77,7 +77,7 @@ abstract class Weapon
             // apply both base and crit damage modifiers
             callbacks.countBaseDamage?.Invoke(source, target, ref critDamage);
             callbacks.countCritDamage?.Invoke(source, target, ref critDamage);
-            damageComp.hits.Add(new Hit(source, (int)MathF.Floor(critDamage), true));
+            damageComp.hits.Add(new Hit(source, (int)MathF.Floor(critDamage)));
 
             // apply both base and crit actions
             callbacks.onBaseDamage?.Invoke(source, target, ref critDamage);
@@ -89,7 +89,7 @@ abstract class Weapon
 
             // apply only base action
             callbacks.countBaseDamage?.Invoke(source, target, ref baseDamage);
-            damageComp.hits.Add(new Hit(source, (int)MathF.Floor(baseDamage), false));
+            damageComp.hits.Add(new Hit(source, (int)MathF.Floor(baseDamage)));
 
             // apply base damage action
             callbacks.onBaseDamage?.Invoke(source, target, ref baseDamage);
