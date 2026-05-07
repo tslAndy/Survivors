@@ -124,11 +124,15 @@ class StatusEffectHandler
 
             case StatusEffectType.Weaken:
             case StatusEffectType.Rage:
-                entity.Get<WeaponComp>().dpsFactor = effect.val;
-                entity.Get<ShieldComp>().dpsFactor = effect.val;
-
                 ref WeaponComp weapon = ref entity.Get<WeaponComp>();
                 weapon.dpsFactor = effect.val;
+                for (int i = 0; i < weapon.weapons.Count; i++)
+                    weapon.weapons[i].entity?.Get<AnimComp>().timeScale = effect.val;
+
+                ref ShieldComp shield = ref entity.Get<ShieldComp>();
+                shield.dpsFactor = effect.val;
+                for (int i = 0; i < shield.shields.Count; i++)
+                    shield.shields[i].entity?.Get<AnimComp>().timeScale = effect.val;
 
                 break;
 
@@ -163,8 +167,16 @@ class StatusEffectHandler
 
             case StatusEffectType.Weaken:
             case StatusEffectType.Rage:
-                entity.Get<WeaponComp>().dpsFactor = 1.0f;
-                entity.Get<ShieldComp>().dpsFactor = 1.0f;
+                ref WeaponComp weapon = ref entity.Get<WeaponComp>();
+                weapon.dpsFactor = effect.val;
+                for (int i = 0; i < weapon.weapons.Count; i++)
+                    weapon.weapons[i].entity?.Get<AnimComp>().timeScale = 1.0f;
+
+                ref ShieldComp shield = ref entity.Get<ShieldComp>();
+                shield.dpsFactor = effect.val;
+                for (int i = 0; i < shield.shields.Count; i++)
+                    shield.shields[i].entity?.Get<AnimComp>().timeScale = 1.0f;
+
                 break;
 
             case StatusEffectType.Haste:

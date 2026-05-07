@@ -23,11 +23,14 @@ partial class PlayerSys : BaseSystem<World, float>
     private readonly Hash WalkGroupHash = AnimAtlas.CountHash("Walk");
     private readonly Hash RunGroupHash = AnimAtlas.CountHash("Run");
 
+    private readonly int _wallsLayer;
+
     public PlayerSys(World world, InputHandler inputHandler, WorldContext context)
         : base(world)
     {
         _inputHandler = inputHandler;
         _context = context;
+        _wallsLayer = context.layerMap["Walls"];
     }
 
     [Query]
@@ -39,7 +42,12 @@ partial class PlayerSys : BaseSystem<World, float>
     )
     {
         using CachedList<TileColl> tileColls = CachedList<TileColl>.Create();
-        _context.tileCollSys.GetOverlap(trs.position, trs.scale * coll.radius, default, tileColls);
+        _context.tileCollSys.GetOverlap(
+            trs.position,
+            trs.scale * coll.radius,
+            _wallsLayer,
+            tileColls
+        );
 
         if (tileColls.Count == 0)
             return;
@@ -70,7 +78,7 @@ partial class PlayerSys : BaseSystem<World, float>
         switch (player.state)
         {
             case PlayerState.Idle:
-                Idle(input, modifier, ref player, ref animator, ref rigid);
+                Idle(input, modifier, ref player, ref animator, ref rigid, ref moveComp);
                 return;
 
             case PlayerState.Walk:
@@ -91,7 +99,8 @@ partial class PlayerSys : BaseSystem<World, float>
         bool modifier,
         ref PlayerComp player,
         ref AnimComp animator,
-        ref RigidComp rigid
+        ref RigidComp rigid,
+        ref CharMoveComp moveComp
     )
     {
         rigid.velocity = Vector2.Zero;

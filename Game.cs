@@ -123,7 +123,7 @@ class Game : IDisposable
                 new RigidComp { layer = enemyLayer },
                 new CollComp { radius = 0.5f },
                 new HealthComp { currentHP = 100, maxHP = 100 },
-                new DamageComp { hits = CachedList<Hit>.Create() },
+                new DamageComp { hits = CachedList<Hit>.Create(), damageFactor = 1.0f },
                 new StatusEffectComp
                 {
                     newEffects = CachedList<StatusEffect>.Create(),
@@ -140,7 +140,7 @@ class Game : IDisposable
             .Resolve<AnimAtlasManager>()
             .Get("./Resources/AnimAtlases/Entities/Player.animAtlas");
 
-        CachedList<(Weapon, Entity?)> weapons = CachedList<(Weapon, Entity?)>.Create();
+        CachedList<WeaponElem> weapons = CachedList<WeaponElem>.Create();
 
         WeaponConfig weaponConfig = new WeaponConfig
         {
@@ -158,11 +158,15 @@ class Game : IDisposable
             {
                 attacker
                     .Get<StatusEffectComp>()
-                    .newEffects.Add(new StatusEffect(StatusEffectType.Weaken, 10.0f, 3f));
+                    .newEffects.Add(new StatusEffect(StatusEffectType.Rage, 10.0f, 3.0f));
 
-                target
+                attacker
                     .Get<StatusEffectComp>()
-                    .newEffects.Add(new StatusEffect(StatusEffectType.Sensitivity, 3.0f, 3.0f));
+                    .newEffects.Add(new StatusEffect(StatusEffectType.Haste, 10.0f, 5.0f));
+                //
+                // target
+                //     .Get<StatusEffectComp>()
+                //     .newEffects.Add(new StatusEffect(StatusEffectType.Sensitivity, 3.0f, 3.0f));
             },
         };
 
@@ -181,9 +185,9 @@ class Game : IDisposable
         );
 
         Weapon weapon = new MeleeWeapon(weaponConfig, callbacks, _scope.Resolve<WorldContext>());
-        weapons.Add((weapon, swing));
+        weapons.Add(new WeaponElem(weapon, swing));
 
-        CachedList<(Shield, Entity?)> shields = CachedList<(Shield, Entity?)>.Create();
+        CachedList<ShieldElem> shields = CachedList<ShieldElem>.Create();
 
         Entity player = _world.Create<
             PlayerComp,
