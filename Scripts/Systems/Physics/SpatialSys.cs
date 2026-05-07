@@ -36,74 +36,103 @@ partial class SpatialSys : BaseSystem<World, float>
         Vector2 rayNorm = Vector2.Normalize(rayEnd - rayStart);
         rayNorm = new Vector2(-rayNorm.Y, rayNorm.X);
 
-        int minX = (int)MathF.Floor(rayStart.X);
-        int minY = (int)MathF.Floor(rayStart.Y);
-        int maxX = (int)MathF.Floor(rayEnd.X);
-        int maxY = (int)MathF.Floor(rayEnd.Y);
+        Span<(int, int)> span = stackalloc (int, int)[9];
+        RefSet<(int, int)> refSet = new RefSet<(int, int)>(span);
 
         for (int gridLevel = 0; gridLevel < MAX_LEVELS; gridLevel++)
         {
-            int xStart = (minX >> gridLevel) - 1;
-            int yStart = (minY >> gridLevel) - 1;
-            int xEnd = (maxX >> gridLevel) + 2;
-            int yEnd = (maxY >> gridLevel) + 2;
+            refSet.Reset();
+            float cellSize = 1 << gridLevel;
 
-            int cellSize = 1 << gridLevel;
-            float cellRadius = 1.22222f * cellSize;
+            Vector2 localStart = rayStart / cellSize;
+            Vector2 localEnd = rayEnd / cellSize;
 
-            for (int y = yStart; y < yEnd; y++)
+            Vector2 delta = Vector2.Normalize(localEnd - localStart);
+            Vector2 invDelta = new Vector2(
+                MathF.Abs(delta.X) > 0.00001f ? 1.0f / delta.X : 1e10f,
+                MathF.Abs(delta.Y) > 0.00001f ? 1.0f / delta.Y : 1e10f
+            );
+
+            int sx = Math.Sign(delta.X);
+            int sy = Math.Sign(delta.Y);
+
+            Vector2 pos = localStart;
+
+            int cx = sx > 0 ? (int)MathF.Floor(pos.X) : (int)MathF.Ceiling(pos.X);
+            int cy = sy > 0 ? (int)MathF.Floor(pos.Y) : (int)MathF.Ceiling(pos.Y);
+
+            Vector2 min = Vector2.Min(localStart, localEnd);
+            Vector2 max = Vector2.Max(localStart, localEnd);
+
+            for (int i = 0; i < 10_000; i++)
             {
-                for (int x = xStart; x < xEnd; x++)
+                if (Vector2.LessThanAny(pos, min) || Vector2.GreaterThanAny(pos, max))
+                    break;
+
+                int px = (int)MathF.Floor(pos.X);
+                int py = (int)MathF.Floor(pos.Y);
+
+                for (int ky = py - 1; ky < py + 2; ky++)
                 {
-                    Key key = new Key(x, y, gridLevel);
-
-                    if (!_map.TryGetValue(key, out CachedList<Entity>? list))
-                        continue;
-
-                    Vector2 cellCenter = cellSize * new Vector2(x + 0.5f, y + 0.5f);
-                    if (
-                        !GeomUtil.RayCircleIntersect(
-                            cellCenter,
-                            cellRadius,
-                            rayStart,
-                            rayEnd,
-                            rayNorm
-                        )
-                    )
+                    for (int kx = px - 1; kx < px + 2; kx++)
                     {
-                        continue;
-                    }
-
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        Entity other = list[i];
-                        if (other == entity)
+                        if (!refSet.TryAdd((kx, ky)))
                             continue;
 
-                        ref RigidComp otherRigid = ref other.Get<RigidComp>();
-                        if (layer != otherRigid.layer)
+                        Key key = new Key(kx, ky, gridLevel);
+                        if (!_map.TryGetValue(key, out CachedList<Entity>? list))
                             continue;
 
-                        Components<CollComp, TransformComp> comps = other.Get<
-                            CollComp,
-                            TransformComp
-                        >();
-                        ref CollComp otherColl = ref comps.t0;
-                        ref TransformComp otherTrs = ref comps.t1;
+                        for (int j = 0; j < list.Count; j++)
+                        {
+                            Entity other = list[j];
+                            if (other == entity)
+                                continue;
 
-                        Vector2 otherPosition = otherTrs.position;
-                        float otherRadius = otherColl.radius * otherTrs.scale;
-                        if (
-                            GeomUtil.RayCircleIntersect(
-                                otherPosition,
-                                otherRadius,
-                                rayStart,
-                                rayEnd,
-                                rayNorm
+                            ref RigidComp otherRigid = ref other.Get<RigidComp>();
+                            if (layer != otherRigid.layer)
+                                continue;
+
+                            Components<CollComp, TransformComp> comps = other.Get<
+                                CollComp,
+                                TransformComp
+                            >();
+                            ref CollComp otherColl = ref comps.t0;
+                            ref TransformComp otherTrs = ref comps.t1;
+
+                            Vector2 otherPosition = otherTrs.position;
+                            float otherRadius = otherColl.radius * otherTrs.scale;
+
+                            if (
+                                GeomUtil.RayCircleIntersect(
+                                    otherPosition,
+                                    otherRadius,
+                                    rayStart,
+                                    rayEnd,
+                                    rayNorm
+                                )
                             )
-                        )
-                            result.Add(other);
+                                result.Add(other);
+                        }
                     }
+                }
+
+                Vector2 t = new Vector2(cx + sx - pos.X, cy + sy - pos.Y) * invDelta;
+                if (MathF.Abs(t.X - t.Y) < 0.00001f)
+                {
+                    pos += t.X * delta;
+                    cx += sx;
+                    cy += sy;
+                }
+                else if (t.X < t.Y)
+                {
+                    pos += t.X * delta;
+                    cx += sx;
+                }
+                else
+                {
+                    pos += t.Y * delta;
+                    cy += sy;
                 }
             }
         }
