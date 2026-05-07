@@ -20,15 +20,8 @@ partial class WeaponSys : BaseSystem<World, float>
     )
     {
         float dts = dt * weapon.dpsFactor;
-
-        if (weapon.single != null)
-        {
-            weapon.single.Update(entity, trs.position, dts);
-            return;
-        }
-
         for (int i = 0; i < weapon.weapons.Count; i++)
-            weapon.weapons[i].Update(entity, trs.position, dts);
+            weapon.weapons[i].weapon.Update(entity, trs.position, dts);
     }
 
     [Query]

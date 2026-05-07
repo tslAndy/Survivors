@@ -180,7 +180,7 @@ endkey
 ##-----------------------SWING_A---------------------##
 
 anim Swing_A
-frametime 200
+frametime 150
 repeat true
 
 key swing_1_1
@@ -194,7 +194,7 @@ endkey
 ##-----------------------SWING_B---------------------##
 
 anim Swing_B
-frametime 200
+frametime 150
 repeat true
 
 key swing_2_1
@@ -208,7 +208,7 @@ endkey
 ##-----------------------SWING_C---------------------##
 
 anim Swing_C
-frametime 200
+frametime 150
 repeat true
 
 key swing_3_1
@@ -222,7 +222,7 @@ endkey
 ##-----------------------SWING_D---------------------##
 
 anim Swing_D
-frametime 200
+frametime 150
 repeat true
 
 key swing_4_1
@@ -236,7 +236,7 @@ endkey
 ##-----------------------SWING_E---------------------##
 
 anim Swing_E
-frametime 200
+frametime 150
 repeat true
 
 key swing_5_1

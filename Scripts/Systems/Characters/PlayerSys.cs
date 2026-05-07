@@ -102,13 +102,11 @@ partial class PlayerSys : BaseSystem<World, float>
         if (modifier)
         {
             animator.SetAnim(RunGroupHash, animator.animDir);
-            // animator.anim = animator.atlas[RunGroupHash, (int)animator.animDir];
             player.state = PlayerState.Run;
         }
         else
         {
             animator.SetAnim(WalkGroupHash, animator.animDir);
-            // animator.anim = animator.atlas[WalkGroupHash, (int)animator.animDir];
             player.state = PlayerState.Walk;
         }
     }
@@ -125,7 +123,6 @@ partial class PlayerSys : BaseSystem<World, float>
         if (input.LengthSquared() < 0.001f)
         {
             animator.SetAnim(IdleGroupHash, animator.animDir);
-            // animator.anim = animator.atlas[IdleGroupHash, (int)animator.animDir];
             player.state = PlayerState.Idle;
             return;
         }
@@ -133,7 +130,6 @@ partial class PlayerSys : BaseSystem<World, float>
         if (modifier)
         {
             animator.SetAnim(RunGroupHash, animator.animDir);
-            // animator.anim = animator.atlas[RunGroupHash, (int)animator.animDir];
             player.state = PlayerState.Run;
             return;
         }
@@ -142,11 +138,7 @@ partial class PlayerSys : BaseSystem<World, float>
 
         AnimDir animDir = input.AsAnimDir();
         if (animDir != animator.animDir)
-        {
             animator.SetAnim(WalkGroupHash, animDir);
-            // animator.animDir = animDir;
-            // animator.anim = animator.atlas[WalkGroupHash, (int)animator.animDir];
-        }
     }
 
     private void Run(
@@ -161,7 +153,6 @@ partial class PlayerSys : BaseSystem<World, float>
         if (input.LengthSquared() < 0.001f)
         {
             animator.SetAnim(IdleGroupHash, animator.animDir);
-            // animator.anim = animator.atlas[IdleGroupHash, (int)animator.animDir];
             player.state = PlayerState.Idle;
             return;
         }
@@ -169,7 +160,6 @@ partial class PlayerSys : BaseSystem<World, float>
         if (!modifier)
         {
             animator.SetAnim(WalkGroupHash, animator.animDir);
-            // animator.anim = animator.atlas[WalkGroupHash, (int)animator.animDir];
             player.state = PlayerState.Walk;
             return;
         }
@@ -178,10 +168,6 @@ partial class PlayerSys : BaseSystem<World, float>
 
         AnimDir animDir = input.AsAnimDir();
         if (animDir != animator.animDir)
-        {
             animator.SetAnim(RunGroupHash, animDir);
-            // animator.animDir = animDir;
-            // animator.anim = animator.atlas[RunGroupHash, (int)animator.animDir];
-        }
     }
 }

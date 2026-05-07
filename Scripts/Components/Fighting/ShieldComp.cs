@@ -1,3 +1,4 @@
+using Arch.Core;
 using Utils;
 using Weapons;
 
@@ -5,13 +6,6 @@ namespace Components.Fighting;
 
 struct ShieldComp
 {
-    public CachedList<Shield> shields;
-    public Shield single;
-
+    public CachedList<(Shield shield, Entity? ent)> shields;
     public float dpsFactor;
 }
-
-/*
- * Если игрок, то список содержит много компонентов
- * Если враг, то список пустой и только одно оружие
- * */

@@ -1,3 +1,4 @@
+using Arch.Core;
 using Utils;
 using Weapons;
 
@@ -5,11 +6,6 @@ namespace Components.Fighting;
 
 struct WeaponComp
 {
-    public CachedList<Weapon> weapons;
-    public Weapon single;
+    public CachedList<(Weapon weapon, Entity? ent)> weapons;
     public float dpsFactor;
 }
-/*
- * Если игрок, то список содержит много компонентов
- * Если враг, то список пустой и только одно оружие
- * */

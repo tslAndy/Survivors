@@ -110,6 +110,7 @@ class Game : IDisposable
                     atlas = goblinAtlas,
                     anim = goblinAtlas["Idle_Down"],
                     animDir = AnimDir.Down,
+                    timeScale = 1.0f,
                 },
                 new TransformComp
                 {
@@ -139,14 +140,14 @@ class Game : IDisposable
             .Resolve<AnimAtlasManager>()
             .Get("./Resources/AnimAtlases/Entities/Player.animAtlas");
 
-        CachedList<Weapon> weapons = CachedList<Weapon>.Create();
+        CachedList<(Weapon, Entity?)> weapons = CachedList<(Weapon, Entity?)>.Create();
 
         WeaponConfig weaponConfig = new WeaponConfig
         {
             baseDamage = 10,
             critDamage = 10,
             critChance = 30,
-            attackTime = 1.0f,
+            attackTime = 0.75f,
             detectRadius = 4.0f,
             targetLayer = _scope.Resolve<LayerMap>()["EnemyEnts"],
         };
@@ -155,9 +156,9 @@ class Game : IDisposable
         {
             onBaseDamage = (attacker, target, ref damage) =>
             {
-                // attacker
-                //     .Get<StatusEffectComp>()
-                //     .newEffects.Add(new StatusEffect(StatusEffectType.Haste, 10.0f, 5f));
+                attacker
+                    .Get<StatusEffectComp>()
+                    .newEffects.Add(new StatusEffect(StatusEffectType.Weaken, 10.0f, 3f));
 
                 target
                     .Get<StatusEffectComp>()
@@ -165,9 +166,19 @@ class Game : IDisposable
             },
         };
 
-        weapons.Add(new MeleeWeapon(weaponConfig, callbacks, _scope.Resolve<WorldContext>()));
+        AnimAtlas swingAtlas = _scope
+            .Resolve<AnimAtlasManager>()
+            .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas");
+        Entity swing = _world.Create<TransformComp, SpriteComp, AnimComp>(
+            new TransformComp(),
+            new SpriteComp { drawOrder = 2 },
+            new AnimComp { anim = swingAtlas["Swing_A"], atlas = swingAtlas }
+        );
 
-        CachedList<Shield> shields = CachedList<Shield>.Create();
+        Weapon weapon = new MeleeWeapon(weaponConfig, callbacks, _scope.Resolve<WorldContext>());
+        weapons.Add((weapon, swing));
+
+        CachedList<(Shield, Entity?)> shields = CachedList<(Shield, Entity?)>.Create();
 
         Entity player = _world.Create<
             PlayerComp,
@@ -192,6 +203,7 @@ class Game : IDisposable
                 atlas = playerAnimAtlas,
                 anim = playerAnimAtlas["Idle_Up"],
                 animDir = AnimDir.Up,
+                timeScale = 1.0f,
             },
             new TransformComp { position = new Vector2(15.0f, 10.0f), scale = 1.0f },
             new RigidComp { layer = _scope.Resolve<LayerMap>()["PlayerEnts"] },
@@ -212,15 +224,6 @@ class Game : IDisposable
                 incomeFactor = 1.0f,
                 radiusFactor = 1.0f,
             }
-        );
-
-        AnimAtlas swingAtlas = _scope
-            .Resolve<AnimAtlasManager>()
-            .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas");
-        Entity swing = _world.Create<TransformComp, SpriteComp, AnimComp>(
-            new TransformComp(),
-            new SpriteComp { drawOrder = 2 },
-            new AnimComp { anim = swingAtlas["Swing_A"], atlas = swingAtlas }
         );
 
         player.AddRelationship<TrsOwn>(swing);

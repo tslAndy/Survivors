@@ -32,8 +32,6 @@ class SystemsModule : Module
                     // health
                     x.Resolve<HealthSys>(),
                     x.Resolve<DeathSys>(),
-                    // other
-                    x.Resolve<TrsOwningSys>(),
                     //physics
                     x.Resolve<SpatialSys>(),
                     x.Resolve<TileCollSys>(),
@@ -48,6 +46,8 @@ class SystemsModule : Module
                     // loot
                     x.Resolve<DropSys>(),
                     x.Resolve<LootCollectSys>(),
+                    // other
+                    x.Resolve<TrsOwningSys>(),
                     // audio and drawing
                     x.Resolve<AnimSys>(),
                     x.Resolve<TilemapDrawSys>(),

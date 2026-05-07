@@ -21,15 +21,8 @@ partial class ShieldSys : BaseSystem<World, float>
     )
     {
         float dts = dt * shield.dpsFactor;
-
-        if (shield.single != null)
-        {
-            shield.single.Update(entity, ref damage, ref effects, trs.position, dts);
-            return;
-        }
-
         for (int i = 0; i < shield.shields.Count; i++)
-            shield.shields[i].Update(entity, ref damage, ref effects, trs.position, dts);
+            shield.shields[i].shield.Update(entity, ref damage, ref effects, trs.position, dts);
     }
 
     [Query]

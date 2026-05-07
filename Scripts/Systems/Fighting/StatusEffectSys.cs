@@ -126,6 +126,10 @@ class StatusEffectHandler
             case StatusEffectType.Rage:
                 entity.Get<WeaponComp>().dpsFactor = effect.val;
                 entity.Get<ShieldComp>().dpsFactor = effect.val;
+
+                ref WeaponComp weapon = ref entity.Get<WeaponComp>();
+                weapon.dpsFactor = effect.val;
+
                 break;
 
             case StatusEffectType.Haste:
