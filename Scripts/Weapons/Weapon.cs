@@ -28,7 +28,7 @@ struct WeaponCallbacks
         onCritDamage;
 }
 
-abstract class Weapon
+class Weapon : IWeapon
 {
     private float _time;
     public float time => _time;
@@ -37,7 +37,7 @@ abstract class Weapon
     protected readonly WeaponCallbacks callbacks;
     protected readonly WorldContext context;
 
-    protected Weapon(WeaponConfig config, WeaponCallbacks callbacks, WorldContext context)
+    public Weapon(WeaponConfig config, WeaponCallbacks callbacks, WorldContext context)
     {
         this.config = config;
         this.callbacks = callbacks;

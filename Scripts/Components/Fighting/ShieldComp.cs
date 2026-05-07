@@ -1,6 +1,6 @@
+using System.Numerics;
 using Arch.Core;
 using Utils;
-using Weapons;
 
 namespace Components.Fighting;
 
@@ -10,12 +10,23 @@ struct ShieldComp
     public float dpsFactor;
 }
 
+interface IShield
+{
+    void Update(
+        Entity entity,
+        ref DamageComp damage,
+        ref StatusEffectComp effects,
+        Vector2 position,
+        float dt
+    );
+}
+
 struct ShieldElem
 {
-    public Shield shield;
+    public IShield shield;
     public Entity? entity;
 
-    public ShieldElem(Shield shield, Entity? entity)
+    public ShieldElem(IShield shield, Entity? entity)
     {
         this.shield = shield;
         this.entity = entity;

@@ -1,6 +1,6 @@
+using System.Numerics;
 using Arch.Core;
 using Utils;
-using Weapons;
 
 namespace Components.Fighting;
 
@@ -10,12 +10,17 @@ struct WeaponComp
     public float dpsFactor;
 }
 
+interface IWeapon
+{
+    void Update(Entity entity, Vector2 position, float dt);
+}
+
 struct WeaponElem
 {
-    public Weapon weapon;
+    public IWeapon weapon;
     public Entity? entity;
 
-    public WeaponElem(Weapon weapon, Entity? entity)
+    public WeaponElem(IWeapon weapon, Entity? entity)
     {
         this.weapon = weapon;
         this.entity = entity;

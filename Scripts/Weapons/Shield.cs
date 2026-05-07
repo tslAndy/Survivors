@@ -14,7 +14,7 @@ struct ShieldCallbacks
     public delegate void EffectCallback(Entity entity, ref StatusEffect effect);
 }
 
-class Shield
+class Shield : IShield
 {
     protected readonly ShieldCallbacks callbacks;
     protected readonly WorldContext context;
