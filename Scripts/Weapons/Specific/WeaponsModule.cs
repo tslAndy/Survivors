@@ -4,15 +4,51 @@ using Components.Basic;
 using Components.Fighting;
 using Engine.Animations;
 using Engine.Common;
+using Engine.Sprites;
 using Systems;
-using Weapons.Specific;
 
-namespace Weapons;
+namespace Weapons.Specific;
 
 class WeaponsModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
+        builder
+            .Register<WeaponElem>(x =>
+            {
+                WeaponConfig config = new WeaponConfig
+                {
+                    baseDamage = 20,
+                    critDamage = 50,
+                    critChance = 30,
+                    attackTime = 0.5f,
+                    detectRadius = 8.0f,
+                    targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                };
+
+                BulletConfig bulletConfig = new BulletConfig
+                {
+                    sprite = x.Resolve<SpriteAtlasManager>()
+                        .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")["arrow_1"],
+                    velocity = 8.0f,
+                    radius = 0.25f,
+                    bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
+                    drawOrder = 2,
+                };
+
+                WeaponCallbacks callbacks = new WeaponCallbacks { };
+
+                IWeapon weapon = new Bow(
+                    bulletConfig,
+                    config,
+                    callbacks,
+                    x.Resolve<WorldContext>()
+                );
+                return new WeaponElem(weapon, null);
+            })
+            .Named<WeaponElem>("simpleBow")
+            .InstancePerLifetimeScope();
+
         builder
             .Register<WeaponElem>(x =>
             {
@@ -43,7 +79,7 @@ class WeaponsModule : Module
                         }
                     );
 
-                Weapon weapon = new MeleeWeapon(config, callbacks, x.Resolve<WorldContext>());
+                IWeapon weapon = new MeleeWeapon(config, callbacks, x.Resolve<WorldContext>());
                 return new WeaponElem(weapon, swing);
             })
             .Named<WeaponElem>("simpleSword")

@@ -40,6 +40,7 @@ class SystemsModule : Module
                     x.Resolve<EnemySys>(),
                     x.Resolve<PlayerSys>(),
                     // fighting
+                    x.Resolve<BulletWeaponSys>(),
                     x.Resolve<WeaponSys>(),
                     x.Resolve<ShieldSys>(),
                     x.Resolve<StatusEffectSys>(),

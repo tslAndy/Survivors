@@ -2,7 +2,7 @@ spriteAtlas ./Resources/SpriteAtlases/Items/BattleEffects.spriteAtlas
 
 ##-----------------------CAST_A---------------------##
 
-anim Cast_A
+anim Cast_1
 frametime 200
 repeat true
 
@@ -27,7 +27,7 @@ endkey
 
 ##-----------------------CAST_B---------------------##
 
-anim Cast_B
+anim Cast_2
 frametime 200
 repeat true
 
@@ -52,7 +52,7 @@ endkey
 
 ##-----------------------CAST_C---------------------##
 
-anim Cast_C
+anim Cast_3
 frametime 200
 repeat true
 
@@ -77,7 +77,7 @@ endkey
 
 ##-----------------------CAST_D---------------------##
 
-anim Cast_D
+anim Cast_4
 frametime 200
 repeat true
 
@@ -102,7 +102,7 @@ endkey
 
 ##-----------------------CAST_E---------------------##
 
-anim Cast_E 
+anim Cast_5 
 frametime 200
 repeat true
 
@@ -127,7 +127,7 @@ endkey
 
 ##-----------------------SHIELD_A---------------------##
 
-anim Shield_A
+anim Shield_1
 frametime 200
 repeat true
 
@@ -140,7 +140,7 @@ endkey
 
 ##-----------------------SHIELD_B---------------------##
 
-anim Shield_B
+anim Shield_2
 frametime 200
 repeat true
 
@@ -153,7 +153,7 @@ endkey
 
 ##-----------------------SHIELD_C---------------------##
 
-anim Shield_C
+anim Shield_3
 frametime 200
 repeat true
 
@@ -166,7 +166,7 @@ endkey
 
 ##-----------------------SHIELD_D---------------------##
 
-anim Shield_D
+anim Shield_4
 frametime 200
 repeat true
 
@@ -179,7 +179,7 @@ endkey
 
 ##-----------------------SWING_A---------------------##
 
-anim Swing_A
+anim Swing_1
 frametime 150
 repeat true
 
@@ -193,7 +193,7 @@ endkey
 
 ##-----------------------SWING_B---------------------##
 
-anim Swing_B
+anim Swing_2
 frametime 150
 repeat true
 
@@ -207,7 +207,7 @@ endkey
 
 ##-----------------------SWING_C---------------------##
 
-anim Swing_C
+anim Swing_3
 frametime 150
 repeat true
 
@@ -221,7 +221,7 @@ endkey
 
 ##-----------------------SWING_D---------------------##
 
-anim Swing_D
+anim Swing_4
 frametime 150
 repeat true
 
@@ -235,7 +235,7 @@ endkey
 
 ##-----------------------SWING_E---------------------##
 
-anim Swing_E
+anim Swing_5
 frametime 150
 repeat true
 
@@ -250,7 +250,7 @@ endkey
 
 ##-----------------------FIREBALL_A---------------------##
 
-anim Fireball_A
+anim Fireball_1
 frametime 200
 repeat true
 
@@ -275,7 +275,7 @@ endkey
 
 ##-----------------------FIREBALL_B---------------------##
 
-anim Fireball_B
+anim Fireball_2
 frametime 200
 repeat true
 
@@ -300,7 +300,7 @@ endkey
 
 ##-----------------------FIREBALL_C---------------------##
 
-anim Fireball_C
+anim Fireball_3
 frametime 200
 repeat true
 
@@ -325,7 +325,7 @@ endkey
 
 ##-----------------------FIREBALL_D---------------------##
 
-anim Fireball_D
+anim Fireball_4
 frametime 200
 repeat true
 
@@ -349,7 +349,7 @@ endkey
 
 ##-----------------------FIREBALL_E---------------------##
 
-anim Fireball_E
+anim Fireball_5
 frametime 200
 repeat true
 
@@ -373,7 +373,7 @@ endkey
 
 ##-----------------------FIREBALL_F---------------------##
 
-anim Fireball_F
+anim Fireball_6
 frametime 200
 repeat true
 
@@ -397,7 +397,7 @@ endkey
 
 ##-----------------------FIREBALL_G---------------------##
 
-anim Fireball_G
+anim Fireball_7
 frametime 200
 repeat true
 
@@ -421,7 +421,7 @@ endkey
 
 ##-----------------------FIREBALL_H---------------------##
 
-anim Fireball_H
+anim Fireball_8
 frametime 200
 repeat true
 
@@ -445,7 +445,7 @@ endkey
 
 ##-----------------------FIREBALL_I---------------------##
 
-anim Fireball_I
+anim Fireball_9
 frametime 200
 repeat true
 
@@ -469,7 +469,7 @@ endkey
 
 ##-----------------------FIREBALL_J---------------------##
 
-anim Fireball_J
+anim Fireball_10
 frametime 200
 repeat true
 
@@ -493,7 +493,7 @@ endkey
 
 ##-----------------------EXPOSION_A---------------------##
 
-anim Explosion_A
+anim Explosion_1
 frametime 200
 repeat false
 
@@ -509,7 +509,7 @@ endkey
 
 ##-----------------------EXPOSION_B---------------------##
 
-anim Explosion_B
+anim Explosion_2
 frametime 200
 repeat false
 
@@ -532,7 +532,7 @@ endkey
 
 ##-----------------------EXPOSION_C---------------------##
 
-anim Explosion_C
+anim Explosion_3
 frametime 200
 repeat false
 
@@ -551,7 +551,7 @@ endkey
 
 ##-----------------------EXPOSION_D---------------------##
 
-anim Explosion_D
+anim Explosion_4
 frametime 200
 repeat false
 
@@ -569,7 +569,7 @@ endkey
 
 ##-----------------------EXPOSION_E---------------------##
 
-anim Explosion_E
+anim Explosion_5
 frametime 200
 repeat false
 
@@ -594,7 +594,7 @@ endkey
 
 ##-----------------------EXPOSION_F---------------------##
 
-anim Explosion_F
+anim Explosion_6
 frametime 200
 repeat false
 

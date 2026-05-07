@@ -19,6 +19,7 @@ using Systems;
 using Systems.Characters;
 using Utils;
 using Weapons;
+using Weapons.Specific;
 
 class Game : IDisposable
 {
@@ -46,7 +47,7 @@ class Game : IDisposable
         LoadTilemaps();
 
         _scope.ResolveNamed<Entity>("player");
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 500; i++)
             _scope.ResolveNamed<Entity>("goblin");
     }
 
@@ -142,7 +143,7 @@ class EntitiesModule : Module
                         }
                     );
 
-                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleSword");
+                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleBow");
                 weapons.Add(weaponElem);
                 if (weaponElem.entity != null)
                     player.AddRelationship<TrsOwn>(weaponElem.entity.Value);
