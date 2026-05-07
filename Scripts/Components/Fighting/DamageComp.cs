@@ -17,7 +17,6 @@ struct Hit
 
     // if direct damage from entity
     public Entity? source;
-    public bool isCrit;
 
     // if damage from status effect
     public StatusEffectType effectType;
@@ -26,12 +25,12 @@ struct Hit
     {
         this.source = source;
         this.damage = damage;
-        this.isCrit = isCrit;
+        this.effectType = default;
     }
 
     public Hit(int damage, StatusEffectType effectType)
     {
-        this.source = null;
+        this.source = default;
         this.damage = damage;
         this.effectType = effectType;
     }

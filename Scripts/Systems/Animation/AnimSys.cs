@@ -25,7 +25,7 @@ partial class AnimSys : BaseSystem<World, float>
         if (animator.time == default)
             ChangeKey(anim.keys[0], ref spriteComp);
 
-        animator.time += dt;
+        animator.time += dt * animator.timeScale;
         if (animator.time < anim.frameTime)
             return;
 

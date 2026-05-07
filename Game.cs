@@ -172,7 +172,12 @@ class Game : IDisposable
         Entity swing = _world.Create<TransformComp, SpriteComp, AnimComp>(
             new TransformComp(),
             new SpriteComp { drawOrder = 2 },
-            new AnimComp { anim = swingAtlas["Swing_A"], atlas = swingAtlas }
+            new AnimComp
+            {
+                anim = swingAtlas["Swing_A"],
+                atlas = swingAtlas,
+                timeScale = 1.0f,
+            }
         );
 
         Weapon weapon = new MeleeWeapon(weaponConfig, callbacks, _scope.Resolve<WorldContext>());
