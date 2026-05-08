@@ -29,13 +29,14 @@ partial class StatusEffectSys : BaseSystem<World, float>
             if (index < 0)
             {
                 effects.runningEffects.Add(newEff);
-                _effectHandler.OnEffectAdd(entity, ref newEff);
+                _effectHandler.AddEffect(entity, ref newEff);
                 continue;
             }
 
             ref StatusEffect oldEff = ref effects.runningEffects[index];
-            _effectHandler.CombineEffects(ref oldEff, ref newEff);
-            _effectHandler.OnEffectAdd(entity, ref oldEff);
+
+            float oldVal = oldEff.val;
+            _effectHandler.CombineEffects(entity, ref oldEff, ref newEff);
         }
 
         effects.newEffects.Reset();
@@ -72,7 +73,7 @@ partial class StatusEffectSys : BaseSystem<World, float>
             if (effect.duration < 0.0f)
             {
                 effects.runningEffects.SwapRemove(i);
-                _effectHandler.OnEffectRemove(entity, ref effect);
+                _effectHandler.RemoveEffect(entity, ref effect);
             }
             else
             {
@@ -86,8 +87,6 @@ partial class StatusEffectSys : BaseSystem<World, float>
     {
         if (!death.isDead)
             return;
-
-        Console.WriteLine("disposing");
 
         effects.newEffects.Dispose();
         effects.runningEffects.Dispose();

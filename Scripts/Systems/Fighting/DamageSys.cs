@@ -39,7 +39,7 @@ partial class DamageSys : BaseSystem<World, float>
         }
 
         int floored = (int)MathF.Floor(total);
-        if (total != 0)
+        if (floored != 0)
         {
             health.currentHP -= floored;
             DamageNumSpawner.Spawn(World, trs.position, floored);

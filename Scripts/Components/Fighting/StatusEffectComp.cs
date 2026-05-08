@@ -38,7 +38,6 @@ enum StatusEffectType : byte
     // defense
     Armor,
     Delicacy,
-    Curse,
 
     // attack
     Rage,
@@ -69,7 +68,6 @@ enum LongStatEffType : long
     // defense
     Armor = 1 << StatusEffectType.Armor,
     Delicacy = 1 << StatusEffectType.Delicacy,
-    Curse = 1 << StatusEffectType.Curse,
 
     // attack
     Rage = 1 << StatusEffectType.Rage,
