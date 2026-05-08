@@ -3,17 +3,20 @@ using Arch.Core;
 using Arch.System;
 using Components.Basic;
 using Components.Other;
+using Systems.Basic;
 
 namespace Systems.Fighting;
 
 partial class DeathSys : BaseSystem<World, float>
 {
     private readonly CommandBuffer _commandBuffer;
+    private readonly LocalTrsSys _localTrsSys;
 
-    public DeathSys(World world, CommandBuffer commandBuffer)
+    public DeathSys(World world, CommandBuffer commandBuffer, LocalTrsSys localTrsSys)
         : base(world)
     {
         _commandBuffer = commandBuffer;
+        _localTrsSys = localTrsSys;
     }
 
     [Query]
@@ -23,6 +26,7 @@ partial class DeathSys : BaseSystem<World, float>
             return;
 
         death.isDead = true;
+        _localTrsSys.DestroyDescendents(entity);
         _commandBuffer.Destroy(entity);
     }
 
@@ -30,7 +34,10 @@ partial class DeathSys : BaseSystem<World, float>
     private void UpdateTimer([Data] in float dt, Entity entity, ref TimerDestroyComp timerDestroy)
     {
         timerDestroy.time -= dt;
-        if (timerDestroy.time < 0.0f)
-            _commandBuffer.Destroy(entity);
+        if (timerDestroy.time > 0.0f)
+            return;
+
+        _localTrsSys.DestroyDescendents(entity);
+        _commandBuffer.Destroy(entity);
     }
 }

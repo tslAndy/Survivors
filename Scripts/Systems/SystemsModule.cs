@@ -29,6 +29,8 @@ class SystemsModule : Module
             {
                 Group<float> systems = new Group<float>(
                     "Base Systems",
+                    // basic
+                    x.Resolve<LocalTrsSys>(),
                     // health
                     x.Resolve<HealthSys>(),
                     x.Resolve<DeathSys>(),
