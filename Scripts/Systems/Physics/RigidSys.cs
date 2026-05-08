@@ -12,7 +12,7 @@ partial class RigidSys : BaseSystem<World, float>
 
     [Query]
     [None(typeof(DeathComp))]
-    private void Move([Data] in float dt, ref TransformComp trs, in RigidComp rigid)
+    private void Move([Data] in float dt, ref TrsComp trs, in RigidComp rigid)
     {
         trs.position += rigid.velocity * dt;
     }

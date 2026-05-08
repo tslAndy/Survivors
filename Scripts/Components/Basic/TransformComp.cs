@@ -2,11 +2,9 @@ using System.Numerics;
 
 namespace Components.Basic;
 
-struct TransformComp
+struct TrsComp
 {
     public Vector2 position;
     public float rotation,
         scale;
 }
-
-struct TrsOwn { }

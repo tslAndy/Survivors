@@ -20,7 +20,7 @@ partial class TextDrawSys : BaseSystem<World, float>
     }
 
     [Query]
-    private void DrawText(in TextComp text, in TransformComp trs)
+    private void DrawText(in TextComp text, in TrsComp trs)
     {
         float fontSize = text.fontSize * trs.scale * _cam.pixelsPerUnit;
         Vector2 size =

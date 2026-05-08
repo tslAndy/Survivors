@@ -38,14 +38,14 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
     public abstract void UpdateBullet(
         Entity owner,
         Entity bullet,
-        ref TransformComp trs,
+        ref TrsComp trs,
         ref RigidComp rigid,
         ref CollComp coll
     );
 
     protected void InstantiateBullet(Entity owner, Vector2 position, Vector2 direction)
     {
-        TransformComp trs = new TransformComp
+        TrsComp trs = new TrsComp
         {
             position = position,
             rotation = Single.RadiansToDegrees(MathF.Atan2(direction.Y, direction.X)),
@@ -63,7 +63,7 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
         else if (bulletConfig.anim != null)
             anim.anim = bulletConfig.anim;
 
-        context.world.Create<AnimComp, SpriteComp, TransformComp, RigidComp, CollComp, BulletComp>(
+        context.world.Create<AnimComp, SpriteComp, TrsComp, RigidComp, CollComp, BulletComp>(
             anim,
             sprite,
             trs,

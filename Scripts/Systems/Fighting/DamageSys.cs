@@ -25,7 +25,7 @@ partial class DamageSys : BaseSystem<World, float>
     private void UpdateDamage(
         Entity entity,
         in DamageComp damage,
-        in TransformComp trs,
+        in TrsComp trs,
         ref HealthComp health
     )
     {
@@ -76,14 +76,14 @@ static class DamageNumSpawner
         float randOffset = (Random.Shared.NextSingle() - 0.5f) * 0.8f; // -0.4f +0.4f
         position += new Vector2(randOffset, randOffset);
 
-        world.Create<TextComp, TransformComp, RigidComp, TimerDestroyComp>(
+        world.Create<TextComp, TrsComp, RigidComp, TimerDestroyComp>(
             new TextComp
             {
                 text = numStr,
                 fontSize = BASE_FONT_SIZE,
                 color = positive ? Color.Red : Color.Green,
             },
-            new TransformComp { position = position, scale = 1.0f },
+            new TrsComp { position = position, scale = 1.0f },
             new RigidComp { velocity = new Vector2(0.0f, -1.0f) },
             new TimerDestroyComp { time = 1.0f }
         );

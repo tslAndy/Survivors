@@ -27,7 +27,7 @@ partial class LootCollectSys : BaseSystem<World, float>
         [Data] in float dt,
         Entity entity,
         ref LootCollComp lootColl,
-        ref TransformComp trs
+        ref TrsComp trs
     )
     {
         using CachedList<Entity> overlap = CachedList<Entity>.Create();
@@ -43,7 +43,7 @@ partial class LootCollectSys : BaseSystem<World, float>
         for (int i = 0; i < overlap.Count; i++)
         {
             Entity targ = overlap[i];
-            ref TransformComp targTrs = ref targ.Get<TransformComp>();
+            ref TrsComp targTrs = ref targ.Get<TrsComp>();
             if (Vector2.DistanceSquared(trs.position, targTrs.position) > 0.0001f)
             {
                 targTrs.position +=

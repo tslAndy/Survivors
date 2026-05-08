@@ -15,7 +15,7 @@ partial class ShieldSys : BaseSystem<World, float>
         [Data] in float dt,
         Entity entity,
         ref ShieldComp shield,
-        ref TransformComp trs,
+        ref TrsComp trs,
         ref DamageComp damage,
         ref StatusEffectComp effects
     )

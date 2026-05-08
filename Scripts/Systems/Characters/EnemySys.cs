@@ -18,7 +18,7 @@ partial class EnemySys : BaseSystem<World, float>
     private void UpdateEnemy(
         Entity entity,
         ref EnemyComp enemy,
-        ref TransformComp trs,
+        ref TrsComp trs,
         ref RigidComp rigid,
         ref MoveComp moveComp
     )
@@ -54,7 +54,7 @@ abstract class EnemyBehaviour : IEnemyBehaviour
     public abstract void Update(
         Entity entity,
         ref EnemyComp enemy,
-        ref TransformComp trs,
+        ref TrsComp trs,
         ref RigidComp rigid,
         ref MoveComp moveComp
     );
@@ -68,12 +68,12 @@ class GoblinBehaviour : EnemyBehaviour
     public override void Update(
         Entity entity,
         ref EnemyComp enemy,
-        ref TransformComp trs,
+        ref TrsComp trs,
         ref RigidComp rigid,
         ref MoveComp moveComp
     )
     {
-        Vector2 pos = player.Get<TransformComp>().position;
+        Vector2 pos = player.Get<TrsComp>().position;
         rigid.velocity =
             moveComp.speedFactor * moveComp.maxSpeed * Vector2.Normalize(pos - trs.position);
     }

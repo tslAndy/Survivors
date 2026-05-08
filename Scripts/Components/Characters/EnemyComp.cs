@@ -15,7 +15,7 @@ interface IEnemyBehaviour
     void Update(
         Entity entity,
         ref EnemyComp enemy,
-        ref TransformComp trs,
+        ref TrsComp trs,
         ref RigidComp rigid,
         ref MoveComp moveComp
     );

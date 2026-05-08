@@ -15,7 +15,7 @@ partial class BulletWeaponSys : BaseSystem<World, float>
     private void UpdateBullet(
         Entity entity,
         in BulletComp bullet,
-        ref TransformComp trs,
+        ref TrsComp trs,
         ref RigidComp rigid,
         ref CollComp coll
     )

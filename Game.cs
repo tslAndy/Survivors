@@ -1,7 +1,6 @@
 using System.Numerics;
 using Arch.Buffer;
 using Arch.Core;
-using Arch.Relationships;
 using Arch.System;
 using Autofac;
 using Components.Basic;
@@ -18,7 +17,6 @@ using Raylib_cs;
 using Systems;
 using Systems.Characters;
 using Utils;
-using Weapons;
 using Weapons.Specific;
 
 class Game : IDisposable
@@ -103,7 +101,7 @@ class EntitiesModule : Module
                         MoveComp,
                         SpriteComp,
                         AnimComp,
-                        TransformComp,
+                        TrsComp,
                         RigidComp,
                         CollComp,
                         ShieldComp,
@@ -123,7 +121,7 @@ class EntitiesModule : Module
                             animDir = AnimDir.Up,
                             timeScale = 1.0f,
                         },
-                        new TransformComp { position = new Vector2(15.0f, 10.0f), scale = 1.0f },
+                        new TrsComp { position = new Vector2(15.0f, 10.0f), scale = 1.0f },
                         new RigidComp { layer = x.Resolve<LayerMap>()["PlayerEnts"] },
                         new CollComp { radius = 0.5f },
                         new ShieldComp { shields = shields, dpsFactor = 1.0f },
@@ -144,10 +142,10 @@ class EntitiesModule : Module
                         }
                     );
 
-                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleSword");
-                weapons.Add(weaponElem);
-                if (weaponElem.entity != null)
-                    player.AddRelationship<TrsOwn>(weaponElem.entity.Value);
+                // WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleSword");
+                // weapons.Add(weaponElem);
+                // if (weaponElem.entity != null)
+                //     player.AddRelationship<TrsOwn>(weaponElem.entity.Value);
 
                 return player;
             })
@@ -166,7 +164,7 @@ class EntitiesModule : Module
                         MoveComp,
                         SpriteComp,
                         AnimComp,
-                        TransformComp,
+                        TrsComp,
                         RigidComp,
                         CollComp,
                         HealthComp,
@@ -184,7 +182,7 @@ class EntitiesModule : Module
                             animDir = AnimDir.Down,
                             timeScale = 1.0f,
                         },
-                        new TransformComp
+                        new TrsComp
                         {
                             position = new Vector2(
                                 2.0f + Random.Shared.NextSingle() * 26.0f,

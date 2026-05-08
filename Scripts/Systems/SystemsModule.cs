@@ -48,8 +48,6 @@ class SystemsModule : Module
                     // loot
                     x.Resolve<DropSys>(),
                     x.Resolve<LootCollectSys>(),
-                    // other
-                    x.Resolve<TrsOwningSys>(),
                     // audio and drawing
                     x.Resolve<AnimSys>(),
                     x.Resolve<TilemapDrawSys>(),

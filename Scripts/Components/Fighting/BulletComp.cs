@@ -15,7 +15,7 @@ interface IBulletWeapon
     void UpdateBullet(
         Entity owner,
         Entity bullet,
-        ref TransformComp trs,
+        ref TrsComp trs,
         ref RigidComp rigid,
         ref CollComp coll
     );

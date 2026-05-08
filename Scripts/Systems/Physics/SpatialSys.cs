@@ -93,12 +93,9 @@ partial class SpatialSys : BaseSystem<World, float>
                             if (layer != otherRigid.layer)
                                 continue;
 
-                            Components<CollComp, TransformComp> comps = other.Get<
-                                CollComp,
-                                TransformComp
-                            >();
+                            Components<CollComp, TrsComp> comps = other.Get<CollComp, TrsComp>();
                             ref CollComp otherColl = ref comps.t0;
-                            ref TransformComp otherTrs = ref comps.t1;
+                            ref TrsComp otherTrs = ref comps.t1;
 
                             Vector2 otherPosition = otherTrs.position;
                             float otherRadius = otherColl.radius * otherTrs.scale;
@@ -177,12 +174,9 @@ partial class SpatialSys : BaseSystem<World, float>
                         if (layer != otherRigid.layer)
                             continue;
 
-                        Components<CollComp, TransformComp> comps = other.Get<
-                            CollComp,
-                            TransformComp
-                        >();
+                        Components<CollComp, TrsComp> comps = other.Get<CollComp, TrsComp>();
                         ref CollComp otherColl = ref comps.t0;
-                        ref TransformComp otherTrs = ref comps.t1;
+                        ref TrsComp otherTrs = ref comps.t1;
 
                         Vector2 otherPosition = otherTrs.position;
                         float otherRadius = otherColl.radius * otherTrs.scale;
@@ -210,7 +204,7 @@ partial class SpatialSys : BaseSystem<World, float>
 
     [Query]
     [None(typeof(DeathComp))]
-    private void Fill(in Entity entity, in CollComp coll, in TransformComp trs)
+    private void Fill(in Entity entity, in CollComp coll, in TrsComp trs)
     {
         Vector2 position = trs.position;
         float radius = coll.radius * trs.scale;

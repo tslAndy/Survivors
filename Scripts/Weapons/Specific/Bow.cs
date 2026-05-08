@@ -32,7 +32,7 @@ class Bow : BulletWeapon, IBulletWeapon
         );
         for (int i = 0; i < overlap.Count; i++)
         {
-            Vector2 enemyPos = overlap[i].Get<TransformComp>().position;
+            Vector2 enemyPos = overlap[i].Get<TrsComp>().position;
             InstantiateBullet(entity, position, Vector2.Normalize(enemyPos - position));
         }
     }
@@ -40,7 +40,7 @@ class Bow : BulletWeapon, IBulletWeapon
     public override void UpdateBullet(
         Entity entity,
         Entity bullet,
-        ref TransformComp trs,
+        ref TrsComp trs,
         ref RigidComp rigid,
         ref CollComp coll
     )

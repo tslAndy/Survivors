@@ -36,7 +36,7 @@ partial class PlayerSys : BaseSystem<World, float>
     [Query]
     private void UpdateCollisions(
         ref PlayerComp player,
-        ref TransformComp trs,
+        ref TrsComp trs,
         in CollComp coll,
         ref RigidComp rigid
     )

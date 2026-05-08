@@ -15,7 +15,7 @@ partial class WeaponSys : BaseSystem<World, float>
     private void UpdateWeapon(
         [Data] in float dt,
         Entity entity,
-        in TransformComp trs,
+        in TrsComp trs,
         ref WeaponComp weapon
     )
     {

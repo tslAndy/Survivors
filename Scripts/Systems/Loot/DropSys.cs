@@ -28,7 +28,7 @@ partial class DropSys : BaseSystem<World, float>
     }
 
     [Query]
-    private void UpdateDrop(in DeathComp death, in DropComp drop, in TransformComp trs)
+    private void UpdateDrop(in DeathComp death, in DropComp drop, in TrsComp trs)
     {
         if (!death.isDead)
             return;
@@ -62,8 +62,8 @@ partial class DropSys : BaseSystem<World, float>
             Random.Shared.NextSingle() - 0.5f
         );
 
-        World.Create<TransformComp, RigidComp, CollComp, SpriteComp, LootComp, TimerDestroyComp>(
-            new TransformComp { position = position + offset, scale = 0.5f },
+        World.Create<TrsComp, RigidComp, CollComp, SpriteComp, LootComp, TimerDestroyComp>(
+            new TrsComp { position = position + offset, scale = 0.5f },
             new RigidComp { layer = _lootLayer },
             new CollComp { radius = 1.0f },
             new SpriteComp

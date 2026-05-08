@@ -68,8 +68,8 @@ class WeaponsModule : Module
                     .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas");
 
                 Entity swing = x.Resolve<World>()
-                    .Create<TransformComp, SpriteComp, AnimComp>(
-                        new TransformComp { scale = 1.0f },
+                    .Create<TrsComp, SpriteComp, AnimComp>(
+                        new TrsComp { scale = 1.0f },
                         new SpriteComp { drawOrder = 2 },
                         new AnimComp
                         {
