@@ -46,8 +46,8 @@ class Game : IDisposable
         LoadTilemaps();
 
         _scope.ResolveNamed<Entity>("player");
-        for (int i = 0; i < 500; i++)
-            _scope.ResolveNamed<Entity>("goblin");
+        // for (int i = 0; i < 500; i++)
+        //     _scope.ResolveNamed<Entity>("goblin");
     }
 
     public void Update()
@@ -110,7 +110,8 @@ class EntitiesModule : Module
                         DamageComp,
                         HealthComp,
                         StatusEffectComp,
-                        LootCollComp
+                        LootCollComp,
+                        LineComp
                     >(
                         new PlayerComp { state = PlayerState.Idle },
                         new MoveComp { maxSpeed = 3.0f, speedFactor = 1.0f },
@@ -145,7 +146,8 @@ class EntitiesModule : Module
                             speed = 10.0f,
                             incomeFactor = 1.0f,
                             radiusFactor = 1.0f,
-                        }
+                        },
+                        new LineComp { drawOrder = 0, lines = CachedList<Line>.Create() }
                     );
 
                 WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleSword");

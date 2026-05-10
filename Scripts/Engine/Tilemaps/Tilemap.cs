@@ -19,16 +19,13 @@ class Tilemap
             int cx = x / TileChunk.SIZE;
             int cy = y / TileChunk.SIZE;
 
-            int tx = (TileChunk.SIZE + (x % TileChunk.SIZE)) % TileChunk.SIZE;
-            int ty = (TileChunk.SIZE + (y % TileChunk.SIZE)) % TileChunk.SIZE;
-
             if (_lastChunk.Check(cx, cy))
-                return _lastChunk.chunk[tx, ty];
+                return _lastChunk.chunk[x % TileChunk.SIZE, y % TileChunk.SIZE];
 
             if (_chunks.TryGetValue((cx, cy), out TileChunk? chunk))
             {
                 _lastChunk = new CachedChunk(cx, cy, chunk);
-                return _lastChunk.chunk[tx, ty];
+                return _lastChunk.chunk[x % TileChunk.SIZE, y % TileChunk.SIZE];
             }
 
             return null;
@@ -38,15 +35,11 @@ class Tilemap
             int cx = x / TileChunk.SIZE;
             int cy = y / TileChunk.SIZE;
 
-            int tx = (TileChunk.SIZE + (x % TileChunk.SIZE)) % TileChunk.SIZE;
-            int ty = (TileChunk.SIZE + (y % TileChunk.SIZE)) % TileChunk.SIZE;
-
             if (!_lastChunk.Check(cx, cy))
             {
                 if (_chunks.TryGetValue((cx, cy), out TileChunk? chunk))
                 {
                     _lastChunk = new CachedChunk(cx, cy, chunk);
-                    _lastChunk.chunk[tx, ty] = value;
                 }
                 else
                 {
@@ -56,7 +49,7 @@ class Tilemap
                 }
             }
 
-            _lastChunk.chunk[tx, ty] = value;
+            _lastChunk.chunk[x % TileChunk.SIZE, y % TileChunk.SIZE] = value;
             if (_lastChunk.chunk.IsEmpty)
             {
                 _chunks.Remove((cx, cy));
@@ -104,16 +97,22 @@ class TileChunk
     {
         get
         {
-            if (x < 0 || x >= SIZE || y < 0 || y >= SIZE)
+            if (x <= -SIZE || x >= SIZE || y <= -SIZE || y >= SIZE)
                 throw new ArgumentOutOfRangeException($"Coords {x} {y} are invalid.");
-            return _tiles?[y * SIZE + x];
+
+            int tx = (TileChunk.SIZE + (x % TileChunk.SIZE)) % TileChunk.SIZE;
+            int ty = (TileChunk.SIZE + (y % TileChunk.SIZE)) % TileChunk.SIZE;
+            return _tiles?[ty * SIZE + tx];
         }
         set
         {
-            if (x < 0 || x >= SIZE || y < 0 || y >= SIZE)
+            if (x <= -SIZE || x >= SIZE || y <= -SIZE || y >= SIZE)
                 throw new ArgumentOutOfRangeException($"Coords {x} {y} are invalid.");
 
-            int ind = y * SIZE + x;
+            int tx = (TileChunk.SIZE + (x % TileChunk.SIZE)) % TileChunk.SIZE;
+            int ty = (TileChunk.SIZE + (y % TileChunk.SIZE)) % TileChunk.SIZE;
+
+            int ind = ty * SIZE + tx;
             _count += (value == null ? 0 : 1) - (_tiles[ind] == null ? 0 : 1);
             _tiles[ind] = value;
         }

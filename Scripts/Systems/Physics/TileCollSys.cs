@@ -4,6 +4,7 @@ using Arch.System;
 using Components.Other;
 using Components.Physics;
 using Engine.Common;
+using Engine.Tilemaps;
 using Utils;
 
 namespace Systems.Physics;
@@ -22,14 +23,158 @@ partial class TileCollSys : BaseSystem<World, float>
         CachedList<TileColl> result
     )
     {
-        OverlapCheckQuery(World, in position, in radius, targetLayer, result);
+        ColliderOverlapQuery(World, in position, in radius, in targetLayer, result);
+    }
+
+    public void GetOverlap(
+        Vector2 rayStart,
+        Vector2 rayEnd,
+        int targetLayer,
+        CachedList<TileColl> result
+    )
+    {
+        RayOverlapQuery(World, in rayStart, in rayEnd, in targetLayer, in result);
     }
 
     [Query]
-    private void OverlapCheck(
+    private void RayOverlap(
+        [Data] in Vector2 rayStart,
+        [Data] in Vector2 rayEnd,
+        [Data] in int targetLayer,
+        [Data] in CachedList<TileColl> result,
+        in TilemapComp tilemap,
+        in RigidComp rigid
+    )
+    {
+        if (rigid.layer != targetLayer)
+            return;
+
+        Vector2 delta = Vector2.Normalize(rayEnd - rayStart);
+        Vector2 invDelta = new Vector2(
+            MathF.Abs(delta.X) > 0.0001f ? (1.0f / delta.X) : 1e10f,
+            MathF.Abs(delta.Y) > 0.0001f ? (1.0f / delta.Y) : 1e10f
+        );
+
+        int sx = Math.Sign(delta.X);
+        int sy = Math.Sign(delta.Y);
+
+        Vector2 pos = rayStart;
+
+        int cx = sx > 0 ? (int)MathF.Floor(pos.X) : (int)MathF.Ceiling(pos.X);
+        int cy = sy > 0 ? (int)MathF.Floor(pos.Y) : (int)MathF.Ceiling(pos.Y);
+
+        Vector2 min = Vector2.Min(rayStart, rayEnd);
+        Vector2 max = Vector2.Max(rayStart, rayEnd);
+
+        TileChunk? chunk = null;
+        int chunkX = int.MinValue,
+            chunkY = int.MinValue;
+
+        int moveX = 0,
+            moveY = 0;
+
+        for (int i = 0; i < 10_000; i++)
+        {
+            if (Vector2.LessThanAny(pos, min) || Vector2.GreaterThanAny(pos, max))
+                break;
+
+            int x = (int)MathF.Floor(pos.X);
+            int y = (int)MathF.Floor(pos.Y);
+
+            int tx = x / TileChunk.SIZE;
+            int ty = y / TileChunk.SIZE;
+
+            if (chunk == null || chunkX != tx || chunkY != ty)
+            {
+                chunkX = tx;
+                chunkY = ty;
+                chunk = tilemap.tilemap.GetChunk(chunkX, chunkY);
+            }
+
+            if (chunk == null)
+            {
+                int nextX = x - x % TileChunk.SIZE;
+                int nextY = y - y % TileChunk.SIZE;
+
+                if (Math.Sign(pos.X) == sx)
+                    nextX += sx * TileChunk.SIZE;
+                if (Math.Sign(pos.Y) == sy)
+                    nextY += sy * TileChunk.SIZE;
+
+                chunkX = nextX / TileChunk.SIZE;
+                chunkY = nextY / TileChunk.SIZE;
+
+                Vector2 n = new Vector2(nextX - pos.X, nextY - pos.Y) * invDelta;
+                n.X += 0.0001f;
+                n.Y += 0.0001f;
+
+                if (n.X > 0.0f && (n.X < n.Y || n.Y < 0.0f))
+                {
+                    pos += n.X * delta;
+
+                    moveX = sx;
+                    moveY = 0;
+                }
+                else if (n.Y > 0.0f && (n.Y < n.X || n.X < 0.0f))
+                {
+                    pos += n.Y * delta;
+
+                    moveX = 0;
+                    moveY = sy;
+                }
+                else
+                {
+                    break;
+                }
+
+                cx = sx > 0 ? (int)MathF.Floor(pos.X) : (int)MathF.Ceiling(pos.X);
+                cy = sy > 0 ? (int)MathF.Floor(pos.Y) : (int)MathF.Ceiling(pos.Y);
+
+                continue;
+            }
+            if (chunk[x % TileChunk.SIZE, y % TileChunk.SIZE] != null)
+            {
+                Vector2 norm = new Vector2(-moveX, -moveY);
+
+                if (Vector2.Dot(norm, rayEnd - rayStart) < 0.0f)
+                {
+                    result.Add(new TileColl(new Vector2Int(x, y), pos, norm, 0.0f));
+                    break;
+                }
+            }
+
+            Vector2 t = new Vector2(cx + sx - pos.X, cy + sy - pos.Y) * invDelta;
+            t.X += 0.0001f;
+            t.Y += 0.0001f;
+
+            if (t.X > 0.0f && (t.X < t.Y || t.Y < 0.0f))
+            {
+                pos += t.X * delta;
+                cx += sx;
+
+                moveX = sx;
+                moveY = 0;
+            }
+            else if (t.Y > 0.0f && (t.Y < t.X || t.X < 0.0f))
+            {
+                pos += t.Y * delta;
+                cy += sy;
+
+                moveX = 0;
+                moveY = sy;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    [Query]
+    private void ColliderOverlap(
         [Data] in Vector2 position,
         [Data] in float radius,
-        [Data] int targetLayer,
+        [Data] in int targetLayer,
         [Data] CachedList<TileColl> result,
         in TilemapComp tilemap,
         in RigidComp rigid
@@ -93,20 +238,24 @@ partial class TileCollSys : BaseSystem<World, float>
 
         Vector2 normB = new Vector2(normA.Y, -normA.X);
         Vector2 bestNorm = Vector2.Dot(axis, normA) < Vector2.Dot(axis, normB) ? normA : normB;
-        tileColl = new TileColl(tilePos, bestNorm, circProj - rectProj);
+        float depth = circProj - rectProj;
+        Vector2 point = position + axis * (radius - depth);
+        tileColl = new TileColl(tilePos, point, bestNorm, depth);
         return true;
     }
 }
 
 struct TileColl
 {
-    public Vector2Int tilePosition;
-    public Vector2 normal;
+    public Vector2Int tile;
+    public Vector2 point,
+        normal;
     public float depth;
 
-    public TileColl(Vector2Int tilePosition, Vector2 normal, float depth)
+    public TileColl(Vector2Int tile, Vector2 point, Vector2 normal, float depth)
     {
-        this.tilePosition = tilePosition;
+        this.tile = tile;
+        this.point = point;
         this.normal = normal;
         this.depth = depth;
     }

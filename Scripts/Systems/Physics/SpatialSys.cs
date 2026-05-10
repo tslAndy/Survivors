@@ -39,22 +39,22 @@ partial class SpatialSys : BaseSystem<World, float>
         Span<(int, int)> span = stackalloc (int, int)[9];
         RefSet<(int, int)> refSet = new RefSet<(int, int)>(span);
 
+        Vector2 delta = Vector2.Normalize(rayEnd - rayStart);
+        Vector2 invDelta = new Vector2(
+            MathF.Abs(delta.X) > 0.00001f ? 1.0f / delta.X : 1e10f,
+            MathF.Abs(delta.Y) > 0.00001f ? 1.0f / delta.Y : 1e10f
+        );
+
+        int sx = Math.Sign(delta.X);
+        int sy = Math.Sign(delta.Y);
+
         for (int gridLevel = 0; gridLevel < MAX_LEVELS; gridLevel++)
         {
             refSet.Reset();
-            float cellSize = 1 << gridLevel;
 
+            float cellSize = 1 << gridLevel;
             Vector2 localStart = rayStart / cellSize;
             Vector2 localEnd = rayEnd / cellSize;
-
-            Vector2 delta = Vector2.Normalize(localEnd - localStart);
-            Vector2 invDelta = new Vector2(
-                MathF.Abs(delta.X) > 0.00001f ? 1.0f / delta.X : 1e10f,
-                MathF.Abs(delta.Y) > 0.00001f ? 1.0f / delta.Y : 1e10f
-            );
-
-            int sx = Math.Sign(delta.X);
-            int sy = Math.Sign(delta.Y);
 
             Vector2 pos = localStart;
 
@@ -115,21 +115,22 @@ partial class SpatialSys : BaseSystem<World, float>
                 }
 
                 Vector2 t = new Vector2(cx + sx - pos.X, cy + sy - pos.Y) * invDelta;
-                if (MathF.Abs(t.X - t.Y) < 0.00001f)
-                {
-                    pos += t.X * delta;
-                    cx += sx;
-                    cy += sy;
-                }
-                else if (t.X < t.Y)
+                t.X += 0.0001f;
+                t.Y += 0.0001f;
+
+                if (t.X > 0.0f && (t.X < t.Y || t.Y < 0.0f))
                 {
                     pos += t.X * delta;
                     cx += sx;
                 }
-                else
+                else if (t.Y > 0.0f && (t.Y < t.X || t.X < 0.0f))
                 {
                     pos += t.Y * delta;
                     cy += sy;
+                }
+                else
+                {
+                    break;
                 }
             }
         }
