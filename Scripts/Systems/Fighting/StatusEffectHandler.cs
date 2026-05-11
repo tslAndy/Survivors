@@ -1,13 +1,31 @@
 using Arch.Core;
 using Arch.Core.Extensions;
-using Components.Characters;
+using Components.Basic;
 using Components.Fighting;
-using Components.Loot;
+using Engine.Common;
+using Systems.Basic;
 
 class StatusEffectHandler
 {
     private const float MAX_DURATION = 5.0f;
     private const float MAX_DPS = 100;
+
+    private readonly Hash _moveHash,
+        _attackSpeedHash,
+        _damageTakeHash,
+        _damageGiveHash,
+        _lootIncomeHash,
+        _lootRadiusHash;
+
+    public StatusEffectHandler(ModRegistry modRegistry)
+    {
+        _moveHash = modRegistry["moveFactor"];
+        _attackSpeedHash = modRegistry["attackSpeedFactor"];
+        _damageTakeHash = modRegistry["damageTakeFactor"];
+        _damageGiveHash = modRegistry["damageGiveFactor"];
+        _lootIncomeHash = modRegistry["lootIncomeFactor"];
+        _lootRadiusHash = modRegistry["lootRadiusFactor"];
+    }
 
     public void CombineEffects(Entity entity, ref StatusEffect first, ref StatusEffect second)
     {
@@ -71,11 +89,13 @@ class StatusEffectHandler
         {
             case StatusEffectType.Armor:
             case StatusEffectType.Delicacy:
+                entity.Get<ModComp>()[_damageTakeHash] *= value;
                 // entity.Get<DamageComp>().damageFactor *= value;
                 break;
 
             case StatusEffectType.Weaken:
             case StatusEffectType.Rage:
+                entity.Get<ModComp>()[_damageGiveHash] *= value;
                 // ref WeaponComp weapon = ref entity.Get<WeaponComp>();
                 // weapon.dpsFactor *= value;
                 // for (int i = 0; i < weapon.weapons.Count; i++)
@@ -89,16 +109,19 @@ class StatusEffectHandler
 
             case StatusEffectType.Haste:
             case StatusEffectType.Slowness:
+                entity.Get<ModComp>()[_moveHash] *= value;
                 // entity.Get<MoveComp>().speedFactor *= value;
                 break;
 
             case StatusEffectType.Greed:
             case StatusEffectType.Poverty:
+                entity.Get<ModComp>()[_lootIncomeHash] *= value;
                 // entity.Get<LootCollComp>().incomeFactor *= value;
                 break;
 
             case StatusEffectType.ShortHand:
             case StatusEffectType.LongHand:
+                entity.Get<ModComp>()[_lootRadiusHash] *= value;
                 // entity.Get<LootCollComp>().radiusFactor *= value;
                 break;
 

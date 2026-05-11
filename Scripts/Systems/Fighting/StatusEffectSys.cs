@@ -8,10 +8,10 @@ partial class StatusEffectSys : BaseSystem<World, float>
     private StatusEffectHandler _effectHandler;
     private const float APPLY_TIME = 1.0f;
 
-    public StatusEffectSys(World world)
+    public StatusEffectSys(World world, StatusEffectHandler effectHandler)
         : base(world)
     {
-        _effectHandler = new StatusEffectHandler();
+        this._effectHandler = effectHandler;
     }
 
     [Query]
