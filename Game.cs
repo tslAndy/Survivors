@@ -46,8 +46,8 @@ class Game : IDisposable
         LoadTilemaps();
 
         _scope.ResolveNamed<Entity>("player");
-        // for (int i = 0; i < 500; i++)
-        //     _scope.ResolveNamed<Entity>("goblin");
+        for (int i = 0; i < 500; i++)
+            _scope.ResolveNamed<Entity>("goblin");
     }
 
     public void Update()
@@ -150,7 +150,7 @@ class EntitiesModule : Module
                         new LineComp { drawOrder = 0, lines = CachedList<Line>.Create() }
                     );
 
-                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleSword");
+                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleLaser");
                 weapons.Add(weaponElem);
                 if (weaponElem.entity != null)
                     player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);

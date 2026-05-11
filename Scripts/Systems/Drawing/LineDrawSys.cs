@@ -54,7 +54,8 @@ partial class LineDrawSys : BaseSystem<World, float>
     {
         AABB camBox = _cam.frustum;
 
-        CachedList<Line> lines = entity.Get<LineComp>().lines;
+        ref LineComp lineComp = ref entity.Get<LineComp>();
+        CachedList<Line> lines = lineComp.lines;
         for (int i = 0; i < lines.Count; i++)
         {
             ref Line line = ref lines[i];
@@ -67,5 +68,6 @@ partial class LineDrawSys : BaseSystem<World, float>
             float thick = _cam.pixelsPerUnit * line.thick;
             Raylib.DrawLineEx(start, end, thick, line.color);
         }
+        lineComp.lines.Reset();
     }
 }

@@ -56,20 +56,32 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
         CollComp coll = new CollComp { radius = bulletConfig.radius };
         BulletComp bullet = new BulletComp { owner = owner, weapon = this };
 
-        AnimComp anim = new AnimComp { timeScale = 1.0f };
         SpriteComp sprite = new SpriteComp { drawOrder = bulletConfig.drawOrder };
         if (bulletConfig.sprite != null)
+        {
             sprite.sprite = bulletConfig.sprite;
+
+            context.world.Create<SpriteComp, TrsComp, RigidComp, CollComp, BulletComp>(
+                sprite,
+                trs,
+                rigid,
+                coll,
+                bullet
+            );
+        }
         else if (bulletConfig.anim != null)
+        {
+            AnimComp anim = new AnimComp { timeScale = 1.0f };
             anim.anim = bulletConfig.anim;
 
-        context.world.Create<AnimComp, SpriteComp, TrsComp, RigidComp, CollComp, BulletComp>(
-            anim,
-            sprite,
-            trs,
-            rigid,
-            coll,
-            bullet
-        );
+            context.world.Create<AnimComp, SpriteComp, TrsComp, RigidComp, CollComp, BulletComp>(
+                anim,
+                sprite,
+                trs,
+                rigid,
+                coll,
+                bullet
+            );
+        }
     }
 }

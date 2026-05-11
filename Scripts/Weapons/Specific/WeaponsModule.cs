@@ -5,6 +5,7 @@ using Components.Fighting;
 using Engine.Animations;
 using Engine.Common;
 using Engine.Sprites;
+using Raylib_cs;
 using Systems;
 
 namespace Weapons.Specific;
@@ -47,7 +48,37 @@ class WeaponsModule : Module
                 return new WeaponElem(weapon, null);
             })
             .Named<WeaponElem>("simpleBow")
-            .InstancePerLifetimeScope();
+            .InstancePerDependency();
+
+        builder
+            .Register<WeaponElem>(x =>
+            {
+                WeaponConfig config = new WeaponConfig
+                {
+                    baseDamage = 2,
+                    critDamage = 5,
+                    critChance = 30,
+                    attackTime = 0.1f,
+                    detectRadius = 4.0f,
+                    targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                };
+
+                WeaponCallbacks callbacks = new WeaponCallbacks { };
+
+                RayConfig rayConfig = new RayConfig
+                {
+                    rays = 10,
+                    length = 10.0f,
+                    rotationSpeed = Single.DegreesToRadians(180.0f),
+                    thick = 0.1f,
+                    color = Color.Red,
+                };
+
+                IWeapon weapon = new Laser(rayConfig, config, callbacks, x.Resolve<WorldContext>());
+                return new WeaponElem(weapon, null);
+            })
+            .Named<WeaponElem>("simpleLaser")
+            .InstancePerDependency();
 
         builder
             .Register<WeaponElem>(x =>
@@ -64,26 +95,26 @@ class WeaponsModule : Module
 
                 WeaponCallbacks callbacks = new WeaponCallbacks { };
 
-                // AnimAtlas swingAtlas = x.Resolve<AnimAtlasManager>()
-                //     .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas");
-                //
-                // Entity swing = x.Resolve<World>()
-                //     .Create<TrsComp, LocalTrsComp, SpriteComp, AnimComp>(
-                //         new TrsComp { scale = 1.0f },
-                //         new LocalTrsComp { scale = 1.0f },
-                //         new SpriteComp { drawOrder = 2 },
-                //         new AnimComp
-                //         {
-                //             anim = swingAtlas["Swing_1"],
-                //             atlas = swingAtlas,
-                //             timeScale = 1.0f,
-                //         }
-                //     );
+                AnimAtlas swingAtlas = x.Resolve<AnimAtlasManager>()
+                    .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas");
+
+                Entity swing = x.Resolve<World>()
+                    .Create<TrsComp, LocalTrsComp, SpriteComp, AnimComp>(
+                        new TrsComp { scale = 1.0f },
+                        new LocalTrsComp { scale = 1.0f },
+                        new SpriteComp { drawOrder = 2 },
+                        new AnimComp
+                        {
+                            anim = swingAtlas["Swing_1"],
+                            atlas = swingAtlas,
+                            timeScale = 1.0f,
+                        }
+                    );
 
                 IWeapon weapon = new MeleeWeapon(config, callbacks, x.Resolve<WorldContext>());
                 return new WeaponElem(weapon, null);
             })
             .Named<WeaponElem>("simpleSword")
-            .InstancePerLifetimeScope();
+            .InstancePerDependency();
     }
 }

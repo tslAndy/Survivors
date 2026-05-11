@@ -31,7 +31,6 @@ struct WeaponCallbacks
 class Weapon : IWeapon
 {
     private float _time;
-    public float time => _time;
 
     protected readonly WeaponConfig config;
     protected readonly WeaponCallbacks callbacks;
