@@ -6,6 +6,7 @@ using Components.Physics;
 using Engine.Animations;
 using Engine.Sprites;
 using Systems;
+using Systems.Basic;
 
 namespace Weapons;
 
@@ -28,9 +29,10 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
         BulletConfig bulletConfig,
         WeaponConfig config,
         WeaponCallbacks callbacks,
-        WorldContext context
+        WorldContext context,
+        ModRegistry modRegistry
     )
-        : base(config, callbacks, context)
+        : base(config, callbacks, context, modRegistry)
     {
         this.bulletConfig = bulletConfig;
     }
@@ -71,9 +73,7 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
         }
         else if (bulletConfig.anim != null)
         {
-            AnimComp anim = new AnimComp { timeScale = 1.0f };
-            anim.anim = bulletConfig.anim;
-
+            AnimComp anim = new AnimComp { anim = bulletConfig.anim };
             context.world.Create<AnimComp, SpriteComp, TrsComp, RigidComp, CollComp, BulletComp>(
                 anim,
                 sprite,

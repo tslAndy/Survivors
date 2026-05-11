@@ -5,6 +5,8 @@ using Arch.System;
 using Components.Basic;
 using Components.Characters;
 using Components.Physics;
+using Engine.Common;
+using Systems.Basic;
 
 namespace Systems.Characters;
 
@@ -20,10 +22,11 @@ partial class EnemySys : BaseSystem<World, float>
         ref EnemyComp enemy,
         ref TrsComp trs,
         ref RigidComp rigid,
-        ref MoveComp moveComp
+        ref MoveComp moveComp,
+        ref ModComp modComp
     )
     {
-        enemy.behaviour.Update(entity, ref enemy, ref trs, ref rigid, ref moveComp);
+        enemy.behaviour.Update(entity, ref enemy, ref trs, ref rigid, ref moveComp, ref modComp);
     }
 }
 
@@ -56,25 +59,32 @@ abstract class EnemyBehaviour : IEnemyBehaviour
         ref EnemyComp enemy,
         ref TrsComp trs,
         ref RigidComp rigid,
-        ref MoveComp moveComp
+        ref MoveComp moveComp,
+        ref ModComp modComp
     );
 }
 
 class GoblinBehaviour : EnemyBehaviour
 {
-    public GoblinBehaviour(WorldContext context)
-        : base(context) { }
+    private readonly Hash _moveFactor;
+
+    public GoblinBehaviour(WorldContext context, ModRegistry modRegistry)
+        : base(context)
+    {
+        _moveFactor = modRegistry["moveFactor"];
+    }
 
     public override void Update(
         Entity entity,
         ref EnemyComp enemy,
         ref TrsComp trs,
         ref RigidComp rigid,
-        ref MoveComp moveComp
+        ref MoveComp moveComp,
+        ref ModComp modComp
     )
     {
         Vector2 pos = player.Get<TrsComp>().position;
         rigid.velocity =
-            moveComp.speedFactor * moveComp.maxSpeed * Vector2.Normalize(pos - trs.position);
+            modComp[_moveFactor] * moveComp.maxSpeed * Vector2.Normalize(pos - trs.position);
     }
 }

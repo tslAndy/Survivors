@@ -1,5 +1,6 @@
 using System.Numerics;
 using Arch.Core;
+using Components.Basic;
 using Components.Fighting;
 using Systems;
 
@@ -29,6 +30,7 @@ class Shield : IShield
         Entity entity,
         ref DamageComp damage,
         ref StatusEffectComp effects,
+        ref ModComp modComp,
         Vector2 position,
         float dt
     )

@@ -3,6 +3,7 @@ using Arch.Core;
 using Arch.Core.Extensions;
 using Components.Basic;
 using Systems;
+using Systems.Basic;
 using Utils;
 
 namespace Weapons.Specific;
@@ -13,13 +14,14 @@ class Laser : RayWeapon
         RayConfig rayConfig,
         WeaponConfig config,
         WeaponCallbacks callbacks,
-        WorldContext context
+        WorldContext context,
+        ModRegistry modRegistry
     )
-        : base(rayConfig, config, callbacks, context) { }
+        : base(rayConfig, config, callbacks, context, modRegistry) { }
 
-    protected override void OnUpdate(Entity entity, Vector2 position, float dt)
+    protected override void OnUpdate(Entity entity, ref ModComp modComp, Vector2 position, float dt)
     {
-        base.OnUpdate(entity, position, dt);
+        base.OnUpdate(entity, ref modComp, position, dt);
 
         ref LineComp lineComp = ref entity.Get<LineComp>();
 
@@ -41,7 +43,7 @@ class Laser : RayWeapon
         }
     }
 
-    protected override void OnTimer(Entity entity, Vector2 position)
+    protected override void OnTimer(Entity entity, ref ModComp modComp, Vector2 position)
     {
         using CachedList<Entity> overlap = CachedList<Entity>.Create();
 
@@ -60,7 +62,7 @@ class Laser : RayWeapon
             );
 
             for (int j = 0; j < overlap.Count; j++)
-                Damage(entity, overlap[j]);
+                Damage(entity, ref modComp, overlap[j]);
 
             overlap.Reset();
         }

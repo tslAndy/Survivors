@@ -6,18 +6,22 @@ using Components.Basic;
 using Components.Fighting;
 using Components.Other;
 using Components.Physics;
+using Engine.Common;
 using Raylib_cs;
+using Systems.Basic;
 
 namespace Systems.Fighting;
 
 partial class DamageSys : BaseSystem<World, float>
 {
     private readonly CommandBuffer _commandBuffer;
+    private readonly Hash _damageTakeFactor;
 
-    public DamageSys(World world, CommandBuffer commandBuffer)
+    public DamageSys(World world, CommandBuffer commandBuffer, ModRegistry modRegistry)
         : base(world)
     {
         _commandBuffer = commandBuffer;
+        _damageTakeFactor = modRegistry["damageTakeFactor"];
     }
 
     [Query]
@@ -26,14 +30,15 @@ partial class DamageSys : BaseSystem<World, float>
         Entity entity,
         in DamageComp damage,
         in TrsComp trs,
-        ref HealthComp health
+        ref HealthComp health,
+        ref ModComp modComp
     )
     {
         float total = 0.0f;
         for (int i = 0; i < damage.hits.Count; i++)
         {
             ref Hit hit = ref damage.hits[i];
-            total += hit.damage > 0 ? hit.damage * damage.damageFactor : hit.damage;
+            total += hit.damage > 0 ? hit.damage * modComp[_damageTakeFactor] : hit.damage;
             // if hit.damage > 0 it's damage, and should be scaled
             // else it's a regeneration, should not be scaled
         }

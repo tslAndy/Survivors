@@ -2,21 +2,30 @@ using Arch.Core;
 using Arch.System;
 using Components.Basic;
 using Engine.Animations;
+using Engine.Common;
+using Systems.Basic;
 
 namespace Systems.Animation;
 
 partial class AnimSys : BaseSystem<World, float>
 {
     private readonly SoundSys soundSys;
+    private readonly Hash timeFactor;
 
-    public AnimSys(World world, SoundSys soundSys)
+    public AnimSys(World world, SoundSys soundSys, ModRegistry modRegistry)
         : base(world)
     {
         this.soundSys = soundSys;
+        this.timeFactor = modRegistry["animTimeFactor"];
     }
 
     [Query]
-    private void Execute([Data] in float dt, ref AnimComp animator, ref SpriteComp spriteComp)
+    private void Execute(
+        [Data] in float dt,
+        ref AnimComp animator,
+        ref SpriteComp spriteComp,
+        ModComp modComp
+    )
     {
         Anim anim = animator.anim;
         if (anim == null || animator.keyIndex == anim.keys.Length)
@@ -25,7 +34,7 @@ partial class AnimSys : BaseSystem<World, float>
         if (animator.time == default)
             ChangeKey(anim.keys[0], ref spriteComp);
 
-        animator.time += dt * animator.timeScale;
+        animator.time += dt * modComp[timeFactor];
         if (animator.time < anim.frameTime)
             return;
 

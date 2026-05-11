@@ -2,13 +2,20 @@ using Arch.Core;
 using Arch.System;
 using Components.Basic;
 using Components.Fighting;
+using Engine.Common;
+using Systems.Basic;
 
 namespace Systems.Fighting;
 
 partial class WeaponSys : BaseSystem<World, float>
 {
-    public WeaponSys(World world)
-        : base(world) { }
+    private readonly Hash _attackSpeedFactor;
+
+    public WeaponSys(World world, ModRegistry modRegistry)
+        : base(world)
+    {
+        _attackSpeedFactor = modRegistry["attackSpeedFactor"];
+    }
 
     [Query]
     [None(typeof(DeathComp))]
@@ -16,12 +23,13 @@ partial class WeaponSys : BaseSystem<World, float>
         [Data] in float dt,
         Entity entity,
         in TrsComp trs,
-        ref WeaponComp weapon
+        ref WeaponComp weapon,
+        ref ModComp modComp
     )
     {
-        float dts = dt * weapon.dpsFactor;
+        float dts = dt * modComp[_attackSpeedFactor];
         for (int i = 0; i < weapon.weapons.Count; i++)
-            weapon.weapons[i].weapon.Update(entity, trs.position, dts);
+            weapon.weapons[i].weapon.Update(entity, ref modComp, trs.position, dts);
     }
 
     [Query]

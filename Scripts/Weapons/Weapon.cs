@@ -1,8 +1,11 @@
 using System.Numerics;
 using Arch.Core;
 using Arch.Core.Extensions;
+using Components.Basic;
 using Components.Fighting;
+using Engine.Common;
 using Systems;
+using Systems.Basic;
 
 namespace Weapons;
 
@@ -36,42 +39,56 @@ class Weapon : IWeapon
     protected readonly WeaponCallbacks callbacks;
     protected readonly WorldContext context;
 
-    public Weapon(WeaponConfig config, WeaponCallbacks callbacks, WorldContext context)
+    private readonly Hash _damageGiveFactor;
+
+    public Weapon(
+        WeaponConfig config,
+        WeaponCallbacks callbacks,
+        WorldContext context,
+        ModRegistry modRegistry
+    )
     {
         this.config = config;
         this.callbacks = callbacks;
+        this.context = context;
 
         this._time = 0.0f;
-        this.context = context;
+        this._damageGiveFactor = modRegistry["damageGiveFactor"];
     }
 
-    public void Update(Entity entity, Vector2 position, float dt)
+    public void Update(Entity entity, ref ModComp modComp, Vector2 position, float dt)
     {
-        OnUpdate(entity, position, dt);
+        OnUpdate(entity, ref modComp, position, dt);
 
         _time += dt;
         if (_time < config.attackTime)
             return;
 
         _time -= config.attackTime;
-        OnTimer(entity, position);
+        OnTimer(entity, ref modComp, position);
     }
 
-    protected virtual void OnUpdate(Entity entity, Vector2 position, float dt) { }
+    protected virtual void OnUpdate(
+        Entity entity,
+        ref ModComp modComp,
+        Vector2 position,
+        float dt
+    ) { }
 
-    protected virtual void OnTimer(Entity entity, Vector2 position) { }
+    protected virtual void OnTimer(Entity entity, ref ModComp modComp, Vector2 position) { }
 
-    protected void Damage(Entity source, Entity target)
+    protected void Damage(Entity source, ref ModComp modComp, Entity target)
     {
         ref DamageComp damageComp = ref target.Get<DamageComp>();
 
         // count crit chance
+        float damageFactor = modComp[_damageGiveFactor];
         float critChance = config.critChance;
         callbacks.getCritChance?.Invoke(source, target, ref critChance);
 
         if (Random.Shared.Next(0, 100) < critChance)
         {
-            float critDamage = config.critDamage;
+            float critDamage = config.critDamage * damageFactor;
 
             // apply both base and crit damage modifiers
             callbacks.countBaseDamage?.Invoke(source, target, ref critDamage);
@@ -84,7 +101,7 @@ class Weapon : IWeapon
         }
         else
         {
-            float baseDamage = config.baseDamage;
+            float baseDamage = config.baseDamage * damageFactor;
 
             // apply only base action
             callbacks.countBaseDamage?.Invoke(source, target, ref baseDamage);

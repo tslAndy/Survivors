@@ -6,7 +6,6 @@ namespace Components.Fighting;
 struct DamageComp
 {
     public CachedList<Hit> hits;
-    public float damageFactor;
 }
 
 // if direct hit from entity, effect type is default (because stat effects are applied separately)

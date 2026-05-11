@@ -1,7 +1,9 @@
 using System.Numerics;
 using Arch.Core;
+using Components.Basic;
 using Raylib_cs;
 using Systems;
+using Systems.Basic;
 
 namespace Weapons;
 
@@ -26,14 +28,15 @@ abstract class RayWeapon : Weapon
         RayConfig rayConfig,
         WeaponConfig config,
         WeaponCallbacks callbacks,
-        WorldContext context
+        WorldContext context,
+        ModRegistry modRegistry
     )
-        : base(config, callbacks, context)
+        : base(config, callbacks, context, modRegistry)
     {
         this.rayConfig = rayConfig;
     }
 
-    protected override void OnUpdate(Entity entity, Vector2 position, float dt)
+    protected override void OnUpdate(Entity entity, ref ModComp modComp, Vector2 position, float dt)
     {
         _angle += rayConfig.rotationSpeed * dt;
     }

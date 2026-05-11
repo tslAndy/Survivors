@@ -7,8 +7,7 @@ namespace Components.Basic;
 struct AnimComp
 {
     public int keyIndex;
-    public float time,
-        timeScale;
+    public float time;
 
     public AnimAtlas atlas;
     public AnimDir animDir;

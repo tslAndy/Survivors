@@ -2,6 +2,7 @@ using Arch.Core;
 using Autofac;
 using Engine.Common;
 using Engine.Sprites;
+using Systems.Basic;
 using Systems.Physics;
 
 namespace Systems.Loot;
@@ -23,6 +24,7 @@ class LootModule : Module
             .Register<LootCollectSys>(x => new LootCollectSys(
                 x.Resolve<World>(),
                 x.Resolve<SpatialSys>(),
+                x.Resolve<ModRegistry>(),
                 x.Resolve<LayerMap>()["Loot"]
             ))
             .InstancePerLifetimeScope();

@@ -1,5 +1,6 @@
 using System.Numerics;
 using Arch.Core;
+using Components.Basic;
 using Utils;
 
 namespace Components.Fighting;
@@ -7,12 +8,11 @@ namespace Components.Fighting;
 struct WeaponComp
 {
     public CachedList<WeaponElem> weapons;
-    public float dpsFactor;
 }
 
 interface IWeapon
 {
-    void Update(Entity entity, Vector2 position, float dt);
+    void Update(Entity entity, ref ModComp modComp, Vector2 position, float dt);
 }
 
 struct WeaponElem

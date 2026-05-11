@@ -71,35 +71,35 @@ class StatusEffectHandler
         {
             case StatusEffectType.Armor:
             case StatusEffectType.Delicacy:
-                entity.Get<DamageComp>().damageFactor *= value;
+                // entity.Get<DamageComp>().damageFactor *= value;
                 break;
 
             case StatusEffectType.Weaken:
             case StatusEffectType.Rage:
-                ref WeaponComp weapon = ref entity.Get<WeaponComp>();
-                weapon.dpsFactor *= value;
+                // ref WeaponComp weapon = ref entity.Get<WeaponComp>();
+                // weapon.dpsFactor *= value;
                 // for (int i = 0; i < weapon.weapons.Count; i++)
                 //     weapon.weapons[i].entity?.Get<AnimComp>().timeScale = effect.val;
 
-                ref ShieldComp shield = ref entity.Get<ShieldComp>();
-                shield.dpsFactor *= value;
+                // ref ShieldComp shield = ref entity.Get<ShieldComp>();
+                // shield.dpsFactor *= value;
                 // for (int i = 0; i < shield.shields.Count; i++)
                 //     shield.shields[i].entity?.Get<AnimComp>().timeScale = effect.val;
                 break;
 
             case StatusEffectType.Haste:
             case StatusEffectType.Slowness:
-                entity.Get<MoveComp>().speedFactor *= value;
+                // entity.Get<MoveComp>().speedFactor *= value;
                 break;
 
             case StatusEffectType.Greed:
             case StatusEffectType.Poverty:
-                entity.Get<LootCollComp>().incomeFactor *= value;
+                // entity.Get<LootCollComp>().incomeFactor *= value;
                 break;
 
             case StatusEffectType.ShortHand:
             case StatusEffectType.LongHand:
-                entity.Get<LootCollComp>().radiusFactor *= value;
+                // entity.Get<LootCollComp>().radiusFactor *= value;
                 break;
 
             default:

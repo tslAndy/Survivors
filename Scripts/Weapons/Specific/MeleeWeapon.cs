@@ -4,6 +4,7 @@ using Arch.Core.Extensions;
 using Components.Basic;
 using Raylib_cs;
 using Systems;
+using Systems.Basic;
 using Systems.Physics;
 using Utils;
 
@@ -11,10 +12,15 @@ namespace Weapons.Specific;
 
 class MeleeWeapon : Weapon
 {
-    public MeleeWeapon(WeaponConfig config, WeaponCallbacks callbacks, WorldContext context)
-        : base(config, callbacks, context) { }
+    public MeleeWeapon(
+        WeaponConfig config,
+        WeaponCallbacks callbacks,
+        WorldContext context,
+        ModRegistry modRegistry
+    )
+        : base(config, callbacks, context, modRegistry) { }
 
-    protected override void OnUpdate(Entity entity, Vector2 position, float dt)
+    protected override void OnUpdate(Entity entity, ref ModComp modComp, Vector2 position, float dt)
     {
         ref LineComp lineComp = ref entity.Get<LineComp>();
         lineComp.lines.Reset();
@@ -61,7 +67,7 @@ class MeleeWeapon : Weapon
         }
     }
 
-    protected override void OnTimer(Entity entity, Vector2 position)
+    protected override void OnTimer(Entity entity, ref ModComp modComp, Vector2 position)
     {
         using CachedList<Entity> overlap = CachedList<Entity>.Create();
         context.spatial.GetOverlap(
@@ -73,6 +79,6 @@ class MeleeWeapon : Weapon
         );
 
         for (int i = 0; i < overlap.Count; i++)
-            Damage(entity, overlap[i]);
+            Damage(entity, ref modComp, overlap[i]);
     }
 }

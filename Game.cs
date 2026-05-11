@@ -16,6 +16,7 @@ using Engine.Common;
 using Engine.Tilemaps;
 using Raylib_cs;
 using Systems;
+using Systems.Basic;
 using Systems.Characters;
 using Utils;
 using Weapons.Specific;
@@ -111,17 +112,17 @@ class EntitiesModule : Module
                         HealthComp,
                         StatusEffectComp,
                         LootCollComp,
-                        LineComp
+                        LineComp,
+                        ModComp
                     >(
                         new PlayerComp { state = PlayerState.Idle },
-                        new MoveComp { maxSpeed = 3.0f, speedFactor = 1.0f },
+                        new MoveComp { maxSpeed = 3.0f },
                         new SpriteComp { drawOrder = 1 },
                         new AnimComp
                         {
                             atlas = playerAnimAtlas,
                             anim = playerAnimAtlas["Idle_Up"],
                             animDir = AnimDir.Up,
-                            timeScale = 1.0f,
                         },
                         new TrsComp
                         {
@@ -131,8 +132,8 @@ class EntitiesModule : Module
                         },
                         new RigidComp { layer = x.Resolve<LayerMap>()["PlayerEnts"] },
                         new CollComp { radius = 0.5f },
-                        new ShieldComp { shields = shields, dpsFactor = 1.0f },
-                        new WeaponComp { weapons = weapons, dpsFactor = 1.0f },
+                        new ShieldComp { shields = shields },
+                        new WeaponComp { weapons = weapons },
                         new DamageComp { hits = CachedList<Hit>.Create() },
                         new HealthComp { currentHP = 100, maxHP = 100 },
                         new StatusEffectComp
@@ -140,20 +141,17 @@ class EntitiesModule : Module
                             newEffects = CachedList<StatusEffect>.Create(),
                             runningEffects = CachedList<StatusEffect>.Create(),
                         },
-                        new LootCollComp
-                        {
-                            radius = 15.0f,
-                            speed = 10.0f,
-                            incomeFactor = 1.0f,
-                            radiusFactor = 1.0f,
-                        },
-                        new LineComp { drawOrder = 0, lines = CachedList<Line>.Create() }
+                        new LootCollComp { radius = 15.0f, speed = 10.0f },
+                        new LineComp { drawOrder = 0, lines = CachedList<Line>.Create() },
+                        new ModComp()
                     );
 
                 WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleLaser");
                 weapons.Add(weaponElem);
                 if (weaponElem.entity != null)
                     player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);
+
+                player.Get<ModComp>()[x.Resolve<ModRegistry>()["moveFactor"]] = 2.0f;
 
                 return player;
             })
@@ -178,17 +176,17 @@ class EntitiesModule : Module
                         HealthComp,
                         DamageComp,
                         StatusEffectComp,
-                        DropComp
+                        DropComp,
+                        ModComp
                     >(
                         new EnemyComp { behaviour = x.Resolve<GoblinBehaviour>() },
-                        new MoveComp { maxSpeed = 1.0f, speedFactor = 1.0f },
+                        new MoveComp { maxSpeed = 1.0f },
                         new SpriteComp { drawOrder = 1 },
                         new AnimComp
                         {
                             atlas = goblinAtlas,
                             anim = goblinAtlas["Idle_Down"],
                             animDir = AnimDir.Down,
-                            timeScale = 1.0f,
                         },
                         new TrsComp
                         {
@@ -201,13 +199,14 @@ class EntitiesModule : Module
                         new RigidComp { layer = x.Resolve<LayerMap>()["EnemyEnts"] },
                         new CollComp { radius = 0.5f },
                         new HealthComp { currentHP = 100, maxHP = 100 },
-                        new DamageComp { hits = CachedList<Hit>.Create(), damageFactor = 1.0f },
+                        new DamageComp { hits = CachedList<Hit>.Create() },
                         new StatusEffectComp
                         {
                             newEffects = CachedList<StatusEffect>.Create(),
                             runningEffects = CachedList<StatusEffect>.Create(),
                         },
-                        new DropComp { amount = Random.Shared.Next(1, 5000) }
+                        new DropComp { amount = Random.Shared.Next(1, 5000) },
+                        new ModComp()
                     );
 
                 return enemy;

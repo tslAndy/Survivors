@@ -1,5 +1,6 @@
 using System.Numerics;
 using Arch.Core;
+using Components.Basic;
 using Utils;
 
 namespace Components.Fighting;
@@ -7,7 +8,6 @@ namespace Components.Fighting;
 struct ShieldComp
 {
     public CachedList<ShieldElem> shields;
-    public float dpsFactor;
 }
 
 interface IShield
@@ -16,6 +16,7 @@ interface IShield
         Entity entity,
         ref DamageComp damage,
         ref StatusEffectComp effects,
+        ref ModComp modComp,
         Vector2 position,
         float dt
     );

@@ -5,6 +5,8 @@ using Arch.System;
 using Components.Basic;
 using Components.Loot;
 using Components.Other;
+using Engine.Common;
+using Systems.Basic;
 using Systems.Physics;
 using Utils;
 
@@ -15,10 +17,15 @@ partial class LootCollectSys : BaseSystem<World, float>
     private readonly SpatialSys _spatial;
     private readonly int _lootLayer;
 
-    public LootCollectSys(World world, SpatialSys spatial, int lootLayer)
+    private readonly Hash _incomeFactor,
+        _radiusFactor;
+
+    public LootCollectSys(World world, SpatialSys spatial, ModRegistry modRegistry, int lootLayer)
         : base(world)
     {
         _spatial = spatial;
+        _incomeFactor = modRegistry["lootIncomeFactor"];
+        _radiusFactor = modRegistry["lootRadiusFactor"];
         _lootLayer = lootLayer;
     }
 
@@ -27,14 +34,15 @@ partial class LootCollectSys : BaseSystem<World, float>
         [Data] in float dt,
         Entity entity,
         ref LootCollComp lootColl,
-        ref TrsComp trs
+        ref TrsComp trs,
+        ref ModComp modComp
     )
     {
         using CachedList<Entity> overlap = CachedList<Entity>.Create();
         _spatial.GetOverlap(
             entity,
             trs.position,
-            lootColl.radius * lootColl.radiusFactor,
+            lootColl.radius * modComp[_radiusFactor],
             _lootLayer,
             overlap
         );
@@ -60,6 +68,6 @@ partial class LootCollectSys : BaseSystem<World, float>
             targTimerDestroy.time = 0.0f;
         }
 
-        lootColl.amount += (int)MathF.Floor(totalAmount * lootColl.incomeFactor);
+        lootColl.amount += (int)MathF.Floor(totalAmount * modComp[_incomeFactor]);
     }
 }

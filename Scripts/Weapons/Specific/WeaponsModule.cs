@@ -7,6 +7,7 @@ using Engine.Common;
 using Engine.Sprites;
 using Raylib_cs;
 using Systems;
+using Systems.Basic;
 
 namespace Weapons.Specific;
 
@@ -43,7 +44,8 @@ class WeaponsModule : Module
                     bulletConfig,
                     config,
                     callbacks,
-                    x.Resolve<WorldContext>()
+                    x.Resolve<WorldContext>(),
+                    x.Resolve<ModRegistry>()
                 );
                 return new WeaponElem(weapon, null);
             })
@@ -74,7 +76,13 @@ class WeaponsModule : Module
                     color = Color.Red,
                 };
 
-                IWeapon weapon = new Laser(rayConfig, config, callbacks, x.Resolve<WorldContext>());
+                IWeapon weapon = new Laser(
+                    rayConfig,
+                    config,
+                    callbacks,
+                    x.Resolve<WorldContext>(),
+                    x.Resolve<ModRegistry>()
+                );
                 return new WeaponElem(weapon, null);
             })
             .Named<WeaponElem>("simpleLaser")
@@ -103,15 +111,15 @@ class WeaponsModule : Module
                         new TrsComp { scale = 1.0f },
                         new LocalTrsComp { scale = 1.0f },
                         new SpriteComp { drawOrder = 2 },
-                        new AnimComp
-                        {
-                            anim = swingAtlas["Swing_1"],
-                            atlas = swingAtlas,
-                            timeScale = 1.0f,
-                        }
+                        new AnimComp { anim = swingAtlas["Swing_1"], atlas = swingAtlas }
                     );
 
-                IWeapon weapon = new MeleeWeapon(config, callbacks, x.Resolve<WorldContext>());
+                IWeapon weapon = new MeleeWeapon(
+                    config,
+                    callbacks,
+                    x.Resolve<WorldContext>(),
+                    x.Resolve<ModRegistry>()
+                );
                 return new WeaponElem(weapon, null);
             })
             .Named<WeaponElem>("simpleSword")

@@ -17,6 +17,7 @@ interface IEnemyBehaviour
         ref EnemyComp enemy,
         ref TrsComp trs,
         ref RigidComp rigid,
-        ref MoveComp moveComp
+        ref MoveComp moveComp,
+        ref ModComp modComp
     );
 }

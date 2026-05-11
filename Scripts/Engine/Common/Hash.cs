@@ -1,6 +1,6 @@
 namespace Engine.Common;
 
-struct Hash
+struct Hash : IEquatable<Hash>
 {
     public int val;
 
@@ -13,4 +13,6 @@ struct Hash
     public override int GetHashCode() => HashCode.Combine(val);
 
     public override bool Equals(object? obj) => obj is Hash hash && val == hash.val;
+
+    public bool Equals(Hash other) => val == other.val;
 }

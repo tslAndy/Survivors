@@ -2,6 +2,5 @@ namespace Components.Characters;
 
 struct MoveComp
 {
-    public float maxSpeed,
-        speedFactor;
+    public float maxSpeed;
 }

@@ -7,6 +7,7 @@ using Components.Physics;
 using Engine.Animations;
 using Engine.Common;
 using Engine.Input;
+using Systems.Basic;
 using Systems.Physics;
 using Utils;
 
@@ -23,13 +24,21 @@ partial class PlayerSys : BaseSystem<World, float>
     private readonly Hash WalkGroupHash = AnimAtlas.CountHash("Walk");
     private readonly Hash RunGroupHash = AnimAtlas.CountHash("Run");
 
+    private readonly Hash _moveFactor;
+
     private readonly int _wallsLayer;
 
-    public PlayerSys(World world, InputHandler inputHandler, WorldContext context)
+    public PlayerSys(
+        World world,
+        InputHandler inputHandler,
+        WorldContext context,
+        ModRegistry modRegistry
+    )
         : base(world)
     {
         _inputHandler = inputHandler;
         _context = context;
+        _moveFactor = modRegistry["moveFactor"];
         _wallsLayer = context.layerMap["Walls"];
     }
 
@@ -69,7 +78,8 @@ partial class PlayerSys : BaseSystem<World, float>
         ref PlayerComp player,
         ref AnimComp animator,
         ref RigidComp rigid,
-        ref MoveComp moveComp
+        ref MoveComp moveComp,
+        ref ModComp modComp
     )
     {
         Vector2 input = _inputHandler.GetInput();
@@ -78,15 +88,39 @@ partial class PlayerSys : BaseSystem<World, float>
         switch (player.state)
         {
             case PlayerState.Idle:
-                Idle(input, modifier, ref player, ref animator, ref rigid, ref moveComp);
+                Idle(
+                    input,
+                    modifier,
+                    ref player,
+                    ref animator,
+                    ref rigid,
+                    ref moveComp,
+                    ref modComp
+                );
                 return;
 
             case PlayerState.Walk:
-                Walk(input, modifier, ref player, ref animator, ref rigid, ref moveComp);
+                Walk(
+                    input,
+                    modifier,
+                    ref player,
+                    ref animator,
+                    ref rigid,
+                    ref moveComp,
+                    ref modComp
+                );
                 return;
 
             case PlayerState.Run:
-                Run(input, modifier, ref player, ref animator, ref rigid, ref moveComp);
+                Run(
+                    input,
+                    modifier,
+                    ref player,
+                    ref animator,
+                    ref rigid,
+                    ref moveComp,
+                    ref modComp
+                );
                 return;
 
             case PlayerState.Die:
@@ -100,7 +134,8 @@ partial class PlayerSys : BaseSystem<World, float>
         ref PlayerComp player,
         ref AnimComp animator,
         ref RigidComp rigid,
-        ref MoveComp moveComp
+        ref MoveComp moveComp,
+        ref ModComp modComp
     )
     {
         rigid.velocity = Vector2.Zero;
@@ -126,7 +161,8 @@ partial class PlayerSys : BaseSystem<World, float>
         ref PlayerComp player,
         ref AnimComp animator,
         ref RigidComp rigid,
-        ref MoveComp moveComp
+        ref MoveComp moveComp,
+        ref ModComp modComp
     )
     {
         if (input.LengthSquared() < 0.001f)
@@ -143,7 +179,7 @@ partial class PlayerSys : BaseSystem<World, float>
             return;
         }
 
-        rigid.velocity = 0.75f * moveComp.maxSpeed * moveComp.speedFactor * input;
+        rigid.velocity = 0.75f * moveComp.maxSpeed * modComp[_moveFactor] * input;
 
         AnimDir animDir = input.AsAnimDir();
         if (animDir != animator.animDir)
@@ -156,7 +192,8 @@ partial class PlayerSys : BaseSystem<World, float>
         ref PlayerComp player,
         ref AnimComp animator,
         ref RigidComp rigid,
-        ref MoveComp moveComp
+        ref MoveComp moveComp,
+        ref ModComp modComp
     )
     {
         if (input.LengthSquared() < 0.001f)
@@ -173,7 +210,7 @@ partial class PlayerSys : BaseSystem<World, float>
             return;
         }
 
-        rigid.velocity = moveComp.maxSpeed * moveComp.speedFactor * input;
+        rigid.velocity = moveComp.maxSpeed * modComp[_moveFactor] * input;
 
         AnimDir animDir = input.AsAnimDir();
         if (animDir != animator.animDir)
