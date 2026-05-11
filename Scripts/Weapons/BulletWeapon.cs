@@ -2,6 +2,7 @@ using System.Numerics;
 using Arch.Core;
 using Components.Basic;
 using Components.Fighting;
+using Components.Other;
 using Components.Physics;
 using Engine.Animations;
 using Engine.Common;
@@ -17,9 +18,14 @@ struct BulletConfig
     public Sprite? sprite;
 
     public float velocity,
-        radius;
+        radius,
+        lifetime;
+
     public int bulletLayer,
         drawOrder;
+
+    public bool perforate,
+        bounce;
 }
 
 abstract class BulletWeapon : Weapon, IBulletWeapon
@@ -68,31 +74,34 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
         };
         CollComp coll = new CollComp { radius = bulletConfig.radius };
         BulletComp bullet = new BulletComp { owner = owner, weapon = this };
+        TimerDestroyComp destroyComp = new TimerDestroyComp { time = bulletConfig.lifetime };
 
         SpriteComp sprite = new SpriteComp { drawOrder = bulletConfig.drawOrder };
         if (bulletConfig.sprite != null)
         {
             sprite.sprite = bulletConfig.sprite;
 
-            context.world.Create<SpriteComp, TrsComp, RigidComp, CollComp, BulletComp>(
-                sprite,
-                trs,
-                rigid,
-                coll,
-                bullet
-            );
+            context.world.Create<
+                SpriteComp,
+                TrsComp,
+                RigidComp,
+                CollComp,
+                BulletComp,
+                TimerDestroyComp
+            >(sprite, trs, rigid, coll, bullet, destroyComp);
         }
         else if (bulletConfig.anim != null)
         {
             AnimComp anim = new AnimComp { anim = bulletConfig.anim };
-            context.world.Create<AnimComp, SpriteComp, TrsComp, RigidComp, CollComp, BulletComp>(
-                anim,
-                sprite,
-                trs,
-                rigid,
-                coll,
-                bullet
-            );
+            context.world.Create<
+                AnimComp,
+                SpriteComp,
+                TrsComp,
+                RigidComp,
+                CollComp,
+                BulletComp,
+                TimerDestroyComp
+            >(anim, sprite, trs, rigid, coll, bullet, destroyComp);
         }
     }
 }

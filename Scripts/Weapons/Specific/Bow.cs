@@ -4,7 +4,6 @@ using Arch.Core.Extensions;
 using Components.Basic;
 using Components.Fighting;
 using Components.Physics;
-using Engine.Common;
 using Systems;
 using Systems.Basic;
 using Systems.Physics;
@@ -58,13 +57,28 @@ class Bow : BulletWeapon, IBulletWeapon
 
         ref ModComp modComp = ref entity.Get<ModComp>();
 
-        for (int i = 0; i < overlap.Count; i++)
-            Damage(entity, ref modComp, overlap[i]);
-
-        if (overlap.Count != 0)
+        if (bulletConfig.perforate)
         {
-            context.commandBuffer.Destroy(bullet);
-            return;
+            for (int i = 0; i < overlap.Count; i++)
+            {
+                Entity enemy = overlap[i];
+                if (
+                    context.spatial.collRegistry.AddColl(bullet, enemy)
+                    == CollisionRegistry.CollState.Enter
+                )
+                    Damage(entity, ref modComp, enemy);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < overlap.Count; i++)
+                Damage(entity, ref modComp, overlap[i]);
+
+            if (overlap.Count != 0)
+            {
+                context.commandBuffer.Destroy(bullet);
+                return;
+            }
         }
 
         using CachedList<TileColl> tileOverlap = CachedList<TileColl>.Create();
@@ -74,7 +88,20 @@ class Bow : BulletWeapon, IBulletWeapon
             context.layerMap["Walls"],
             tileOverlap
         );
-        if (tileOverlap.Count != 0)
+
+        if (bulletConfig.bounce)
+        {
+            if (tileOverlap.Count == 0)
+                return;
+
+            ref TileColl tileColl = ref tileOverlap[0];
+            trs.position += 1.0001f * tileColl.depth * tileColl.normal;
+            rigid.velocity = Vector2.Reflect(rigid.velocity, tileColl.normal);
+            trs.rotation = Single.RadiansToDegrees(MathF.Atan2(rigid.velocity.Y, rigid.velocity.X));
+        }
+        else if (tileOverlap.Count != 0)
+        {
             context.commandBuffer.Destroy(bullet);
+        }
     }
 }

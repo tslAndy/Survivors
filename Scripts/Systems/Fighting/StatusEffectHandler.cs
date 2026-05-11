@@ -11,6 +11,7 @@ class StatusEffectHandler
     private const float MAX_DPS = 100;
 
     private readonly Hash _moveHash,
+        _animTimeHash,
         _detectRadiusHash,
         _attackSpeedHash,
         _damageTakeHash,
@@ -21,6 +22,7 @@ class StatusEffectHandler
     public StatusEffectHandler(ModRegistry modRegistry)
     {
         _moveHash = modRegistry["moveFactor"];
+        _animTimeHash = modRegistry["animTimeFactor"];
         _detectRadiusHash = modRegistry["detectRadiusFactor"];
         _attackSpeedHash = modRegistry["attackSpeedFactor"];
         _damageTakeHash = modRegistry["damageTakeFactor"];
@@ -106,16 +108,16 @@ class StatusEffectHandler
             case StatusEffectType.AttackSpeedIncrease:
             case StatusEffectType.AttackSpeedDescrease:
                 entity.Get<ModComp>()[_attackSpeedHash] *= value;
-                break;
-            // ref WeaponComp weapon = ref entity.Get<WeaponComp>();
-            // weapon.dpsFactor *= value;
-            // for (int i = 0; i < weapon.weapons.Count; i++)
-            //     weapon.weapons[i].entity?.Get<AnimComp>().timeScale = effect.val;
 
-            // ref ShieldComp shield = ref entity.Get<ShieldComp>();
-            // shield.dpsFactor *= value;
-            // for (int i = 0; i < shield.shields.Count; i++)
-            //     shield.shields[i].entity?.Get<AnimComp>().timeScale = effect.val;
+                ref WeaponComp weapon = ref entity.Get<WeaponComp>();
+                for (int i = 0; i < weapon.weapons.Count; i++)
+                    weapon.weapons[i].entity?.Get<ModComp>()[_animTimeHash] *= value;
+
+                ref ShieldComp shield = ref entity.Get<ShieldComp>();
+                for (int i = 0; i < shield.shields.Count; i++)
+                    shield.shields[i].entity?.Get<ModComp>()[_animTimeHash] *= value;
+
+                break;
 
             case StatusEffectType.Haste:
             case StatusEffectType.Slowness:

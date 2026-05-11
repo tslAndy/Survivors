@@ -34,8 +34,11 @@ class WeaponsModule : Module
                         .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")["arrow_1"],
                     velocity = 8.0f,
                     radius = 0.25f,
+                    lifetime = 4.0f,
                     bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
                     drawOrder = 2,
+                    perforate = true,
+                    bounce = true,
                 };
 
                 WeaponCallbacks callbacks = new WeaponCallbacks { };

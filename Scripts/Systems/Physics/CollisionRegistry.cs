@@ -37,15 +37,21 @@ class CollisionRegistry
     }
 
     // should be called before GetCollState
-    public void AddColl(Entity first, Entity second)
+    public CollState AddColl(Entity first, Entity second)
     {
         if (_collStates.TryGetValue((first, second), out CollState state))
+        {
             _collStates[(first, second)] = CollState.Stay;
+            return CollState.Stay;
+        }
         else
+        {
             _collStates[(first, second)] = CollState.Enter;
+            return CollState.Enter;
+        }
     }
 
-    public CollState GetCollState(Entity first, Entity second)
+    public CollState GetColl(Entity first, Entity second)
     {
         if (_collStates.TryGetValue((first, second), out CollState state))
             return state;
