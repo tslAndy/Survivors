@@ -135,12 +135,8 @@ partial class TileCollSys : BaseSystem<World, float>
             if (chunk[x % TileChunk.SIZE, y % TileChunk.SIZE] != null)
             {
                 Vector2 norm = new Vector2(-moveX, -moveY);
-
-                if (Vector2.Dot(norm, rayEnd - rayStart) < 0.0f)
-                {
-                    result.Add(new TileColl(new Vector2Int(x, y), pos, norm, 0.0f));
-                    break;
-                }
+                result.Add(new TileColl(new Vector2Int(x, y), pos, norm, 0.0f));
+                break;
             }
 
             Vector2 t = new Vector2(cx + sx - pos.X, cy + sy - pos.Y) * invDelta;
