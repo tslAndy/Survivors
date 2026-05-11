@@ -4,6 +4,7 @@ using Components.Basic;
 using Components.Fighting;
 using Components.Physics;
 using Engine.Animations;
+using Engine.Common;
 using Engine.Sprites;
 using Systems;
 using Systems.Basic;
@@ -24,6 +25,7 @@ struct BulletConfig
 abstract class BulletWeapon : Weapon, IBulletWeapon
 {
     protected readonly BulletConfig bulletConfig;
+    protected readonly Hash bulletSpeedFactor;
 
     public BulletWeapon(
         BulletConfig bulletConfig,
@@ -35,6 +37,7 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
         : base(config, callbacks, context, modRegistry)
     {
         this.bulletConfig = bulletConfig;
+        this.bulletSpeedFactor = modRegistry["bulletSpeedFactor"];
     }
 
     public abstract void UpdateBullet(
@@ -45,7 +48,12 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
         ref CollComp coll
     );
 
-    protected void InstantiateBullet(Entity owner, Vector2 position, Vector2 direction)
+    protected void InstantiateBullet(
+        Entity owner,
+        ref ModComp modComp,
+        Vector2 position,
+        Vector2 direction
+    )
     {
         TrsComp trs = new TrsComp
         {
@@ -54,7 +62,10 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
             scale = 1.0f,
         };
 
-        RigidComp rigid = new RigidComp { velocity = bulletConfig.velocity * direction };
+        RigidComp rigid = new RigidComp
+        {
+            velocity = bulletConfig.velocity * direction * modComp[bulletSpeedFactor],
+        };
         CollComp coll = new CollComp { radius = bulletConfig.radius };
         BulletComp bullet = new BulletComp { owner = owner, weapon = this };
 

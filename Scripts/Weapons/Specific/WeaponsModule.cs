@@ -60,7 +60,7 @@ class WeaponsModule : Module
                     baseDamage = 2,
                     critDamage = 5,
                     critChance = 30,
-                    attackTime = 0.1f,
+                    attackTime = 0.3f,
                     detectRadius = 4.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
                 };
@@ -71,7 +71,7 @@ class WeaponsModule : Module
                 {
                     rays = 10,
                     length = 10.0f,
-                    rotationSpeed = Single.DegreesToRadians(180.0f),
+                    rotationSpeed = Single.DegreesToRadians(90.0f),
                     thick = 0.1f,
                     color = Color.Red,
                 };
@@ -97,7 +97,7 @@ class WeaponsModule : Module
                     critDamage = 50,
                     critChance = 30,
                     attackTime = 0.75f,
-                    detectRadius = 4.0f,
+                    detectRadius = 2.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
                 };
 
@@ -105,13 +105,14 @@ class WeaponsModule : Module
 
                 AnimAtlas swingAtlas = x.Resolve<AnimAtlasManager>()
                     .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas");
-
+                //
                 Entity swing = x.Resolve<World>()
-                    .Create<TrsComp, LocalTrsComp, SpriteComp, AnimComp>(
+                    .Create<TrsComp, LocalTrsComp, SpriteComp, AnimComp, ModComp>(
                         new TrsComp { scale = 1.0f },
                         new LocalTrsComp { scale = 1.0f },
                         new SpriteComp { drawOrder = 2 },
-                        new AnimComp { anim = swingAtlas["Swing_1"], atlas = swingAtlas }
+                        new AnimComp { anim = swingAtlas["Swing_1"], atlas = swingAtlas },
+                        new ModComp()
                     );
 
                 IWeapon weapon = new MeleeWeapon(
@@ -120,7 +121,7 @@ class WeaponsModule : Module
                     x.Resolve<WorldContext>(),
                     x.Resolve<ModRegistry>()
                 );
-                return new WeaponElem(weapon, null);
+                return new WeaponElem(weapon, swing);
             })
             .Named<WeaponElem>("simpleSword")
             .InstancePerDependency();

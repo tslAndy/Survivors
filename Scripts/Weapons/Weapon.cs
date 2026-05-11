@@ -39,7 +39,8 @@ class Weapon : IWeapon
     protected readonly WeaponCallbacks callbacks;
     protected readonly WorldContext context;
 
-    private readonly Hash _damageGiveFactor;
+    protected readonly Hash damageGiveHash;
+    protected readonly Hash detectRadiusHash;
 
     public Weapon(
         WeaponConfig config,
@@ -53,7 +54,8 @@ class Weapon : IWeapon
         this.context = context;
 
         this._time = 0.0f;
-        this._damageGiveFactor = modRegistry["damageGiveFactor"];
+        this.damageGiveHash = modRegistry["damageGiveFactor"];
+        this.detectRadiusHash = modRegistry["detectRadiusFactor"];
     }
 
     public void Update(Entity entity, ref ModComp modComp, Vector2 position, float dt)
@@ -82,7 +84,7 @@ class Weapon : IWeapon
         ref DamageComp damageComp = ref target.Get<DamageComp>();
 
         // count crit chance
-        float damageFactor = modComp[_damageGiveFactor];
+        float damageFactor = modComp[damageGiveHash];
         float critChance = config.critChance;
         callbacks.getCritChance?.Invoke(source, target, ref critChance);
 

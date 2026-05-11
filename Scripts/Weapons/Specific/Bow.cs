@@ -4,6 +4,7 @@ using Arch.Core.Extensions;
 using Components.Basic;
 using Components.Fighting;
 using Components.Physics;
+using Engine.Common;
 using Systems;
 using Systems.Basic;
 using Systems.Physics;
@@ -28,14 +29,19 @@ class Bow : BulletWeapon, IBulletWeapon
         context.spatial.GetOverlap(
             entity,
             position,
-            config.detectRadius,
+            config.detectRadius * modComp[detectRadiusHash],
             config.targetLayer,
             overlap
         );
         for (int i = 0; i < overlap.Count; i++)
         {
             Vector2 enemyPos = overlap[i].Get<TrsComp>().position;
-            InstantiateBullet(entity, position, Vector2.Normalize(enemyPos - position));
+            InstantiateBullet(
+                entity,
+                ref modComp,
+                position,
+                Vector2.Normalize(enemyPos - position)
+            );
         }
     }
 

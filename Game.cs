@@ -146,12 +146,12 @@ class EntitiesModule : Module
                         new ModComp()
                     );
 
-                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleLaser");
+                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleSword");
                 weapons.Add(weaponElem);
                 if (weaponElem.entity != null)
                     player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);
 
-                player.Get<ModComp>()[x.Resolve<ModRegistry>()["moveFactor"]] = 2.0f;
+                player.Get<ModComp>()[x.Resolve<ModRegistry>()["detectRadiusFactor"]] = 2.0f;
 
                 return player;
             })

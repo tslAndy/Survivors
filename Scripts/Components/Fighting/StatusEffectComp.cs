@@ -40,8 +40,14 @@ enum StatusEffectType : byte
     Delicacy,
 
     // attack
-    Rage,
-    Weaken,
+    DamageIncrease,
+    DamageDecrease,
+    AttackSpeedIncrease,
+    AttackSpeedDescrease,
+
+    // radius
+    ShortSight,
+    FarSight,
 
     // speed
     Slowness,
@@ -70,8 +76,15 @@ enum LongStatEffType : long
     Delicacy = 1 << StatusEffectType.Delicacy,
 
     // attack
-    Rage = 1 << StatusEffectType.Rage,
-    Weaken = 1 << StatusEffectType.Weaken,
+    DamageIncrease = 1 << StatusEffectType.DamageIncrease,
+    DamageDecrease = 1 << StatusEffectType.DamageDecrease,
+    AttackSpeedIncrease = 1 << StatusEffectType.AttackSpeedIncrease,
+    AttackSpeedDescrease = 1 << StatusEffectType.AttackSpeedDescrease,
+
+    // TODO: projectile speed
+
+    ShortSight = 1 << StatusEffectType.ShortSight,
+    FarSight = 1 << StatusEffectType.FarSight,
 
     // speed
     Slowness = 1 << StatusEffectType.Slowness,
