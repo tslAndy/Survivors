@@ -92,16 +92,21 @@ class WeaponsModule : Module
         builder
             .Register<WeaponElem>(x =>
             {
-                SpinConfig spinConfig = new SpinConfig
+                BulletConfig bulletConfig = new BulletConfig
                 {
                     sprite = x.Resolve<SpriteAtlasManager>()
                         .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")["chakram_1"],
+                    radius = 0.25f,
+                    lifetime = float.MaxValue,
+                    bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
+                    drawOrder = 2,
+                };
 
+                SpinConfig spinConfig = new SpinConfig
+                {
                     rotSpeed = 90.0f,
                     circleRadius = 2.5f,
-                    bulletRadius = 0.5f,
                     bulletsCount = 10,
-                    drawOrder = 2,
                 };
 
                 WeaponConfig config = new WeaponConfig
@@ -128,6 +133,7 @@ class WeaponsModule : Module
 
                 IWeapon weapon = new SpinWeapon(
                     spinConfig,
+                    bulletConfig,
                     config,
                     callbacks,
                     x.Resolve<WorldContext>()

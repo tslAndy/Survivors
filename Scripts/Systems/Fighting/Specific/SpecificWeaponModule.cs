@@ -7,6 +7,5 @@ class SpecificWeaponModule : Module
     protected override void Load(ContainerBuilder builder)
     {
         builder.RegisterType<BulletWeaponSys>();
-        builder.RegisterType<SpinWeaponSys>();
     }
 }

@@ -76,8 +76,8 @@ class BulletWeapon : Weapon, IBulletWeapon
         }
     }
 
-    public void UpdateBullet(
-        Entity entity,
+    public virtual void UpdateBullet(
+        Entity owner,
         Entity bullet,
         ref TrsComp trs,
         ref RigidComp rigid,
@@ -93,7 +93,7 @@ class BulletWeapon : Weapon, IBulletWeapon
             overlap
         );
 
-        ref ModComp modComp = ref entity.Get<ModComp>();
+        ref ModComp modComp = ref owner.Get<ModComp>();
 
         if (bulletConfig.perforate)
         {
@@ -104,13 +104,13 @@ class BulletWeapon : Weapon, IBulletWeapon
                     context.spatialSys.collRegistry.AddColl(bullet, enemy)
                     == CollisionRegistry.CollState.Enter
                 )
-                    Damage(entity, ref modComp, enemy);
+                    Damage(owner, ref modComp, enemy);
             }
         }
         else
         {
             for (int i = 0; i < overlap.Count; i++)
-                Damage(entity, ref modComp, overlap[i]);
+                Damage(owner, ref modComp, overlap[i]);
 
             if (overlap.Count != 0)
             {
@@ -143,7 +143,7 @@ class BulletWeapon : Weapon, IBulletWeapon
         }
     }
 
-    private void InstantiateBullet(
+    protected Entity InstantiateBullet(
         Entity owner,
         ref ModComp modComp,
         Vector2 position,
@@ -170,7 +170,7 @@ class BulletWeapon : Weapon, IBulletWeapon
         {
             sprite.sprite = bulletConfig.sprite;
 
-            context.world.Create<
+            return context.world.Create<
                 SpriteComp,
                 TrsComp,
                 RigidComp,
@@ -182,7 +182,7 @@ class BulletWeapon : Weapon, IBulletWeapon
         else if (bulletConfig.anim != null)
         {
             AnimComp anim = new AnimComp { anim = bulletConfig.anim };
-            context.world.Create<
+            return context.world.Create<
                 AnimComp,
                 SpriteComp,
                 TrsComp,
@@ -192,5 +192,7 @@ class BulletWeapon : Weapon, IBulletWeapon
                 TimerDestroyComp
             >(anim, sprite, trs, rigid, coll, bullet, destroyComp);
         }
+
+        throw new Exception();
     }
 }

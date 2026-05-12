@@ -43,7 +43,6 @@ class SystemsModule : Module
                     x.Resolve<BehaviourSys>(),
                     // weapon systems
                     x.Resolve<BulletWeaponSys>(),
-                    x.Resolve<SpinWeaponSys>(),
                     // fighting
                     x.Resolve<WeaponSys>(),
                     x.Resolve<ShieldSys>(),
