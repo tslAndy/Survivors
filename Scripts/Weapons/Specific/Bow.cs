@@ -41,6 +41,7 @@ class Bow : BulletWeapon
             Vector2 enemyPos = overlap[i].Get<TrsComp>().position;
             InstantiateBullet(
                 entity,
+                extra,
                 ref modComp,
                 position,
                 Vector2.Normalize(enemyPos - position)
@@ -50,6 +51,7 @@ class Bow : BulletWeapon
 
     public override void UpdateBullet(
         Entity owner,
+        Entity? extra,
         Entity bullet,
         ref TrsComp trs,
         ref RigidComp rigid,

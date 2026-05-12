@@ -20,6 +20,13 @@ partial class BulletWeaponSys : BaseSystem<World, float>
         ref CollComp coll
     )
     {
-        bullet.weapon.UpdateBullet(bullet.owner, entity, ref trs, ref rigid, ref coll);
+        bullet.weapon.UpdateBullet(
+            bullet.owner,
+            bullet.extra,
+            entity,
+            ref trs,
+            ref rigid,
+            ref coll
+        );
     }
 }

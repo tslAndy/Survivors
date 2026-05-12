@@ -53,7 +53,7 @@ class SpinWeapon : BulletWeapon
         // if bullet weren't initialized
         ref TrsComp trs = ref extra.Value.Get<TrsComp>();
         if (trs.descs.Count == 0)
-            Instantiate(entity, ref trs);
+            Instantiate(entity, extra, ref trs);
 
         ref LocalTrsComp localTrs = ref extra.Value.Get<LocalTrsComp>();
         localTrs.rotation += dt * spinConfig.rotSpeed;
@@ -61,6 +61,7 @@ class SpinWeapon : BulletWeapon
 
     public override void UpdateBullet(
         Entity owner,
+        Entity? extra,
         Entity bullet,
         ref TrsComp trs,
         ref RigidComp rigid,
@@ -89,7 +90,7 @@ class SpinWeapon : BulletWeapon
         }
     }
 
-    private void Instantiate(Entity owner, ref TrsComp centerTrs)
+    private void Instantiate(Entity owner, Entity? extra, ref TrsComp centerTrs)
     {
         ref ModComp mod = ref owner.Get<ModComp>();
 
@@ -100,7 +101,7 @@ class SpinWeapon : BulletWeapon
             Vector2 position = spinConfig.circleRadius * dir;
             LocalTrsComp localTrs = new LocalTrsComp { scale = 1.0f, position = position };
 
-            Entity bullet = InstantiateBullet(owner, ref mod, Vector2.Zero, Vector2.Zero);
+            Entity bullet = InstantiateBullet(owner, extra, ref mod, Vector2.Zero, Vector2.Zero);
             bullet.Add<LocalTrsComp>(localTrs);
 
             centerTrs.descs.Add(bullet);

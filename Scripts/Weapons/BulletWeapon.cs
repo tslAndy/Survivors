@@ -46,6 +46,7 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
 
     public abstract void UpdateBullet(
         Entity owner,
+        Entity? extra,
         Entity bullet,
         ref TrsComp trs,
         ref RigidComp rigid,
@@ -54,6 +55,7 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
 
     protected Entity InstantiateBullet(
         Entity owner,
+        Entity? extra,
         ref ModComp modComp,
         Vector2 position,
         Vector2 direction
@@ -72,7 +74,12 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
         };
 
         CollComp coll = new CollComp { radius = bulletConfig.radius };
-        BulletComp bullet = new BulletComp { owner = owner, weapon = this };
+        BulletComp bullet = new BulletComp
+        {
+            owner = owner,
+            extra = extra,
+            weapon = this,
+        };
         TimerDestroyComp destroyComp = new TimerDestroyComp { time = bulletConfig.lifetime };
 
         SpriteComp sprite = new SpriteComp { drawOrder = bulletConfig.drawOrder };
