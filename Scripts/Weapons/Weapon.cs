@@ -4,6 +4,7 @@ using Arch.Core.Extensions;
 using Components.Basic;
 using Components.Fighting;
 using Engine.Common;
+using Raylib_cs;
 using Systems;
 using Systems.Basic;
 
@@ -19,6 +20,8 @@ struct WeaponConfig
 
     public float attackTime;
     public float detectRadius;
+
+    public Sound? sound;
 }
 
 struct WeaponCallbacks
@@ -71,6 +74,12 @@ class Weapon : IWeapon
     ) { }
 
     protected virtual void OnTimer(Entity entity, ref ModComp modComp, Vector2 position) { }
+
+    protected void PlayAttackSound()
+    {
+        if (config.sound != null)
+            context.soundSys.AddSound(config.sound.Value);
+    }
 
     protected void Damage(Entity source, ref ModComp modComp, Entity target)
     {

@@ -20,8 +20,10 @@ class MeleeWeapon : Weapon
 
     protected override void OnTimer(Entity entity, ref ModComp modComp, Vector2 position)
     {
+        PlayAttackSound();
+
         using CachedList<Entity> overlap = CachedList<Entity>.Create();
-        context.spatial.GetOverlap(
+        context.spatialSys.GetOverlap(
             entity,
             position,
             config.detectRadius * modComp[DetectRadiusHash],

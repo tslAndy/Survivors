@@ -5,7 +5,6 @@ using Components.Fighting;
 using Engine.Animations;
 using Engine.Common;
 using Engine.Sprites;
-using Raylib_cs;
 using Systems;
 
 namespace Weapons.Specific;
@@ -51,36 +50,6 @@ class WeaponsModule : Module
                 return new WeaponElem(weapon, null);
             })
             .Named<WeaponElem>("simpleBow")
-            .InstancePerDependency();
-
-        builder
-            .Register<WeaponElem>(x =>
-            {
-                WeaponConfig config = new WeaponConfig
-                {
-                    baseDamage = 2,
-                    critDamage = 5,
-                    critChance = 30,
-                    attackTime = 0.3f,
-                    detectRadius = 4.0f,
-                    targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
-                };
-
-                WeaponCallbacks callbacks = new WeaponCallbacks { };
-
-                RayConfig rayConfig = new RayConfig
-                {
-                    rays = 10,
-                    length = 10.0f,
-                    rotationSpeed = Single.DegreesToRadians(90.0f),
-                    thick = 0.1f,
-                    color = Color.Red,
-                };
-
-                IWeapon weapon = new Laser(rayConfig, config, callbacks, x.Resolve<WorldContext>());
-                return new WeaponElem(weapon, null);
-            })
-            .Named<WeaponElem>("simpleLaser")
             .InstancePerDependency();
 
         builder

@@ -1,6 +1,7 @@
 using Arch.Buffer;
 using Arch.Core;
 using Engine.Common;
+using Systems.Animation;
 using Systems.Physics;
 
 namespace Systems;
@@ -8,8 +9,9 @@ namespace Systems;
 class WorldContext
 {
     public readonly World world;
-    public readonly SpatialSys spatial;
-    public readonly TileCollSys tileCollSys;
+    public readonly SpatialSys spatialSys;
+    public readonly TileCollSys tileSys;
+    public readonly SoundSys soundSys;
     public readonly CommandBuffer commandBuffer;
     public readonly LayerMap layerMap;
 
@@ -17,13 +19,15 @@ class WorldContext
         World world,
         SpatialSys spatial,
         TileCollSys tileCollSys,
+        SoundSys soundSys,
         CommandBuffer commandBuffer,
         LayerMap layerMap
     )
     {
         this.world = world;
-        this.spatial = spatial;
-        this.tileCollSys = tileCollSys;
+        this.spatialSys = spatial;
+        this.tileSys = tileCollSys;
+        this.soundSys = soundSys;
         this.commandBuffer = commandBuffer;
         this.layerMap = layerMap;
     }

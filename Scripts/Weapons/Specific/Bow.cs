@@ -22,8 +22,10 @@ class Bow : BulletWeapon, IBulletWeapon
 
     protected override void OnTimer(Entity entity, ref ModComp modComp, Vector2 position)
     {
+        PlayAttackSound();
+
         using CachedList<Entity> overlap = CachedList<Entity>.Create();
-        context.spatial.GetOverlap(
+        context.spatialSys.GetOverlap(
             entity,
             position,
             config.detectRadius * modComp[DetectRadiusHash],
@@ -51,7 +53,13 @@ class Bow : BulletWeapon, IBulletWeapon
     )
     {
         using CachedList<Entity> overlap = CachedList<Entity>.Create();
-        context.spatial.GetOverlap(entity, trs.position, coll.radius, config.targetLayer, overlap);
+        context.spatialSys.GetOverlap(
+            entity,
+            trs.position,
+            coll.radius,
+            config.targetLayer,
+            overlap
+        );
 
         ref ModComp modComp = ref entity.Get<ModComp>();
 
@@ -61,7 +69,7 @@ class Bow : BulletWeapon, IBulletWeapon
             {
                 Entity enemy = overlap[i];
                 if (
-                    context.spatial.collRegistry.AddColl(bullet, enemy)
+                    context.spatialSys.collRegistry.AddColl(bullet, enemy)
                     == CollisionRegistry.CollState.Enter
                 )
                     Damage(entity, ref modComp, enemy);
@@ -80,7 +88,7 @@ class Bow : BulletWeapon, IBulletWeapon
         }
 
         using CachedList<TileColl> tileOverlap = CachedList<TileColl>.Create();
-        context.tileCollSys.GetOverlap(
+        context.tileSys.GetOverlap(
             trs.position,
             coll.radius,
             context.layerMap["Walls"],

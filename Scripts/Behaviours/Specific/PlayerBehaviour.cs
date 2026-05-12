@@ -51,7 +51,7 @@ class PlayerBehaviour : BaseBehaviour
     private void SolveCollisions(ref EntityContext entityCtx)
     {
         using CachedList<TileColl> tileColls = CachedList<TileColl>.Create();
-        context.tileCollSys.GetOverlap(
+        context.tileSys.GetOverlap(
             entityCtx.trs.position,
             entityCtx.trs.scale * entityCtx.coll.radius,
             _wallsLayer,
