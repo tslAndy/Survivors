@@ -114,7 +114,6 @@ class EntitiesModule : Module
                         HealthComp,
                         StatusEffectComp,
                         LootCollComp,
-                        LineComp,
                         ModComp
                     >(
                         new PlayerTag(),
@@ -149,11 +148,10 @@ class EntitiesModule : Module
                             runningEffects = CachedList<StatusEffect>.Create(),
                         },
                         new LootCollComp { radius = 15.0f, speed = 10.0f },
-                        new LineComp { drawOrder = 0, lines = CachedList<Line>.Create() },
                         new ModComp()
                     );
 
-                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleSpin");
+                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleLaser");
                 weapons.Add(weaponElem);
                 if (weaponElem.entity != null)
                     player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);

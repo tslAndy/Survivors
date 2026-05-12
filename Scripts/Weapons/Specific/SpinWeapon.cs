@@ -63,6 +63,13 @@ class SpinWeapon : Weapon, ISpinWeapon
         }
     }
 
+    protected override void OnTimer(
+        Entity entity,
+        Entity? extra,
+        ref ModComp modComp,
+        Vector2 position
+    ) => PlayAttackSound();
+
     protected override void OnUpdate(
         Entity entity,
         Entity? extra,

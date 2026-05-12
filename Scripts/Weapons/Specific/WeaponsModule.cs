@@ -7,6 +7,7 @@ using Engine.Animations;
 using Engine.Common;
 using Engine.Sounds;
 using Engine.Sprites;
+using Raylib_cs;
 using Systems;
 using Utils;
 
@@ -141,6 +142,58 @@ class WeaponsModule : Module
                 return new WeaponElem(weapon, center);
             })
             .Named<WeaponElem>("simpleSpin")
+            .InstancePerDependency();
+
+        builder
+            .Register<WeaponElem>(x =>
+            {
+                LaserConfig laserConfig = new LaserConfig
+                {
+                    raysCount = 4,
+                    start = 0.25f,
+                    end = 10.0f,
+                    thick = 0.1f,
+                    rotSpeed = 40,
+                    color = Color.Red,
+                };
+
+                WeaponConfig config = new WeaponConfig
+                {
+                    baseDamage = 10,
+                    critDamage = 20,
+                    critChance = 30,
+                    attackTime = 0.1f,
+                    detectRadius = 2.0f,
+                    targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                };
+
+                WeaponCallbacks callbacks = new WeaponCallbacks
+                {
+                    onBaseDamage = (attacker, target, ref val) =>
+                    {
+                        attacker
+                            .Get<StatusEffectComp>()
+                            .newEffects.Add(
+                                new StatusEffect(StatusEffectType.AttackSpeedIncrease, 10.0f, 3.0f)
+                            );
+                    },
+                };
+
+                IWeapon weapon = new LaserWeapon(
+                    laserConfig,
+                    config,
+                    callbacks,
+                    x.Resolve<WorldContext>()
+                );
+
+                Entity extra = x.Resolve<World>()
+                    .Create<LineComp, TrsComp, LocalTrsComp>(
+                        new LineComp { lines = CachedList<Line>.Create() }
+                    );
+
+                return new WeaponElem(weapon, extra);
+            })
+            .Named<WeaponElem>("simpleLaser")
             .InstancePerDependency();
     }
 }
