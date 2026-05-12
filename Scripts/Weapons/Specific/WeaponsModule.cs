@@ -4,6 +4,7 @@ using Components.Basic;
 using Components.Fighting;
 using Engine.Animations;
 using Engine.Common;
+using Engine.Sounds;
 using Engine.Sprites;
 using Systems;
 
@@ -41,7 +42,7 @@ class WeaponsModule : Module
 
                 WeaponCallbacks callbacks = new WeaponCallbacks { };
 
-                IWeapon weapon = new Bow(
+                IWeapon weapon = new BulletWeapon(
                     bulletConfig,
                     config,
                     callbacks,
