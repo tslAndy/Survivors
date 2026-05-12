@@ -1,33 +1,19 @@
 using Engine.Common;
-using Utils;
 
 namespace Systems.Basic;
 
-class ModRegistry
+static class ModRegistry
 {
-    private readonly Elem[] _elems;
+    private static readonly List<string> _elems = new List<string>();
 
-    public ModRegistry(params string[] names)
+    public static Hash CountHash(string name)
     {
-        _elems = new Elem[names.Length];
-        for (int i = 0; i < names.Length; i++)
-            _elems[i] = new Elem { name = names[i], hash = new Hash(i) };
-    }
-
-    public Hash this[string name]
-    {
-        get
+        int ind = _elems.IndexOf(name);
+        if (ind < 0)
         {
-            int index = _elems.IndexOf((x, xname) => x.name == xname, name);
-            if (index < 0)
-                throw new ArgumentException("Wrong modifier name", nameof(name));
-            return _elems[index].hash;
+            ind = 0;
+            _elems.Add(name);
         }
-    }
-
-    private struct Elem
-    {
-        public string name;
-        public Hash hash;
+        return new Hash(ind);
     }
 }

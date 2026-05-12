@@ -2,20 +2,14 @@ using System.Numerics;
 using Arch.Core;
 using Components.Basic;
 using Systems;
-using Systems.Basic;
 using Utils;
 
 namespace Weapons.Specific;
 
 class MeleeWeapon : Weapon
 {
-    public MeleeWeapon(
-        WeaponConfig config,
-        WeaponCallbacks callbacks,
-        WorldContext context,
-        ModRegistry modRegistry
-    )
-        : base(config, callbacks, context, modRegistry) { }
+    public MeleeWeapon(WeaponConfig config, WeaponCallbacks callbacks, WorldContext context)
+        : base(config, callbacks, context) { }
 
     protected override void OnUpdate(
         Entity entity,
@@ -30,7 +24,7 @@ class MeleeWeapon : Weapon
         context.spatial.GetOverlap(
             entity,
             position,
-            config.detectRadius * modComp[detectRadiusHash],
+            config.detectRadius * modComp[DetectRadiusHash],
             config.targetLayer,
             overlap
         );

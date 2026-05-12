@@ -31,19 +31,17 @@ struct BulletConfig
 abstract class BulletWeapon : Weapon, IBulletWeapon
 {
     protected readonly BulletConfig bulletConfig;
-    protected readonly Hash bulletSpeedFactor;
+    protected readonly Hash BulletSpeedHash = ModRegistry.CountHash("bulletSpeedFactor");
 
     public BulletWeapon(
         BulletConfig bulletConfig,
         WeaponConfig config,
         WeaponCallbacks callbacks,
-        WorldContext context,
-        ModRegistry modRegistry
+        WorldContext context
     )
-        : base(config, callbacks, context, modRegistry)
+        : base(config, callbacks, context)
     {
         this.bulletConfig = bulletConfig;
-        this.bulletSpeedFactor = modRegistry["bulletSpeedFactor"];
     }
 
     public abstract void UpdateBullet(
@@ -70,7 +68,7 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
 
         RigidComp rigid = new RigidComp
         {
-            velocity = bulletConfig.velocity * direction * modComp[bulletSpeedFactor],
+            velocity = bulletConfig.velocity * direction * modComp[BulletSpeedHash],
         };
         CollComp coll = new CollComp { radius = bulletConfig.radius };
         BulletComp bullet = new BulletComp { owner = owner, weapon = this };

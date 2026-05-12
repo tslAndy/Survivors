@@ -9,13 +9,10 @@ namespace Systems.Fighting;
 
 partial class ShieldSys : BaseSystem<World, float>
 {
-    private readonly Hash _attackSpeedFactor;
+    private readonly Hash AttackSpeedHash = ModRegistry.CountHash("attackSpeedFactor");
 
-    public ShieldSys(World world, ModRegistry modRegistry)
-        : base(world)
-    {
-        _attackSpeedFactor = modRegistry["attackSpeedFactor"];
-    }
+    public ShieldSys(World world)
+        : base(world) { }
 
     [Query]
     private void UpdateShield(
@@ -28,7 +25,7 @@ partial class ShieldSys : BaseSystem<World, float>
         ref ModComp modComp
     )
     {
-        float dts = dt * modComp[_attackSpeedFactor];
+        float dts = dt * modComp[AttackSpeedHash];
         for (int i = 0; i < shield.shields.Count; i++)
             shield
                 .shields[i]

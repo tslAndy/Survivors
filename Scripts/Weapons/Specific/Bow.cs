@@ -5,7 +5,6 @@ using Components.Basic;
 using Components.Fighting;
 using Components.Physics;
 using Systems;
-using Systems.Basic;
 using Systems.Physics;
 using Utils;
 
@@ -17,10 +16,9 @@ class Bow : BulletWeapon, IBulletWeapon
         BulletConfig bulletConfig,
         WeaponConfig config,
         WeaponCallbacks callbacks,
-        WorldContext context,
-        ModRegistry modRegistry
+        WorldContext context
     )
-        : base(bulletConfig, config, callbacks, context, modRegistry) { }
+        : base(bulletConfig, config, callbacks, context) { }
 
     protected override void OnTimer(Entity entity, ref ModComp modComp, Vector2 position)
     {
@@ -28,7 +26,7 @@ class Bow : BulletWeapon, IBulletWeapon
         context.spatial.GetOverlap(
             entity,
             position,
-            config.detectRadius * modComp[detectRadiusHash],
+            config.detectRadius * modComp[DetectRadiusHash],
             config.targetLayer,
             overlap
         );

@@ -15,13 +15,12 @@ namespace Systems.Fighting;
 partial class DamageSys : BaseSystem<World, float>
 {
     private readonly CommandBuffer _commandBuffer;
-    private readonly Hash _damageTakeFactor;
+    private readonly Hash DamageTakeHash = ModRegistry.CountHash("damageTakeFactor");
 
-    public DamageSys(World world, CommandBuffer commandBuffer, ModRegistry modRegistry)
+    public DamageSys(World world, CommandBuffer commandBuffer)
         : base(world)
     {
         _commandBuffer = commandBuffer;
-        _damageTakeFactor = modRegistry["damageTakeFactor"];
     }
 
     [Query]
@@ -38,7 +37,7 @@ partial class DamageSys : BaseSystem<World, float>
         for (int i = 0; i < damage.hits.Count; i++)
         {
             ref Hit hit = ref damage.hits[i];
-            total += hit.damage > 0 ? hit.damage * modComp[_damageTakeFactor] : hit.damage;
+            total += hit.damage > 0 ? hit.damage * modComp[DamageTakeHash] : hit.damage;
             // if hit.damage > 0 it's damage, and should be scaled
             // else it's a regeneration, should not be scaled
         }

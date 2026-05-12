@@ -10,13 +10,12 @@ namespace Systems.Animation;
 partial class AnimSys : BaseSystem<World, float>
 {
     private readonly SoundSys soundSys;
-    private readonly Hash timeFactor;
+    private readonly Hash TimeFactorHash = ModRegistry.CountHash("animTimeFactor");
 
-    public AnimSys(World world, SoundSys soundSys, ModRegistry modRegistry)
+    public AnimSys(World world, SoundSys soundSys)
         : base(world)
     {
         this.soundSys = soundSys;
-        this.timeFactor = modRegistry["animTimeFactor"];
     }
 
     [Query]
@@ -34,7 +33,7 @@ partial class AnimSys : BaseSystem<World, float>
         if (animator.time == default)
             ChangeKey(anim.keys[0], ref spriteComp);
 
-        animator.time += dt * modComp[timeFactor];
+        animator.time += dt * modComp[TimeFactorHash];
         if (animator.time < anim.frameTime)
             return;
 

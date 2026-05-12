@@ -17,16 +17,14 @@ partial class LootCollectSys : BaseSystem<World, float>
     private readonly SpatialSys _spatial;
     private readonly int _lootLayer;
 
-    private readonly Hash _incomeFactor,
-        _radiusFactor;
+    private readonly Hash IncomeFactorHash = ModRegistry.CountHash("lootIncomeFactor"),
+        IncomeRadiusHash = ModRegistry.CountHash("lootRadiusFactor");
 
-    public LootCollectSys(World world, SpatialSys spatial, ModRegistry modRegistry, int lootLayer)
+    public LootCollectSys(World world, SpatialSys spatial, LayerMap layerMap)
         : base(world)
     {
         _spatial = spatial;
-        _incomeFactor = modRegistry["lootIncomeFactor"];
-        _radiusFactor = modRegistry["lootRadiusFactor"];
-        _lootLayer = lootLayer;
+        _lootLayer = layerMap["Loot"];
     }
 
     [Query]
@@ -42,7 +40,7 @@ partial class LootCollectSys : BaseSystem<World, float>
         _spatial.GetOverlap(
             entity,
             trs.position,
-            lootColl.radius * modComp[_radiusFactor],
+            lootColl.radius * modComp[IncomeRadiusHash],
             _lootLayer,
             overlap
         );
@@ -68,6 +66,6 @@ partial class LootCollectSys : BaseSystem<World, float>
             targTimerDestroy.time = 0.0f;
         }
 
-        lootColl.amount += (int)MathF.Floor(totalAmount * modComp[_incomeFactor]);
+        lootColl.amount += (int)MathF.Floor(totalAmount * modComp[IncomeFactorHash]);
     }
 }

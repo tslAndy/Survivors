@@ -14,19 +14,18 @@ namespace Behaviours.Specific;
 class PlayerBehaviour : BaseBehaviour
 {
     private readonly InputHandler _inputHandler;
-    private readonly Hash _moveFactor;
     private readonly int _wallsLayer;
 
     private readonly Hash IdleGroupHash = AnimAtlas.CountHash("Idle");
     private readonly Hash WalkGroupHash = AnimAtlas.CountHash("Walk");
+    private readonly Hash MoveFactorHash = ModRegistry.CountHash("moveFactor");
 
     private const float CORR_RATE = 0.4f;
 
-    public PlayerBehaviour(WorldContext context, InputHandler inputHandler, ModRegistry modRegistry)
+    public PlayerBehaviour(WorldContext context, InputHandler inputHandler)
         : base(context)
     {
         _inputHandler = inputHandler;
-        _moveFactor = modRegistry["moveFactor"];
         _wallsLayer = context.layerMap["Walls"];
     }
 
@@ -97,7 +96,7 @@ class PlayerBehaviour : BaseBehaviour
             return;
         }
 
-        entityCtx.rigid.velocity = entityCtx.move.maxSpeed * entityCtx.mod[_moveFactor] * input;
+        entityCtx.rigid.velocity = entityCtx.move.maxSpeed * entityCtx.mod[MoveFactorHash] * input;
 
         AnimDir animDir = input.AsAnimDir();
         if (animDir != entityCtx.animator.animDir)

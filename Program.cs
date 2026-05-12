@@ -93,3 +93,22 @@ class Program
  * так как вынесли модификаторы, можно сделать для врагов отдельные компоненты которые будут управлять оружием
  *
  * */
+
+/*
+
+MODIFIERS:
+
+moveFactor
+animTimeFactor
+
+attackSpeedFactor
+detectRadiusFactor
+
+bulletSpeedFactor
+
+damageGiveFactor
+damageTakeFactor
+
+lootRadiusFactor
+lootIncomeFactor
+*/

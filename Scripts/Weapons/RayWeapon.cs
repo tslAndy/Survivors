@@ -3,7 +3,6 @@ using Arch.Core;
 using Components.Basic;
 using Raylib_cs;
 using Systems;
-using Systems.Basic;
 
 namespace Weapons;
 
@@ -28,10 +27,9 @@ abstract class RayWeapon : Weapon
         RayConfig rayConfig,
         WeaponConfig config,
         WeaponCallbacks callbacks,
-        WorldContext context,
-        ModRegistry modRegistry
+        WorldContext context
     )
-        : base(config, callbacks, context, modRegistry)
+        : base(config, callbacks, context)
     {
         this.rayConfig = rayConfig;
     }

@@ -9,13 +9,10 @@ namespace Systems.Fighting;
 
 partial class WeaponSys : BaseSystem<World, float>
 {
-    private readonly Hash _attackSpeedFactor;
+    private readonly Hash AttackSpeedHash = ModRegistry.CountHash("attackSpeedFactor");
 
-    public WeaponSys(World world, ModRegistry modRegistry)
-        : base(world)
-    {
-        _attackSpeedFactor = modRegistry["attackSpeedFactor"];
-    }
+    public WeaponSys(World world)
+        : base(world) { }
 
     [Query]
     [None(typeof(DeathComp))]
@@ -27,7 +24,7 @@ partial class WeaponSys : BaseSystem<World, float>
         ref ModComp modComp
     )
     {
-        float dts = dt * modComp[_attackSpeedFactor];
+        float dts = dt * modComp[AttackSpeedHash];
         for (int i = 0; i < weapon.weapons.Count; i++)
             weapon.weapons[i].weapon.Update(entity, ref modComp, trs.position, dts);
     }

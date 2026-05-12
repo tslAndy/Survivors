@@ -3,7 +3,6 @@ using Arch.Core;
 using Arch.Core.Extensions;
 using Components.Basic;
 using Systems;
-using Systems.Basic;
 using Utils;
 
 namespace Weapons.Specific;
@@ -14,10 +13,9 @@ class Laser : RayWeapon
         RayConfig rayConfig,
         WeaponConfig config,
         WeaponCallbacks callbacks,
-        WorldContext context,
-        ModRegistry modRegistry
+        WorldContext context
     )
-        : base(rayConfig, config, callbacks, context, modRegistry) { }
+        : base(rayConfig, config, callbacks, context) { }
 
     protected override void OnUpdate(Entity entity, ref ModComp modComp, Vector2 position, float dt)
     {

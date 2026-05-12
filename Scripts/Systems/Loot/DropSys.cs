@@ -20,11 +20,11 @@ partial class DropSys : BaseSystem<World, float>
     private readonly SpriteAtlas _itemsAtlas;
     private readonly int _lootLayer;
 
-    public DropSys(World world, SpriteAtlas itemsAtlas, int lootLayer)
+    public DropSys(World world, SpriteAtlas itemsAtlas, LayerMap layerMap)
         : base(world)
     {
         _itemsAtlas = itemsAtlas;
-        _lootLayer = lootLayer;
+        _lootLayer = layerMap["Loot"];
     }
 
     [Query]
