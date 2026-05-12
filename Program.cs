@@ -111,4 +111,6 @@ damageTakeFactor
 
 lootRadiusFactor
 lootIncomeFactor
+
+dropFactor
 */

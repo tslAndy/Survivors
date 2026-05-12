@@ -23,7 +23,7 @@ partial class AnimSys : BaseSystem<World, float>
         [Data] in float dt,
         ref AnimComp animator,
         ref SpriteComp spriteComp,
-        ModComp modComp
+        in ModComp modComp
     )
     {
         Anim anim = animator.anim;

@@ -17,7 +17,8 @@ class StatusEffectHandler
         DamageTakeHash = ModRegistry.CountHash("damageTakeFactor"),
         DamageGiveHash = ModRegistry.CountHash("damageGiveFactor"),
         LootIncomeHash = ModRegistry.CountHash("lootIncomeFactor"),
-        LootRadiusHash = ModRegistry.CountHash("lootRadiusFactor");
+        LootRadiusHash = ModRegistry.CountHash("lootRadiusFactor"),
+        LootDropHash = ModRegistry.CountHash("lootDropFactor");
 
     public void CombineEffects(Entity entity, ref StatusEffect first, ref StatusEffect second)
     {
@@ -42,6 +43,7 @@ class StatusEffectHandler
             case StatusEffectType.Haste:
             case StatusEffectType.Greed:
             case StatusEffectType.LongHand:
+            case StatusEffectType.RichDrop:
                 float oldVal = first.val;
                 first.duration = Math.Clamp(first.duration + second.duration, 0.0f, MAX_DURATION);
                 first.val = Math.Max(first.val, second.val);
@@ -56,6 +58,7 @@ class StatusEffectHandler
             case StatusEffectType.Stuck:
             case StatusEffectType.Poverty:
             case StatusEffectType.ShortHand:
+            case StatusEffectType.PoorDrop:
                 oldVal = first.val;
                 first.duration = Math.Clamp(first.duration + second.duration, 0.0f, MAX_DURATION);
                 first.val = Math.Min(first.val, second.val);
@@ -125,6 +128,11 @@ class StatusEffectHandler
             case StatusEffectType.ShortHand:
             case StatusEffectType.LongHand:
                 entity.Get<ModComp>()[LootRadiusHash] *= value;
+                break;
+
+            case StatusEffectType.PoorDrop:
+            case StatusEffectType.RichDrop:
+                entity.Get<ModComp>()[LootDropHash] *= value;
                 break;
 
             default:

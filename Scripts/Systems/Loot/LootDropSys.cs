@@ -7,20 +7,23 @@ using Components.Other;
 using Components.Physics;
 using Engine.Common;
 using Engine.Sprites;
+using Systems.Basic;
 
 namespace Systems.Loot;
 
-partial class DropSys : BaseSystem<World, float>
+partial class LootDropSys : BaseSystem<World, float>
 {
-    private Hash THOUSAND_HASH = SpriteAtlas.CountHash("money_thousand");
-    private Hash HUNDRED_HASH = SpriteAtlas.CountHash("money_hundred");
-    private Hash TEN_HASH = SpriteAtlas.CountHash("money_ten");
-    private Hash ONE_HASH = SpriteAtlas.CountHash("money_one");
+    private readonly Hash THOUSAND_HASH = SpriteAtlas.CountHash("money_thousand");
+    private readonly Hash HUNDRED_HASH = SpriteAtlas.CountHash("money_hundred");
+    private readonly Hash TEN_HASH = SpriteAtlas.CountHash("money_ten");
+    private readonly Hash ONE_HASH = SpriteAtlas.CountHash("money_one");
+
+    private readonly Hash LootDropHash = ModRegistry.CountHash("lootDropFactor");
 
     private readonly SpriteAtlas _itemsAtlas;
     private readonly int _lootLayer;
 
-    public DropSys(World world, SpriteAtlas itemsAtlas, LayerMap layerMap)
+    public LootDropSys(World world, SpriteAtlas itemsAtlas, LayerMap layerMap)
         : base(world)
     {
         _itemsAtlas = itemsAtlas;
@@ -28,12 +31,12 @@ partial class DropSys : BaseSystem<World, float>
     }
 
     [Query]
-    private void UpdateDrop(in DeathComp death, in DropComp drop, in TrsComp trs)
+    private void UpdateDrop(in DeathComp death, in DropComp drop, in ModComp mod, in TrsComp trs)
     {
         if (!death.isDead)
             return;
 
-        int amount = drop.amount;
+        int amount = (int)MathF.Floor(drop.amount * mod[LootDropHash]);
 
         int thousands = amount - (amount % 1000);
         if (thousands != 0)

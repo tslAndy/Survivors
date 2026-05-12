@@ -54,11 +54,17 @@ enum StatusEffectType : byte
     Haste,
     Stuck,
 
-    // money
+    // money income
     Poverty,
     Greed,
+
+    // money collect
     ShortHand,
     LongHand,
+
+    // money drop
+    PoorDrop,
+    RichDrop,
 }
 
 enum LongStatEffType : long
@@ -81,9 +87,6 @@ enum LongStatEffType : long
     AttackSpeedIncrease = 1 << StatusEffectType.AttackSpeedIncrease,
     AttackSpeedDescrease = 1 << StatusEffectType.AttackSpeedDescrease,
 
-    // TODO: projectile speed
-    // TODO: entity drop coeff
-
     ShortSight = 1 << StatusEffectType.ShortSight,
     FarSight = 1 << StatusEffectType.FarSight,
 
@@ -92,11 +95,17 @@ enum LongStatEffType : long
     Haste = 1 << StatusEffectType.Haste,
     Stuck = 1 << StatusEffectType.Stuck,
 
-    // money
+    // money income
     Greed = 1 << StatusEffectType.Greed,
     Poverty = 1 << StatusEffectType.Poverty,
+
+    // money collect
     ShortHand = 1 << StatusEffectType.ShortHand,
     LongHand = 1 << StatusEffectType.LongHand,
+
+    // money drop
+    PoorDrop = 1 << StatusEffectType.PoorDrop,
+    RichDrop = 1 << StatusEffectType.RichDrop,
 
     // combined
     SimpleEffects = Burn | Bleed | Poison | Shock | Regen,

@@ -47,7 +47,7 @@ class SystemsModule : Module
                     x.Resolve<StatusEffectSys>(),
                     x.Resolve<DamageSys>(),
                     // loot
-                    x.Resolve<DropSys>(),
+                    x.Resolve<LootDropSys>(),
                     x.Resolve<LootCollectSys>(),
                     // audio and drawing
                     x.Resolve<AnimSys>(),
