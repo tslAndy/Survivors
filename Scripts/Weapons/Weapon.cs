@@ -34,7 +34,7 @@ struct WeaponCallbacks
         onCritDamage;
 }
 
-class Weapon : IWeapon
+abstract class Weapon : IWeapon
 {
     private float _time;
 

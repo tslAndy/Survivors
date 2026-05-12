@@ -26,7 +26,7 @@ class WeaponsModule : Module
                     critDamage = 50,
                     critChance = 30,
                     attackTime = 0.5f,
-                    detectRadius = 8.0f,
+                    detectRadius = 4.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
                 };
 
@@ -45,7 +45,7 @@ class WeaponsModule : Module
 
                 WeaponCallbacks callbacks = new WeaponCallbacks { };
 
-                IWeapon weapon = new BulletWeapon(
+                IWeapon weapon = new Bow(
                     bulletConfig,
                     config,
                     callbacks,
