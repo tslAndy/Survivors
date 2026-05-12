@@ -1,4 +1,5 @@
 using Arch.Core;
+using Arch.Core.Extensions;
 using Autofac;
 using Components.Basic;
 using Components.Fighting;
@@ -7,6 +8,7 @@ using Engine.Common;
 using Engine.Sounds;
 using Engine.Sprites;
 using Systems;
+using Utils;
 
 namespace Weapons.Specific;
 
@@ -84,6 +86,61 @@ class WeaponsModule : Module
                 return new WeaponElem(weapon, swing);
             })
             .Named<WeaponElem>("simpleSword")
+            .InstancePerDependency();
+
+        builder
+            .Register<WeaponElem>(x =>
+            {
+                SpinConfig spinConfig = new SpinConfig
+                {
+                    sprite = x.Resolve<SpriteAtlasManager>()
+                        .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")["chakram_1"],
+
+                    rotSpeed = 90.0f,
+                    circleRadius = 2.5f,
+                    bulletRadius = 0.5f,
+                    bulletsCount = 10,
+                    drawOrder = 2,
+                };
+
+                WeaponConfig config = new WeaponConfig
+                {
+                    baseDamage = 10,
+                    critDamage = 20,
+                    critChance = 30,
+                    attackTime = 0.75f,
+                    detectRadius = 2.0f,
+                    targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                };
+
+                WeaponCallbacks callbacks = new WeaponCallbacks
+                {
+                    onBaseDamage = (attacker, target, ref val) =>
+                    {
+                        attacker
+                            .Get<StatusEffectComp>()
+                            .newEffects.Add(
+                                new StatusEffect(StatusEffectType.AttackSpeedIncrease, 10.0f, 3.0f)
+                            );
+                    },
+                };
+
+                IWeapon weapon = new SpinWeapon(
+                    spinConfig,
+                    config,
+                    callbacks,
+                    x.Resolve<WorldContext>()
+                );
+
+                Entity center = x.Resolve<World>()
+                    .Create<TrsComp, LocalTrsComp>(
+                        new TrsComp { scale = 1.0f, descs = CachedList<Entity>.Create() },
+                        new LocalTrsComp { scale = 1.0f }
+                    );
+
+                return new WeaponElem(weapon, center);
+            })
+            .Named<WeaponElem>("simpleSpin")
             .InstancePerDependency();
     }
 }

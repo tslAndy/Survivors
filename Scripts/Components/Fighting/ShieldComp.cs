@@ -14,6 +14,7 @@ interface IShield
 {
     void Update(
         Entity entity,
+        Entity? extra,
         ref DamageComp damage,
         ref StatusEffectComp effects,
         ref ModComp modComp,

@@ -47,7 +47,12 @@ class BulletWeapon : Weapon, IBulletWeapon
         this.bulletConfig = bulletConfig;
     }
 
-    protected override void OnTimer(Entity entity, ref ModComp modComp, Vector2 position)
+    protected override void OnTimer(
+        Entity entity,
+        Entity? extra,
+        ref ModComp modComp,
+        Vector2 position
+    )
     {
         PlayAttackSound();
 

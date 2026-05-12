@@ -102,11 +102,19 @@ class StatusEffectHandler
 
                 ref WeaponComp weapon = ref entity.Get<WeaponComp>();
                 for (int i = 0; i < weapon.weapons.Count; i++)
-                    weapon.weapons[i].entity?.Get<ModComp>()[AnimTimeHash] *= value;
+                {
+                    Entity? extra = weapon.weapons[i].entity;
+                    if (extra != null && extra.Value.Has<ModComp>())
+                        extra.Value.Get<ModComp>()[AnimTimeHash] *= value;
+                }
 
                 ref ShieldComp shield = ref entity.Get<ShieldComp>();
                 for (int i = 0; i < shield.shields.Count; i++)
-                    shield.shields[i].entity?.Get<ModComp>()[AnimTimeHash] *= value;
+                {
+                    Entity? extra = shield.shields[i].entity;
+                    if (extra != null && extra.Value.Has<ModComp>())
+                        extra.Value.Get<ModComp>()[AnimTimeHash] *= value;
+                }
 
                 break;
 

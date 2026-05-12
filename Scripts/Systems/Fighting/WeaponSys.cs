@@ -26,7 +26,10 @@ partial class WeaponSys : BaseSystem<World, float>
     {
         float dts = dt * modComp[AttackSpeedHash];
         for (int i = 0; i < weapon.weapons.Count; i++)
-            weapon.weapons[i].weapon.Update(entity, ref modComp, trs.position, dts);
+        {
+            ref WeaponElem elem = ref weapon.weapons[i];
+            elem.weapon.Update(entity, elem.entity, ref modComp, trs.position, dts);
+        }
     }
 
     [Query]

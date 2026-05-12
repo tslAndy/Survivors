@@ -54,26 +54,38 @@ class Weapon : IWeapon
         this._time = 0.0f;
     }
 
-    public void Update(Entity entity, ref ModComp modComp, Vector2 position, float dt)
+    public void Update(
+        Entity entity,
+        Entity? extra,
+        ref ModComp modComp,
+        Vector2 position,
+        float dt
+    )
     {
-        OnUpdate(entity, ref modComp, position, dt);
+        OnUpdate(entity, extra, ref modComp, position, dt);
 
         _time += dt;
         if (_time < config.attackTime)
             return;
 
         _time -= config.attackTime;
-        OnTimer(entity, ref modComp, position);
+        OnTimer(entity, extra, ref modComp, position);
     }
 
     protected virtual void OnUpdate(
         Entity entity,
+        Entity? extra,
         ref ModComp modComp,
         Vector2 position,
         float dt
     ) { }
 
-    protected virtual void OnTimer(Entity entity, ref ModComp modComp, Vector2 position) { }
+    protected virtual void OnTimer(
+        Entity entity,
+        Entity? extra,
+        ref ModComp modComp,
+        Vector2 position
+    ) { }
 
     protected void PlayAttackSound()
     {

@@ -28,9 +28,10 @@ class Shield : IShield
 
     public void Update(
         Entity entity,
+        Entity? extra,
         ref DamageComp damage,
         ref StatusEffectComp effects,
-        ref ModComp modComp,
+        ref ModComp mod,
         Vector2 position,
         float dt
     )
@@ -47,8 +48,14 @@ class Shield : IShield
                 callbacks.effectCallback(entity, ref effects.newEffects[i]);
         }
 
-        OnUpdate(entity, position, dt);
+        OnUpdate(entity, extra, ref mod, position, dt);
     }
 
-    protected virtual void OnUpdate(Entity entity, Vector2 position, float dt) { }
+    protected virtual void OnUpdate(
+        Entity entity,
+        Entity? extra,
+        ref ModComp mod,
+        Vector2 position,
+        float dt
+    ) { }
 }

@@ -10,5 +10,5 @@ struct TrsComp
     public float rotation,
         scale;
 
-    public CachedList<Entity>? descs;
+    public CachedList<Entity> descs;
 }

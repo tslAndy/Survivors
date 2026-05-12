@@ -4,7 +4,7 @@ using Components.Basic;
 using Components.Fighting;
 using Components.Physics;
 
-namespace Systems.Fighting;
+namespace Systems.Fighting.Specific;
 
 partial class BulletWeaponSys : BaseSystem<World, float>
 {

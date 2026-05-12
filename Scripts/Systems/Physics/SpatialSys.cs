@@ -205,6 +205,7 @@ partial class SpatialSys : BaseSystem<World, float>
 
     [Query]
     [None(typeof(DeathComp))]
+    [All(typeof(RigidComp))]
     private void Fill(in Entity entity, in CollComp coll, in TrsComp trs)
     {
         Vector2 position = trs.position;

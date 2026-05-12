@@ -13,12 +13,18 @@ class MeleeWeapon : Weapon
 
     protected override void OnUpdate(
         Entity entity,
+        Entity? extra,
         ref ModComp modComp,
         Vector2 position,
         float dt
     ) { }
 
-    protected override void OnTimer(Entity entity, ref ModComp modComp, Vector2 position)
+    protected override void OnTimer(
+        Entity entity,
+        Entity? extra,
+        ref ModComp modComp,
+        Vector2 position
+    )
     {
         PlayAttackSound();
 

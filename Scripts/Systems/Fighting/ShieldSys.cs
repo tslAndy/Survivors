@@ -27,9 +27,18 @@ partial class ShieldSys : BaseSystem<World, float>
     {
         float dts = dt * modComp[AttackSpeedHash];
         for (int i = 0; i < shield.shields.Count; i++)
-            shield
-                .shields[i]
-                .shield.Update(entity, ref damage, ref effects, ref modComp, trs.position, dts);
+        {
+            ref ShieldElem elem = ref shield.shields[i];
+            elem.shield.Update(
+                entity,
+                elem.entity,
+                ref damage,
+                ref effects,
+                ref modComp,
+                trs.position,
+                dts
+            );
+        }
     }
 
     [Query]

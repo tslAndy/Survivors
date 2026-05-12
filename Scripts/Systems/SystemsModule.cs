@@ -7,6 +7,7 @@ using Systems.Basic;
 using Systems.Behaviour;
 using Systems.Drawing;
 using Systems.Fighting;
+using Systems.Fighting.Specific;
 using Systems.Loot;
 using Systems.Physics;
 
@@ -40,8 +41,10 @@ class SystemsModule : Module
                     x.Resolve<RigidSys>(),
                     // character systems
                     x.Resolve<BehaviourSys>(),
-                    // fighting
+                    // weapon systems
                     x.Resolve<BulletWeaponSys>(),
+                    x.Resolve<SpinWeaponSys>(),
+                    // fighting
                     x.Resolve<WeaponSys>(),
                     x.Resolve<ShieldSys>(),
                     x.Resolve<StatusEffectSys>(),

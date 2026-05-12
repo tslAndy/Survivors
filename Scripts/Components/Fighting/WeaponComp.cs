@@ -12,7 +12,7 @@ struct WeaponComp
 
 interface IWeapon
 {
-    void Update(Entity entity, ref ModComp modComp, Vector2 position, float dt);
+    void Update(Entity entity, Entity? extra, ref ModComp modComp, Vector2 position, float dt);
 }
 
 struct WeaponElem
