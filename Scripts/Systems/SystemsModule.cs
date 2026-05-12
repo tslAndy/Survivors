@@ -4,7 +4,7 @@ using Arch.System;
 using Autofac;
 using Systems.Animation;
 using Systems.Basic;
-using Systems.Characters;
+using Systems.Behaviour;
 using Systems.Drawing;
 using Systems.Fighting;
 using Systems.Loot;
@@ -22,7 +22,7 @@ class SystemsModule : Module
         builder.RegisterModule(new FightingModule());
         builder.RegisterModule(new LootModule());
         builder.RegisterModule(new PhysicsModule());
-        builder.RegisterModule(new CharactersModule());
+        builder.RegisterModule(new BehaviourModule());
 
         builder
             .Register<Group<float>>(x =>
@@ -39,8 +39,7 @@ class SystemsModule : Module
                     x.Resolve<TileCollSys>(),
                     x.Resolve<RigidSys>(),
                     // character systems
-                    x.Resolve<EnemySys>(),
-                    x.Resolve<PlayerSys>(),
+                    x.Resolve<BehaviourSys>(),
                     // fighting
                     x.Resolve<BulletWeaponSys>(),
                     x.Resolve<WeaponSys>(),

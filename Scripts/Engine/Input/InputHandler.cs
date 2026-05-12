@@ -5,8 +5,6 @@ namespace Engine.Input;
 
 class InputHandler
 {
-    public bool IsModifierPressed() => Raylib.IsKeyDown(KeyboardKey.LeftShift);
-
     public Vector2 GetInput()
     {
         float x = 0.0f;

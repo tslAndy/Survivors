@@ -4,8 +4,10 @@ using Arch.Core;
 using Arch.Core.Extensions;
 using Arch.System;
 using Autofac;
+using Behaviours.Specific;
 using Components.Basic;
-using Components.Characters;
+using Components.Behaviour;
+using Components.Behaviours;
 using Components.Fighting;
 using Components.Loot;
 using Components.Other;
@@ -16,8 +18,6 @@ using Engine.Common;
 using Engine.Tilemaps;
 using Raylib_cs;
 using Systems;
-using Systems.Basic;
-using Systems.Characters;
 using Utils;
 using Weapons.Specific;
 
@@ -35,6 +35,7 @@ class Game : IDisposable
         builder.RegisterModule(new EngineModule());
         builder.RegisterModule(new SystemsModule());
         builder.RegisterModule(new WeaponsModule());
+        builder.RegisterModule(new BehavioursModule());
         builder.RegisterModule(new EntitiesModule());
 
         IContainer container = builder.Build();
@@ -99,7 +100,8 @@ class EntitiesModule : Module
 
                 Entity player = x.Resolve<World>()
                     .Create<
-                        PlayerComp,
+                        PlayerTag,
+                        BehaviourComp,
                         MoveComp,
                         SpriteComp,
                         AnimComp,
@@ -115,7 +117,12 @@ class EntitiesModule : Module
                         LineComp,
                         ModComp
                     >(
-                        new PlayerComp { state = PlayerState.Idle },
+                        new PlayerTag(),
+                        new BehaviourComp
+                        {
+                            behaviour = x.Resolve<PlayerBehaviour>(),
+                            state = default,
+                        },
                         new MoveComp { maxSpeed = 3.0f },
                         new SpriteComp { drawOrder = 1 },
                         new AnimComp
@@ -164,7 +171,8 @@ class EntitiesModule : Module
 
                 Entity enemy = x.Resolve<World>()
                     .Create<
-                        EnemyComp,
+                        EnemyTag,
+                        BehaviourComp,
                         MoveComp,
                         SpriteComp,
                         AnimComp,
@@ -177,7 +185,12 @@ class EntitiesModule : Module
                         DropComp,
                         ModComp
                     >(
-                        new EnemyComp { behaviour = x.Resolve<GoblinBehaviour>() },
+                        new EnemyTag(),
+                        new BehaviourComp
+                        {
+                            behaviour = x.Resolve<GoblinBehaviour>(),
+                            state = default,
+                        },
                         new MoveComp { maxSpeed = 1.0f },
                         new SpriteComp { drawOrder = 1 },
                         new AnimComp

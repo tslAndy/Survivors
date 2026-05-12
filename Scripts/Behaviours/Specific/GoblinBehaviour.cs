@@ -1,0 +1,29 @@
+using System.Numerics;
+using Arch.Core.Extensions;
+using Components.Basic;
+using Components.Behaviour;
+using Engine.Common;
+using Systems;
+using Systems.Basic;
+
+namespace Behaviours.Specific;
+
+class GoblinBehaviour : EnemyBehaviour
+{
+    private readonly Hash _moveFactor;
+
+    public GoblinBehaviour(WorldContext context, ModRegistry modRegistry)
+        : base(context)
+    {
+        _moveFactor = modRegistry["moveFactor"];
+    }
+
+    public override void Update(ref EntityContext entityCtx)
+    {
+        Vector2 pos = player.Get<TrsComp>().position;
+        entityCtx.rigid.velocity =
+            entityCtx.mod[_moveFactor]
+            * entityCtx.move.maxSpeed
+            * Vector2.Normalize(pos - entityCtx.trs.position);
+    }
+}

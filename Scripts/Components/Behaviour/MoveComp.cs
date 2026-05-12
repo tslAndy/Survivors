@@ -1,4 +1,4 @@
-namespace Components.Characters;
+namespace Components.Behaviour;
 
 struct MoveComp
 {

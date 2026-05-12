@@ -82,6 +82,7 @@ enum LongStatEffType : long
     AttackSpeedDescrease = 1 << StatusEffectType.AttackSpeedDescrease,
 
     // TODO: projectile speed
+    // TODO: entity drop coeff
 
     ShortSight = 1 << StatusEffectType.ShortSight,
     FarSight = 1 << StatusEffectType.FarSight,

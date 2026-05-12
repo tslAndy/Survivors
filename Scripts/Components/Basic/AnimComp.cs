@@ -28,10 +28,15 @@ struct AnimComp
         }
     }
 
-    public void SetAnim(Hash groupHash, AnimDir animDir)
+    public void SetAnim(Hash groupHash)
     {
         this.anim = atlas[groupHash, (int)animDir];
+    }
+
+    public void SetAnim(Hash groupHash, AnimDir animDir)
+    {
         this.animDir = animDir;
+        this.anim = atlas[groupHash, (int)animDir];
     }
 }
 
