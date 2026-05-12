@@ -202,10 +202,15 @@ partial class TileCollSys : BaseSystem<World, float>
         Vector2 rectPos = new Vector2(tilePos.x + 0.5f, tilePos.y + 0.5f);
         Vector2 axis = Vector2.Normalize(rectPos - position);
 
-        float a = Vector2.Dot(axis, rectPos + new Vector2(-0.5f, -0.5f));
-        float b = Vector2.Dot(axis, rectPos + new Vector2(-0.5f, 0.5f));
-        float c = Vector2.Dot(axis, rectPos + new Vector2(0.5f, 0.5f));
-        float d = Vector2.Dot(axis, rectPos + new Vector2(0.5f, -0.5f));
+        Vector2 pa = rectPos + new Vector2(-0.5f, -0.5f);
+        Vector2 pb = rectPos + new Vector2(-0.5f, 0.5f);
+        Vector2 pc = rectPos + new Vector2(0.5f, 0.5f);
+        Vector2 pd = rectPos + new Vector2(0.5f, -0.5f);
+
+        float a = Vector2.Dot(axis, pa);
+        float b = Vector2.Dot(axis, pb);
+        float c = Vector2.Dot(axis, pc);
+        float d = Vector2.Dot(axis, pd);
 
         float rectProj = a;
         Vector2 normA = new Vector2(0.0f, -1.0f);
@@ -226,6 +231,7 @@ partial class TileCollSys : BaseSystem<World, float>
         }
 
         float circProj = Vector2.Dot(axis, position + axis * radius);
+
         if (circProj < rectProj)
         {
             tileColl = default;
@@ -234,9 +240,18 @@ partial class TileCollSys : BaseSystem<World, float>
 
         Vector2 normB = new Vector2(normA.Y, -normA.X);
         Vector2 bestNorm = Vector2.Dot(axis, normA) < Vector2.Dot(axis, normB) ? normA : normB;
-        float depth = circProj - rectProj;
-        Vector2 point = position + axis * (radius - depth);
+
+        circProj = Vector2.Dot(bestNorm, position - bestNorm * radius);
+
+        rectProj = MathF.Max(
+            MathF.Max(Vector2.Dot(pa, bestNorm), Vector2.Dot(pb, bestNorm)),
+            MathF.Max(Vector2.Dot(pc, bestNorm), Vector2.Dot(pd, bestNorm))
+        );
+
+        float depth = rectProj - circProj;
+        Vector2 point = position - bestNorm * (radius - depth);
         tileColl = new TileColl(tilePos, point, bestNorm, depth);
+
         return true;
     }
 }

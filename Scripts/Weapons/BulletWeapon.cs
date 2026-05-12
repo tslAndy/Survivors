@@ -73,16 +73,17 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
             velocity = bulletConfig.velocity * direction * modComp[BulletSpeedHash],
         };
 
-        CollComp coll = new CollComp { radius = bulletConfig.radius };
         BulletComp bullet = new BulletComp
         {
             owner = owner,
             extra = extra,
             weapon = this,
         };
-        TimerDestroyComp destroyComp = new TimerDestroyComp { time = bulletConfig.lifetime };
 
+        CollComp coll = new CollComp { radius = bulletConfig.radius };
+        TimerDestroyComp destroyComp = new TimerDestroyComp { time = bulletConfig.lifetime };
         SpriteComp sprite = new SpriteComp { drawOrder = bulletConfig.drawOrder };
+
         if (bulletConfig.sprite != null)
         {
             sprite.sprite = bulletConfig.sprite;
@@ -110,6 +111,12 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
             >(anim, sprite, trs, rigid, coll, bullet, destroyComp);
         }
 
-        throw new Exception();
+        return context.world.Create<TrsComp, RigidComp, CollComp, BulletComp, TimerDestroyComp>(
+            trs,
+            rigid,
+            coll,
+            bullet,
+            destroyComp
+        );
     }
 }

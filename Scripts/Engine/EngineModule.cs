@@ -27,7 +27,7 @@ class EngineModule : Module
         builder.RegisterType<InputHandler>().InstancePerLifetimeScope();
 
         builder
-            .Register<Camera>(_ => new Camera(1280, 720, new Vector2(15.0f, 10.0f), 30.0f))
+            .Register<Camera>(_ => new Camera(1280, 720, new Vector2(15.0f, 10.0f), 40.0f))
             .InstancePerLifetimeScope();
 
         builder

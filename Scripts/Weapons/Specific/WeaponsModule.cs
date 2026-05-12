@@ -59,6 +59,56 @@ class WeaponsModule : Module
         builder
             .Register<WeaponElem>(x =>
             {
+                TrailConfig trailConfig = new TrailConfig
+                {
+                    length = 5.0f,
+                    thick = 0.1f,
+                    color = Color.Green,
+                };
+
+                WeaponConfig config = new WeaponConfig
+                {
+                    baseDamage = 20,
+                    critDamage = 50,
+                    critChance = 30,
+                    attackTime = 0.5f,
+                    detectRadius = 2.0f,
+                    targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                };
+
+                BulletConfig bulletConfig = new BulletConfig
+                {
+                    velocity = 4.0f,
+                    radius = 0.01f,
+                    lifetime = 90.0f,
+                    bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
+                    drawOrder = 2,
+                    perforate = true,
+                    bounce = true,
+                };
+
+                WeaponCallbacks callbacks = new WeaponCallbacks { };
+
+                IWeapon weapon = new TrailBow(
+                    trailConfig,
+                    bulletConfig,
+                    config,
+                    callbacks,
+                    x.Resolve<WorldContext>()
+                );
+
+                Entity extra = x.Resolve<World>()
+                    .Create<LineComp, TrsComp, LocalTrsComp>(
+                        new LineComp { lines = CachedList<Line>.Create() }
+                    );
+                return new WeaponElem(weapon, extra);
+            })
+            .Named<WeaponElem>("simpleTrailBow")
+            .InstancePerDependency();
+
+        builder
+            .Register<WeaponElem>(x =>
+            {
                 WeaponConfig config = new WeaponConfig
                 {
                     baseDamage = 20,
