@@ -22,7 +22,6 @@ struct LaserConfig
 class LaserWeapon : Weapon
 {
     protected readonly LaserConfig laserConfig;
-    private float _offset;
 
     public LaserWeapon(
         LaserConfig laserConfig,
@@ -46,16 +45,17 @@ class LaserWeapon : Weapon
         if (extra == null)
             return;
 
-        _offset += dt * laserConfig.rotSpeed;
-
         ref LineComp lineComp = ref extra.Value.Get<LineComp>();
+        ref LocalTrsComp localTrs = ref extra.Value.Get<LocalTrsComp>();
 
         using CachedList<TileColl> overlap = CachedList<TileColl>.Create();
+
+        localTrs.rotation += dt * laserConfig.rotSpeed;
 
         float step = 360.0f / laserConfig.raysCount;
         for (int i = 0; i < laserConfig.raysCount; i++)
         {
-            float angle = Single.DegreesToRadians(_offset + i * step);
+            float angle = Single.DegreesToRadians(localTrs.rotation + i * step);
             Vector2 dir = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
 
             Vector2 start = position + dir * laserConfig.start;

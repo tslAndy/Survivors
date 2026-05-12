@@ -155,10 +155,10 @@ class WeaponsModule : Module
             {
                 LaserConfig laserConfig = new LaserConfig
                 {
-                    raysCount = 4,
-                    start = 0.25f,
+                    raysCount = 10,
+                    start = 0.5f,
                     end = 10.0f,
-                    thick = 0.1f,
+                    thick = 0.3f,
                     rotSpeed = 40,
                     color = Color.Red,
                 };
