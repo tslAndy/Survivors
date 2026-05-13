@@ -1,3 +1,4 @@
+using System.Numerics;
 using Arch.Buffer;
 using Arch.Core;
 using Engine.Common;
@@ -14,6 +15,9 @@ class WorldContext
     public readonly SoundSys soundSys;
     public readonly CommandBuffer commandBuffer;
     public readonly LayerMap layerMap;
+
+    public Entity player;
+    public Vector2 playerPos;
 
     public WorldContext(
         World world,
