@@ -15,8 +15,10 @@ struct WeaponConfig
     public int targetLayer;
 
     public int baseDamage,
-        critDamage;
-    public int critChance;
+        critDamage,
+        critChance;
+
+    public int maxEnemies;
 
     public float attackTime;
     public float detectRadius;

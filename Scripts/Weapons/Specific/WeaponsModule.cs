@@ -25,9 +25,59 @@ class WeaponsModule : Module
                     baseDamage = 20,
                     critDamage = 50,
                     critChance = 30,
+                    attackTime = 1.5f,
+                    detectRadius = 4.0f,
+                    targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    maxEnemies = 1,
+                };
+
+                BulletConfig bulletConfig = new BulletConfig
+                {
+                    sprite = x.Resolve<SpriteAtlasManager>()
+                        .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")[
+                        "boomerang_1"
+                    ],
+                    velocity = 8.0f,
+                    radius = 0.5f,
+                    lifetime = 10.0f,
+                    bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
+                    drawOrder = 2,
+                    perforate = true,
+                    bounce = true,
+                };
+
+                BoomerangConfig boomrConfig = new BoomerangConfig
+                {
+                    maxDist = 10.0f,
+                    rotSpeed = 180.0f,
+                };
+
+                WeaponCallbacks callbacks = new WeaponCallbacks { };
+
+                IWeapon weapon = new Boomerang(
+                    boomrConfig,
+                    bulletConfig,
+                    config,
+                    callbacks,
+                    x.Resolve<WorldContext>()
+                );
+                return new WeaponElem(weapon, null);
+            })
+            .Named<WeaponElem>("simpleBoomerang")
+            .InstancePerDependency();
+
+        builder
+            .Register<WeaponElem>(x =>
+            {
+                WeaponConfig config = new WeaponConfig
+                {
+                    baseDamage = 20,
+                    critDamage = 50,
+                    critChance = 30,
                     attackTime = 0.5f,
                     detectRadius = 4.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    maxEnemies = 10,
                 };
 
                 BulletConfig bulletConfig = new BulletConfig
@@ -39,8 +89,8 @@ class WeaponsModule : Module
                     lifetime = 4.0f,
                     bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
                     drawOrder = 2,
-                    perforate = true,
-                    bounce = true,
+                    perforate = false,
+                    bounce = false,
                 };
 
                 WeaponCallbacks callbacks = new WeaponCallbacks { };
@@ -74,6 +124,7 @@ class WeaponsModule : Module
                     attackTime = 0.5f,
                     detectRadius = 2.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    maxEnemies = 10,
                 };
 
                 BulletConfig bulletConfig = new BulletConfig
@@ -117,6 +168,7 @@ class WeaponsModule : Module
                     attackTime = 0.75f,
                     detectRadius = 2.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    maxEnemies = 10,
                 };
 
                 WeaponCallbacks callbacks = new WeaponCallbacks { };
@@ -167,6 +219,7 @@ class WeaponsModule : Module
                     attackTime = 0.75f,
                     detectRadius = 2.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    maxEnemies = 10,
                 };
 
                 WeaponCallbacks callbacks = new WeaponCallbacks
@@ -221,6 +274,7 @@ class WeaponsModule : Module
                     attackTime = 0.1f,
                     detectRadius = 2.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    maxEnemies = 10,
                 };
 
                 WeaponCallbacks callbacks = new WeaponCallbacks

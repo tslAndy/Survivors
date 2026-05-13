@@ -37,7 +37,7 @@ class MeleeWeapon : Weapon
             overlap
         );
 
-        for (int i = 0; i < overlap.Count; i++)
+        for (int i = 0; i < Math.Min(overlap.Count, config.maxEnemies); i++)
             Damage(entity, ref modComp, overlap[i]);
     }
 }
