@@ -41,7 +41,10 @@ partial class ShieldSys : BaseSystem<World, float>
         }
     }
 
+    // WARNING: enemy shields should be disposed manually
+    // because list is shared
     [Query]
+    [None(typeof(EnemyTag))]
     private void HandleDeath(in DeathComp death, ref ShieldComp shield)
     {
         if (death.isDead)

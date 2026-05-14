@@ -32,8 +32,6 @@ class SystemsModule : Module
                     "Base Systems",
                     // basic
                     x.Resolve<LocalTrsSys>(),
-                    // health
-                    x.Resolve<HealthSys>(),
                     x.Resolve<DeathSys>(),
                     //physics
                     x.Resolve<SpatialSys>(),
@@ -48,6 +46,8 @@ class SystemsModule : Module
                     // damage
                     x.Resolve<StatusEffectSys>(),
                     x.Resolve<DamageSys>(),
+                    // health
+                    x.Resolve<HealthSys>(),
                     // loot
                     x.Resolve<LootDropSys>(),
                     x.Resolve<LootCollectSys>(),

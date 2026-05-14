@@ -22,8 +22,8 @@ class WeaponsModule : Module
             {
                 WeaponConfig config = new WeaponConfig
                 {
-                    baseDamage = 2,
-                    critDamage = 5,
+                    baseDamage = 0,
+                    critDamage = 0,
                     critChance = 30,
                     attackTime = 0.0f,
                     detectRadius = 4.0f,

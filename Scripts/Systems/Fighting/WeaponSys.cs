@@ -32,7 +32,10 @@ partial class WeaponSys : BaseSystem<World, float>
         }
     }
 
+    // WARNING: enemy weapons should be disposed manually
+    // because list is shared
     [Query]
+    [None(typeof(EnemyTag))]
     private void HandleDeath(in DeathComp death, ref WeaponComp weapon)
     {
         if (death.isDead)
