@@ -2,6 +2,7 @@ using System.Numerics;
 using Arch.Core;
 using Arch.Core.Extensions;
 using Components.Basic;
+using Components.Other;
 using Components.Physics;
 using Systems;
 using Systems.Physics;
@@ -55,7 +56,8 @@ class Bow : BulletWeapon
         Entity bullet,
         ref TrsComp trs,
         ref RigidComp rigid,
-        ref CollComp coll
+        ref CollComp coll,
+        ref TimerComp timer
     )
     {
         using CachedList<Entity> overlap = CachedList<Entity>.Create();
@@ -87,7 +89,7 @@ class Bow : BulletWeapon
 
             if (overlap.Count != 0)
             {
-                context.commandBuffer.Destroy(bullet);
+                timer.time = 0.0f;
                 return;
             }
         }
@@ -112,7 +114,7 @@ class Bow : BulletWeapon
         }
         else if (tileOverlap.Count != 0)
         {
-            context.commandBuffer.Destroy(bullet);
+            timer.time = 0.0f;
         }
     }
 }

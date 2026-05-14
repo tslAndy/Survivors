@@ -1,6 +1,6 @@
 namespace Components.Other;
 
-struct TimerDestroyComp
+struct TimerComp
 {
     public float time;
 }

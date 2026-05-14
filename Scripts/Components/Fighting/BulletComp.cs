@@ -1,5 +1,6 @@
 using Arch.Core;
 using Components.Basic;
+using Components.Other;
 using Components.Physics;
 
 namespace Components.Fighting;
@@ -19,6 +20,7 @@ interface IBulletWeapon
         Entity bullet,
         ref TrsComp trs,
         ref RigidComp rigid,
-        ref CollComp coll
+        ref CollComp coll,
+        ref TimerComp timer
     );
 }

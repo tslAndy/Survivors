@@ -31,7 +31,7 @@ partial class DeathSys : BaseSystem<World, float>
     }
 
     [Query]
-    private void UpdateTimer([Data] in float dt, Entity entity, ref TimerDestroyComp timerDestroy)
+    private void UpdateTimer([Data] in float dt, Entity entity, ref TimerComp timerDestroy)
     {
         timerDestroy.time -= dt;
         if (timerDestroy.time > 0.0f)

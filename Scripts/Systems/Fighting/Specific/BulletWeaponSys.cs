@@ -4,6 +4,7 @@ using Arch.Core.Extensions;
 using Arch.System;
 using Components.Basic;
 using Components.Fighting;
+using Components.Other;
 using Components.Physics;
 
 namespace Systems.Fighting.Specific;
@@ -24,7 +25,8 @@ partial class BulletWeaponSys : BaseSystem<World, float>
         in BulletComp bullet,
         ref TrsComp trs,
         ref RigidComp rigid,
-        ref CollComp coll
+        ref CollComp coll,
+        ref TimerComp timer
     )
     {
         if (!World.IsAlive(bullet.owner))
@@ -40,7 +42,8 @@ partial class BulletWeaponSys : BaseSystem<World, float>
             entity,
             ref trs,
             ref rigid,
-            ref coll
+            ref coll,
+            ref timer
         );
     }
 }

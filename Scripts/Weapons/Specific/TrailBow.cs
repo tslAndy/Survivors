@@ -2,6 +2,7 @@ using System.Numerics;
 using Arch.Core;
 using Arch.Core.Extensions;
 using Components.Basic;
+using Components.Other;
 using Components.Physics;
 using Raylib_cs;
 using Systems;
@@ -39,10 +40,11 @@ class TrailBow : Bow
         Entity bullet,
         ref TrsComp trs,
         ref RigidComp rigid,
-        ref CollComp coll
+        ref CollComp coll,
+        ref TimerComp timer
     )
     {
-        base.UpdateBullet(owner, extra, bullet, ref trs, ref rigid, ref coll);
+        base.UpdateBullet(owner, extra, bullet, ref trs, ref rigid, ref coll, ref timer);
         if (extra == null)
             return;
 

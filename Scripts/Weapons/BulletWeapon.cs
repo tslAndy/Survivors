@@ -50,7 +50,8 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
         Entity bullet,
         ref TrsComp trs,
         ref RigidComp rigid,
-        ref CollComp coll
+        ref CollComp coll,
+        ref TimerComp timer
     );
 
     protected Entity InstantiateBullet(
@@ -82,7 +83,7 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
         };
 
         CollComp coll = new CollComp { radius = bulletConfig.radius };
-        TimerDestroyComp destroyComp = new TimerDestroyComp { time = bulletConfig.lifetime };
+        TimerComp destroyComp = new TimerComp { time = bulletConfig.lifetime };
         SpriteComp sprite = new SpriteComp { drawOrder = bulletConfig.drawOrder };
 
         if (bulletConfig.sprite != null)
@@ -95,7 +96,7 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
                 RigidComp,
                 CollComp,
                 BulletComp,
-                TimerDestroyComp
+                TimerComp
             >(sprite, trs, rigid, coll, bullet, destroyComp);
         }
         else if (bulletConfig.anim != null)
@@ -108,11 +109,11 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
                 RigidComp,
                 CollComp,
                 BulletComp,
-                TimerDestroyComp
+                TimerComp
             >(anim, sprite, trs, rigid, coll, bullet, destroyComp);
         }
 
-        return context.world.Create<TrsComp, RigidComp, CollComp, BulletComp, TimerDestroyComp>(
+        return context.world.Create<TrsComp, RigidComp, CollComp, BulletComp, TimerComp>(
             trs,
             rigid,
             coll,

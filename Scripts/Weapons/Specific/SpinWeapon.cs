@@ -2,6 +2,7 @@ using System.Numerics;
 using Arch.Core;
 using Arch.Core.Extensions;
 using Components.Basic;
+using Components.Other;
 using Components.Physics;
 using Systems;
 using Systems.Physics;
@@ -65,7 +66,8 @@ class SpinWeapon : BulletWeapon
         Entity bullet,
         ref TrsComp trs,
         ref RigidComp rigid,
-        ref CollComp coll
+        ref CollComp coll,
+        ref TimerComp timer
     )
     {
         using CachedList<Entity> overlap = CachedList<Entity>.Create();

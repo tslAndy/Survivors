@@ -31,7 +31,7 @@ class GoblinBehaviour : BaseBehaviour
 
 class DistanceLeaf : BaseLeaf
 {
-    private const float ATTACK_DIST = 3.0f;
+    private const float ATTACK_DIST = 4.0f;
 
     public DistanceLeaf(WorldContext context)
         : base(context) { }

@@ -18,6 +18,7 @@ using Engine.Tilemaps;
 using Raylib_cs;
 using Systems;
 using Utils;
+using Weapons;
 using Weapons.Specific;
 
 class Game : IDisposable
@@ -151,6 +152,11 @@ class EntitiesModule : Module
                 weapons.Add(weaponElem);
                 if (weaponElem.entity != null)
                     player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);
+
+                shields.Add(
+                    new ShieldElem(new DestroyShield(default, x.Resolve<WorldContext>()), null)
+                );
+
                 return player;
             })
             .Named<Entity>("player")

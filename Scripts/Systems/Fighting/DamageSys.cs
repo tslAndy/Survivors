@@ -80,7 +80,7 @@ static class DamageNumSpawner
         float randOffset = (Random.Shared.NextSingle() - 0.5f) * 0.8f; // -0.4f +0.4f
         position += new Vector2(randOffset, randOffset);
 
-        world.Create<TextComp, TrsComp, RigidComp, TimerDestroyComp>(
+        world.Create<TextComp, TrsComp, RigidComp, TimerComp>(
             new TextComp
             {
                 text = numStr,
@@ -89,7 +89,7 @@ static class DamageNumSpawner
             },
             new TrsComp { position = position, scale = 1.0f },
             new RigidComp { velocity = new Vector2(0.0f, -1.0f) },
-            new TimerDestroyComp { time = 1.0f }
+            new TimerComp { time = 1.0f }
         );
     }
 }

@@ -65,7 +65,7 @@ partial class LootDropSys : BaseSystem<World, float>
             Random.Shared.NextSingle() - 0.5f
         );
 
-        World.Create<TrsComp, RigidComp, CollComp, SpriteComp, LootComp, TimerDestroyComp>(
+        World.Create<TrsComp, RigidComp, CollComp, SpriteComp, LootComp, TimerComp>(
             new TrsComp { position = position + offset, scale = 0.5f },
             new RigidComp { layer = _lootLayer },
             new CollComp { radius = 1.0f },
@@ -78,7 +78,7 @@ partial class LootDropSys : BaseSystem<World, float>
                 drawOrder = 0,
             },
             new LootComp { amount = amount },
-            new TimerDestroyComp { time = 10.0f }
+            new TimerComp { time = 10.0f }
         );
     }
 }

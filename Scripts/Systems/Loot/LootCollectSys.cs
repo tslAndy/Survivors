@@ -57,12 +57,12 @@ partial class LootCollectSys : BaseSystem<World, float>
                 continue;
             }
 
-            Components<LootComp, TimerDestroyComp> comps = targ.Get<LootComp, TimerDestroyComp>();
+            Components<LootComp, TimerComp> comps = targ.Get<LootComp, TimerComp>();
 
             ref LootComp targLoot = ref comps.t0;
             totalAmount += targLoot.amount;
 
-            ref TimerDestroyComp targTimerDestroy = ref comps.t1;
+            ref TimerComp targTimerDestroy = ref comps.t1;
             targTimerDestroy.time = 0.0f;
         }
 
