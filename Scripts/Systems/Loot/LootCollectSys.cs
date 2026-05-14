@@ -28,6 +28,7 @@ partial class LootCollectSys : BaseSystem<World, float>
     }
 
     [Query]
+    [None(typeof(DeathComp))]
     private void CollectLoot(
         [Data] in float dt,
         Entity entity,

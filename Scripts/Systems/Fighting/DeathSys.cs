@@ -2,7 +2,6 @@ using Arch.Buffer;
 using Arch.Core;
 using Arch.System;
 using Components.Basic;
-using Components.Other;
 using Systems.Basic;
 
 namespace Systems.Fighting;
@@ -26,17 +25,6 @@ partial class DeathSys : BaseSystem<World, float>
             return;
 
         death.isDead = true;
-        _localTrsSys.DestroyDescendents(entity);
-        _commandBuffer.Destroy(entity);
-    }
-
-    [Query]
-    private void UpdateTimer([Data] in float dt, Entity entity, ref TimerComp timerDestroy)
-    {
-        timerDestroy.time -= dt;
-        if (timerDestroy.time > 0.0f)
-            return;
-
         _localTrsSys.DestroyDescendents(entity);
         _commandBuffer.Destroy(entity);
     }

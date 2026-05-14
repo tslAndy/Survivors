@@ -52,6 +52,8 @@ class SystemsModule : Module
                     x.Resolve<LootCollectSys>(),
                     // correction
                     x.Resolve<CollSolveSys>(),
+                    // timer
+                    x.Resolve<TimerSys>(),
                     // audio and drawing
                     x.Resolve<AnimSys>(),
                     x.Resolve<TilemapDrawSys>(),

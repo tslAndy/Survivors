@@ -15,7 +15,9 @@ class FightingModule : Module
 
         builder.RegisterType<DamageSys>().InstancePerLifetimeScope();
         builder.RegisterType<HealthSys>().InstancePerLifetimeScope();
+
         builder.RegisterType<DeathSys>().InstancePerLifetimeScope();
+        builder.RegisterType<TimerSys>().InstancePerLifetimeScope();
 
         builder.RegisterModule(new SpecificWeaponModule());
     }
