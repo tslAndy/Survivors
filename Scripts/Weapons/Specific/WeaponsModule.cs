@@ -22,6 +22,27 @@ class WeaponsModule : Module
             {
                 WeaponConfig config = new WeaponConfig
                 {
+                    baseDamage = 2,
+                    critDamage = 5,
+                    critChance = 30,
+                    attackTime = 1.0f,
+                    detectRadius = 2.0f,
+                    targetLayer = x.Resolve<LayerMap>()["PlayerEnts"],
+                    maxEnemies = 10,
+                };
+
+                WeaponCallbacks callbacks = new WeaponCallbacks { };
+                IWeapon weapon = new MeleeWeapon(config, callbacks, x.Resolve<WorldContext>());
+                return new WeaponElem(weapon, null);
+            })
+            .Named<WeaponElem>("goblinSpear")
+            .InstancePerDependency();
+
+        builder
+            .Register<WeaponElem>(x =>
+            {
+                WeaponConfig config = new WeaponConfig
+                {
                     baseDamage = 20,
                     critDamage = 50,
                     critChance = 30,

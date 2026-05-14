@@ -31,7 +31,7 @@ class PlayerBehaviour : BaseBehaviour
         _wallsLayer = context.layerMap["Walls"];
     }
 
-    public override void Update(ref EntityContext entityCtx)
+    public override void Update(float dt, ref EntityContext entityCtx)
     {
         SolveCollisions(ref entityCtx);
 

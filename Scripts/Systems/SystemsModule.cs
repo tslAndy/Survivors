@@ -41,10 +41,9 @@ class SystemsModule : Module
                     x.Resolve<RigidSys>(),
                     // character systems
                     x.Resolve<BehaviourSys>(),
-                    // weapon systems
-                    x.Resolve<BulletWeaponSys>(),
                     // fighting
                     x.Resolve<WeaponSys>(),
+                    x.Resolve<BulletWeaponSys>(),
                     x.Resolve<ShieldSys>(),
                     // damage
                     x.Resolve<StatusEffectSys>(),

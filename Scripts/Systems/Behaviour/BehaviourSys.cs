@@ -2,7 +2,7 @@ using Arch.Core;
 using Arch.System;
 using Components.Basic;
 using Components.Behaviour;
-using Components.Behaviours;
+using Components.Fighting;
 using Components.Physics;
 
 namespace Systems.Behaviour;
@@ -29,6 +29,7 @@ partial class BehaviourSys : BaseSystem<World, float>
     [Query]
     [None(typeof(DeathComp))]
     private void UpdateBehaviour(
+        [Data] in float dt,
         Entity entity,
         ref BehaviourComp behaviour,
         ref TrsComp trs,
@@ -36,7 +37,8 @@ partial class BehaviourSys : BaseSystem<World, float>
         ref RigidComp rigid,
         ref CollComp coll,
         ref MoveComp move,
-        ref ModComp mod
+        ref ModComp mod,
+        ref WeaponComp weapon
     )
     {
         EntityContext entityCtx = new EntityContext
@@ -48,8 +50,9 @@ partial class BehaviourSys : BaseSystem<World, float>
             coll = ref coll,
             move = ref move,
             mod = ref mod,
+            weapon = ref weapon,
         };
 
-        behaviour.behaviour.Update(ref entityCtx);
+        behaviour.behaviour.Update(dt, ref entityCtx);
     }
 }

@@ -1,5 +1,6 @@
 using Arch.Core;
 using Components.Basic;
+using Components.Fighting;
 using Components.Physics;
 
 namespace Components.Behaviour;
@@ -18,9 +19,10 @@ ref struct EntityContext
     public ref CollComp coll;
     public ref MoveComp move;
     public ref ModComp mod;
+    public ref WeaponComp weapon;
 }
 
 interface IBehaviour
 {
-    void Update(ref EntityContext entityCtx);
+    void Update(float dt, ref EntityContext entityCtx);
 }

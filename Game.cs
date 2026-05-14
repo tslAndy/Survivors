@@ -7,7 +7,6 @@ using Autofac;
 using Behaviours.Specific;
 using Components.Basic;
 using Components.Behaviour;
-using Components.Behaviours;
 using Components.Fighting;
 using Components.Loot;
 using Components.Other;
@@ -158,6 +157,17 @@ class EntitiesModule : Module
             .InstancePerLifetimeScope();
 
         builder
+            .Register<CachedList<WeaponElem>>(x =>
+            {
+                CachedList<WeaponElem> result = new CachedList<WeaponElem>();
+                result.Add(x.ResolveNamed<WeaponElem>("goblinSpear"));
+
+                return result;
+            })
+            .Named<CachedList<WeaponElem>>("goblinWeapons")
+            .InstancePerLifetimeScope();
+
+        builder
             .Register<Entity>(x =>
             {
                 AnimAtlas goblinAtlas = x.Resolve<AnimAtlasManager>()
@@ -177,7 +187,8 @@ class EntitiesModule : Module
                         DamageComp,
                         StatusEffectComp,
                         DropComp,
-                        ModComp
+                        ModComp,
+                        WeaponComp
                     >(
                         new EnemyTag(),
                         new BehaviourComp { behaviour = x.Resolve<GoblinBehaviour>() },
@@ -208,7 +219,11 @@ class EntitiesModule : Module
                             runningEffects = CachedList<StatusEffect>.Create(),
                         },
                         new DropComp { amount = Random.Shared.Next(1, 5000) },
-                        new ModComp()
+                        new ModComp(),
+                        new WeaponComp
+                        {
+                            weapons = x.ResolveNamed<CachedList<WeaponElem>>("goblinWeapons"),
+                        }
                     );
 
                 return enemy;

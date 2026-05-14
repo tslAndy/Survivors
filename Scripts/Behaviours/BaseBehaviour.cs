@@ -9,5 +9,5 @@ abstract class BaseBehaviour : IBehaviour
 
     protected BaseBehaviour(WorldContext context) => this.context = context;
 
-    public abstract void Update(ref EntityContext entityCtx);
+    public abstract void Update(float dt, ref EntityContext entityCtx);
 }

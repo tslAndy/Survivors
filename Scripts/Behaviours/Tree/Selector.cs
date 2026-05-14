@@ -8,11 +8,11 @@ class Selector : INode
 
     public Selector(params INode[] children) => this._children = children;
 
-    public State Update(ref EntityContext ctx)
+    public State Update(float dt, ref EntityContext ctx)
     {
         foreach (INode node in _children)
         {
-            State state = node.Update(ref ctx);
+            State state = node.Update(dt, ref ctx);
             if (state != State.Failure)
                 return state;
         }

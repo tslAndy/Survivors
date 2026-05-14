@@ -1,4 +1,4 @@
-namespace Components.Behaviours;
+namespace Components.Basic;
 
 struct PlayerTag { }
 

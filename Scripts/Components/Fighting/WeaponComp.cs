@@ -5,6 +5,10 @@ using Utils;
 
 namespace Components.Fighting;
 
+// WARNING: enemies of same kind should contains shared list of weapons
+// weapon also should be shared
+// list of enemy weapons should be updated manually
+
 struct WeaponComp
 {
     public CachedList<WeaponElem> weapons;

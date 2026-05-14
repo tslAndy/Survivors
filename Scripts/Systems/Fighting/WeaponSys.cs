@@ -15,7 +15,7 @@ partial class WeaponSys : BaseSystem<World, float>
         : base(world) { }
 
     [Query]
-    [None(typeof(DeathComp))]
+    [None(typeof(DeathComp), typeof(EnemyTag))]
     private void UpdateWeapon(
         [Data] in float dt,
         Entity entity,

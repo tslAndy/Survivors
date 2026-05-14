@@ -4,7 +4,7 @@ namespace Behaviours.Tree;
 
 interface INode
 {
-    State Update(ref EntityContext ctx);
+    State Update(float dt, ref EntityContext ctx);
 }
 
 enum State

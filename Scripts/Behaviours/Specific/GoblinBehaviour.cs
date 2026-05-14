@@ -2,10 +2,11 @@ using System.Numerics;
 using Behaviours.Tree;
 using Components.Basic;
 using Components.Behaviour;
+using Components.Fighting;
 using Engine.Animations;
 using Engine.Common;
 using Systems;
-using Systems.Basic;
+using Utils;
 
 namespace Behaviours.Specific;
 
@@ -22,9 +23,9 @@ class GoblinBehaviour : BaseBehaviour
         node = new Selector(run, attack);
     }
 
-    public override void Update(ref EntityContext entityCtx)
+    public override void Update(float dt, ref EntityContext entityCtx)
     {
-        node.Update(ref entityCtx);
+        node.Update(dt, ref entityCtx);
     }
 }
 
@@ -35,7 +36,7 @@ class DistanceLeaf : BaseLeaf
     public DistanceLeaf(WorldContext context)
         : base(context) { }
 
-    public override State Update(ref EntityContext ctx)
+    public override State Update(float dt, ref EntityContext ctx)
     {
         float dist = Vector2.Distance(context.playerPosition, ctx.trs.position);
         return dist > ATTACK_DIST ? State.Success : State.Failure;
@@ -49,7 +50,7 @@ class MoveTowardsLeaf : BaseLeaf
     public MoveTowardsLeaf(WorldContext context)
         : base(context) { }
 
-    public override State Update(ref EntityContext ctx)
+    public override State Update(float dt, ref EntityContext ctx)
     {
         Vector2 delta = context.playerPosition - ctx.trs.position;
         ctx.rigid.velocity = Vector2.Normalize(delta) * ctx.move.maxSpeed;
@@ -69,13 +70,24 @@ class AttackLeaf : BaseLeaf
     public AttackLeaf(WorldContext context)
         : base(context) { }
 
-    public override State Update(ref EntityContext ctx)
+    public override State Update(float dt, ref EntityContext ctx)
     {
         ctx.rigid.velocity = Vector2.Zero;
 
-        if (ctx.animator.groupHash != AttackHash || ctx.animator.isFinished)
+        if (ctx.animator.groupHash != AttackHash)
             ctx.animator.SetAnimByGroup(AttackHash);
 
+        if (!ctx.animator.isFinished)
+            return State.Success;
+
+        CachedList<WeaponElem> weapons = ctx.weapon.weapons;
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            ref WeaponElem elem = ref weapons[i];
+            // elem.weapon.Update(ctx.entity, elem.entity, ctx.mod, ctx.trs.position);
+        }
+
+        ctx.animator.SetAnimByGroup(AttackHash);
         return State.Success;
     }
 }
