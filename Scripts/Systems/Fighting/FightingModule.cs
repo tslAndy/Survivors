@@ -9,13 +9,5 @@ class FightingModule : Module
         builder.RegisterType<BulletWeaponSys>().InstancePerLifetimeScope();
         builder.RegisterType<WeaponSys>().InstancePerLifetimeScope();
         builder.RegisterType<ShieldSys>().InstancePerLifetimeScope();
-
-        builder.RegisterType<StatusEffectSys>().InstancePerLifetimeScope();
-        builder.RegisterType<StatusEffectHandler>().InstancePerLifetimeScope();
-
-        builder.RegisterType<DamageSys>().InstancePerLifetimeScope();
-        builder.RegisterType<HealthSys>().InstancePerLifetimeScope();
-
-        builder.RegisterType<DeathSys>().InstancePerLifetimeScope();
     }
 }

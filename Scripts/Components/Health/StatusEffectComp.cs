@@ -1,6 +1,6 @@
 using Utils;
 
-namespace Components.Fighting;
+namespace Components.Health;
 
 struct StatusEffectComp
 {

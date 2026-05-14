@@ -5,7 +5,7 @@ using Arch.System;
 using Components.Basic;
 using Components.Other;
 
-namespace Systems.Fighting;
+namespace Systems.Health;
 
 partial class DeathSys : BaseSystem<World, float>
 {

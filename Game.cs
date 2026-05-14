@@ -8,6 +8,7 @@ using Behaviours.Specific;
 using Components.Basic;
 using Components.Behaviour;
 using Components.Fighting;
+using Components.Health;
 using Components.Loot;
 using Components.Other;
 using Components.Physics;

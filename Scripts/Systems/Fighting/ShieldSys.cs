@@ -2,6 +2,7 @@ using Arch.Core;
 using Arch.System;
 using Components.Basic;
 using Components.Fighting;
+using Components.Health;
 using Engine.Common;
 using Systems.Basic;
 

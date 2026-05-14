@@ -7,6 +7,7 @@ using Systems.Basic;
 using Systems.Behaviour;
 using Systems.Drawing;
 using Systems.Fighting;
+using Systems.Health;
 using Systems.Loot;
 using Systems.Physics;
 
@@ -19,6 +20,7 @@ class SystemsModule : Module
         builder.RegisterModule(new BasicModule());
         builder.RegisterModule(new DrawingModule());
         builder.RegisterModule(new AnimSysModule());
+        builder.RegisterModule(new HealthModule());
         builder.RegisterModule(new FightingModule());
         builder.RegisterModule(new LootModule());
         builder.RegisterModule(new PhysicsModule());

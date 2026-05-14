@@ -2,11 +2,11 @@ using Arch.Buffer;
 using Arch.Core;
 using Arch.System;
 using Components.Basic;
-using Components.Fighting;
+using Components.Health;
 using Engine.Animations;
 using Engine.Common;
 
-namespace Systems.Fighting;
+namespace Systems.Health;
 
 partial class HealthSys : BaseSystem<World, float>
 {

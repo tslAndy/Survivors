@@ -1,6 +1,7 @@
 using System.Numerics;
 using Arch.Core;
 using Components.Basic;
+using Components.Health;
 using Utils;
 
 namespace Components.Fighting;

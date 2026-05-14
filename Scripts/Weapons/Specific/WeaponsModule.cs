@@ -3,6 +3,7 @@ using Arch.Core.Extensions;
 using Autofac;
 using Components.Basic;
 using Components.Fighting;
+using Components.Health;
 using Engine.Animations;
 using Engine.Common;
 using Engine.Sounds;

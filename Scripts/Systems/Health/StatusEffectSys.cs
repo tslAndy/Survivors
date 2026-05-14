@@ -1,7 +1,9 @@
 using Arch.Core;
 using Arch.System;
 using Components.Basic;
-using Components.Fighting;
+using Components.Health;
+
+namespace Systems.Health;
 
 partial class StatusEffectSys : BaseSystem<World, float>
 {

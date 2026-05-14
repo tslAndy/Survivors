@@ -2,8 +2,11 @@ using Arch.Core;
 using Arch.Core.Extensions;
 using Components.Basic;
 using Components.Fighting;
+using Components.Health;
 using Engine.Common;
 using Systems.Basic;
+
+namespace Systems.Health;
 
 class StatusEffectHandler
 {

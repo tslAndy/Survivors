@@ -1,4 +1,4 @@
-namespace Components.Fighting;
+namespace Components.Health;
 
 struct HealthComp
 {

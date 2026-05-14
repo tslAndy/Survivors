@@ -3,6 +3,7 @@ using Arch.Core;
 using Arch.Core.Extensions;
 using Components.Basic;
 using Components.Fighting;
+using Components.Health;
 using Components.Other;
 using Systems;
 using Utils;

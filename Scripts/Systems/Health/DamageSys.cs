@@ -3,14 +3,14 @@ using Arch.Buffer;
 using Arch.Core;
 using Arch.System;
 using Components.Basic;
-using Components.Fighting;
+using Components.Health;
 using Components.Other;
 using Components.Physics;
 using Engine.Common;
 using Raylib_cs;
 using Systems.Basic;
 
-namespace Systems.Fighting;
+namespace Systems.Health;
 
 partial class DamageSys : BaseSystem<World, float>
 {
