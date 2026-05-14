@@ -48,7 +48,7 @@ class Game : IDisposable
         LoadTilemaps();
 
         _scope.ResolveNamed<Entity>("player");
-        for (int i = 0; i < 300; i++)
+        for (int i = 0; i < 10; i++)
             _scope.ResolveNamed<Entity>("goblin");
     }
 

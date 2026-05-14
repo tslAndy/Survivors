@@ -33,23 +33,7 @@ partial class LocalTrsSys : BaseSystem<World, float>
             descGlobalTrs.rotation = trs.rotation + descLocalTrs.rotation;
             descGlobalTrs.scale = trs.scale * descLocalTrs.scale;
 
-            Handle(descGlobalTrs);
+            Handle(in descGlobalTrs);
         }
-    }
-
-    public void DestroyDescendents(Entity entity)
-    {
-        ref TrsComp trs = ref entity.Get<TrsComp>();
-        if (trs.descs == null)
-            return;
-
-        for (int i = 0; i < trs.descs.Count; i++)
-        {
-            Entity child = trs.descs[i];
-            DestroyDescendents(child);
-            _buffer.Destroy(child);
-        }
-
-        trs.descs.Dispose();
     }
 }

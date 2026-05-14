@@ -1,6 +1,4 @@
-using Arch.Buffer;
 using Arch.Core;
-using Arch.Core.Extensions;
 using Arch.System;
 using Components.Basic;
 using Components.Fighting;
@@ -11,13 +9,8 @@ namespace Systems.Fighting.Specific;
 
 partial class BulletWeaponSys : BaseSystem<World, float>
 {
-    private readonly CommandBuffer _commBuffer;
-
-    public BulletWeaponSys(World world, CommandBuffer commBuffer)
-        : base(world)
-    {
-        _commBuffer = commBuffer;
-    }
+    public BulletWeaponSys(World world)
+        : base(world) { }
 
     [Query]
     private void UpdateBullet(
@@ -31,8 +24,7 @@ partial class BulletWeaponSys : BaseSystem<World, float>
     {
         if (!World.IsAlive(bullet.owner))
         {
-            if (!entity.Has<LocalTrsComp>())
-                _commBuffer.Destroy(entity);
+            timer.time = 0.0f;
             return;
         }
 

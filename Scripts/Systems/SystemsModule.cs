@@ -32,8 +32,6 @@ class SystemsModule : Module
                     "Base Systems",
                     // basic
                     x.Resolve<LocalTrsSys>(),
-                    x.Resolve<DeathSys>(),
-                    //physics
                     x.Resolve<SpatialSys>(),
                     x.Resolve<TileCollSys>(),
                     x.Resolve<RigidSys>(),
@@ -52,15 +50,15 @@ class SystemsModule : Module
                     x.Resolve<LootCollectSys>(),
                     // correction
                     x.Resolve<CollSolveSys>(),
-                    // timer
-                    x.Resolve<TimerSys>(),
                     // audio and drawing
                     x.Resolve<AnimSys>(),
                     x.Resolve<TilemapDrawSys>(),
                     x.Resolve<SpriteDrawSys>(),
                     x.Resolve<LineDrawSys>(),
                     x.Resolve<TextDrawSys>(),
-                    x.Resolve<SoundSys>()
+                    x.Resolve<SoundSys>(),
+                    // death
+                    x.Resolve<DeathSys>()
                 );
                 systems.Initialize();
                 return systems;
