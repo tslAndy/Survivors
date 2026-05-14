@@ -24,7 +24,7 @@ struct AnimComp
         }
     }
 
-    public Hash groupHash { get; private set; }
+    public Hash groupHash;
 
     public void SetAnim(Hash groupHash)
     {
