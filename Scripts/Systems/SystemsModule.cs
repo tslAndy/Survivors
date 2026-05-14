@@ -46,11 +46,12 @@ class SystemsModule : Module
                     // damage
                     x.Resolve<StatusEffectSys>(),
                     x.Resolve<DamageSys>(),
+                    x.Resolve<HealthSys>(),
                     // loot
                     x.Resolve<LootDropSys>(),
                     x.Resolve<LootCollectSys>(),
-                    // health
-                    x.Resolve<HealthSys>(),
+                    // correction
+                    x.Resolve<CollSolveSys>(),
                     // audio and drawing
                     x.Resolve<AnimSys>(),
                     x.Resolve<TilemapDrawSys>(),

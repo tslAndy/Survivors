@@ -6,8 +6,6 @@ using Engine.Common;
 using Engine.Input;
 using Systems;
 using Systems.Basic;
-using Systems.Physics;
-using Utils;
 
 namespace Behaviours.Specific;
 
@@ -20,8 +18,6 @@ class PlayerBehaviour : BaseBehaviour
     private readonly Hash WalkGroupHash = AnimAtlas.CountHash("Walk");
     private readonly Hash MoveFactorHash = ModRegistry.CountHash("moveFactor");
 
-    private const float CORR_RATE = 0.4f;
-
     private PlayerState _state;
 
     public PlayerBehaviour(WorldContext context, InputHandler inputHandler)
@@ -33,8 +29,6 @@ class PlayerBehaviour : BaseBehaviour
 
     public override void Update(float dt, ref EntityContext entityCtx)
     {
-        SolveCollisions(ref entityCtx);
-
         switch (_state)
         {
             case PlayerState.Idle:
@@ -48,31 +42,6 @@ class PlayerBehaviour : BaseBehaviour
             default:
                 throw new Exception("Uknown state");
         }
-    }
-
-    private void SolveCollisions(ref EntityContext entityCtx)
-    {
-        using CachedList<TileColl> tileColls = CachedList<TileColl>.Create();
-        context.tileSys.GetOverlap(
-            entityCtx.trs.position,
-            entityCtx.trs.scale * entityCtx.coll.radius,
-            _wallsLayer,
-            tileColls
-        );
-
-        if (tileColls.Count == 0)
-            return;
-
-        Vector2 corr = Vector2.Zero;
-        for (int i = 0; i < tileColls.Count; i++)
-        {
-            ref TileColl tileColl = ref tileColls[i];
-            corr += tileColl.normal * tileColl.depth;
-        }
-        corr /= tileColls.Count;
-
-        entityCtx.rigid.velocity = Vector2.Zero;
-        entityCtx.trs.position += corr * CORR_RATE;
     }
 
     private void HandleIdle(ref EntityContext entityCtx)

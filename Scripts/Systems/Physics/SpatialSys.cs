@@ -39,7 +39,12 @@ partial class SpatialSys : BaseSystem<World, float>
         Span<(int, int)> span = stackalloc (int, int)[9];
         RefSet<(int, int)> refSet = new RefSet<(int, int)>(span);
 
-        Vector2 delta = Vector2.Normalize(rayEnd - rayStart);
+        Vector2 delta = rayEnd - rayStart;
+        if (delta.LengthSquared() < 0.001f * 0.001f)
+            return;
+
+        delta = Vector2.Normalize(delta);
+
         Vector2 invDelta = new Vector2(
             MathF.Abs(delta.X) > 0.00001f ? 1.0f / delta.X : 1e10f,
             MathF.Abs(delta.Y) > 0.00001f ? 1.0f / delta.Y : 1e10f

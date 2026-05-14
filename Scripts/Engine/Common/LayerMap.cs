@@ -3,10 +3,12 @@ namespace Engine.Common;
 class LayerMap
 {
     private readonly string[] _layers;
+    private readonly bool[] _collSolve;
 
     public LayerMap(params string[] layers)
     {
         _layers = layers;
+        _collSolve = new bool[layers.Length];
     }
 
     public int this[string name]
@@ -19,4 +21,12 @@ class LayerMap
             return index;
         }
     }
+
+    public void SetCollSolve(string name, bool val) => SetCollSolve(_layers.IndexOf(name), val);
+
+    public bool GetCollSolve(string name) => GetCollSolve(_layers.IndexOf(name));
+
+    public void SetCollSolve(int layerInd, bool val) => _collSolve[layerInd] = val;
+
+    public bool GetCollSolve(int layerInd) => _collSolve[layerInd];
 }

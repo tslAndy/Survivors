@@ -31,14 +31,22 @@ class EngineModule : Module
             .InstancePerLifetimeScope();
 
         builder
-            .Register<LayerMap>(_ => new LayerMap(
-                "PlayerEnts",
-                "EnemyEnts",
-                "PlayerBullets",
-                "EnemyBullets",
-                "Loot",
-                "Walls"
-            ))
+            .Register<LayerMap>(_ =>
+            {
+                LayerMap layerMap = new LayerMap(
+                    "PlayerEnts",
+                    "EnemyEnts",
+                    "PlayerBullets",
+                    "EnemyBullets",
+                    "Loot",
+                    "Walls"
+                );
+
+                layerMap.SetCollSolve("PlayerEnts", true);
+                layerMap.SetCollSolve("EnemyEnts", true);
+
+                return layerMap;
+            })
             .InstancePerLifetimeScope();
     }
 }

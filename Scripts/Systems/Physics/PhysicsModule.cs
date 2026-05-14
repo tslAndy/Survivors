@@ -9,5 +9,6 @@ class PhysicsModule : Module
         builder.RegisterType<SpatialSys>().InstancePerLifetimeScope();
         builder.RegisterType<TileCollSys>().InstancePerLifetimeScope();
         builder.RegisterType<RigidSys>().InstancePerLifetimeScope();
+        builder.RegisterType<CollSolveSys>().InstancePerLifetimeScope();
     }
 }
