@@ -22,6 +22,8 @@ class PlayerBehaviour : BaseBehaviour
 
     private const float CORR_RATE = 0.4f;
 
+    private PlayerState _state;
+
     public PlayerBehaviour(WorldContext context, InputHandler inputHandler)
         : base(context)
     {
@@ -33,13 +35,13 @@ class PlayerBehaviour : BaseBehaviour
     {
         SolveCollisions(ref entityCtx);
 
-        switch (entityCtx.behaviour.state)
+        switch (_state)
         {
-            case (int)PlayerState.Idle:
+            case PlayerState.Idle:
                 HandleIdle(ref entityCtx);
                 break;
 
-            case (int)PlayerState.Walk:
+            case PlayerState.Walk:
                 HandleWalk(ref entityCtx);
                 break;
 
@@ -82,7 +84,7 @@ class PlayerBehaviour : BaseBehaviour
             return;
 
         entityCtx.animator.SetAnimByGroup(WalkGroupHash, input.AsAnimDir());
-        entityCtx.behaviour.state = (int)PlayerState.Walk;
+        _state = PlayerState.Walk;
     }
 
     private void HandleWalk(ref EntityContext entityCtx)
@@ -92,7 +94,7 @@ class PlayerBehaviour : BaseBehaviour
         if (input.LengthSquared() < 0.001f)
         {
             entityCtx.animator.SetAnimByGroup(IdleGroupHash);
-            entityCtx.behaviour.state = (int)PlayerState.Idle;
+            _state = PlayerState.Idle;
             return;
         }
 

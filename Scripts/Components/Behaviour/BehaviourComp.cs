@@ -7,13 +7,11 @@ namespace Components.Behaviour;
 struct BehaviourComp
 {
     public IBehaviour behaviour;
-    public int state;
 }
 
 ref struct EntityContext
 {
     public Entity entity;
-    public ref BehaviourComp behaviour;
     public ref TrsComp trs;
     public ref AnimComp animator;
     public ref RigidComp rigid;

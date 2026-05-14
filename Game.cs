@@ -117,11 +117,7 @@ class EntitiesModule : Module
                         ModComp
                     >(
                         new PlayerTag(),
-                        new BehaviourComp
-                        {
-                            behaviour = x.Resolve<PlayerBehaviour>(),
-                            state = default,
-                        },
+                        new BehaviourComp { behaviour = x.Resolve<PlayerBehaviour>() },
                         new MoveComp { maxSpeed = 3.0f },
                         new SpriteComp { drawOrder = 1 },
                         new AnimComp
@@ -184,11 +180,7 @@ class EntitiesModule : Module
                         ModComp
                     >(
                         new EnemyTag(),
-                        new BehaviourComp
-                        {
-                            behaviour = x.Resolve<GoblinBehaviour>(),
-                            state = default,
-                        },
+                        new BehaviourComp { behaviour = x.Resolve<GoblinBehaviour>() },
                         new MoveComp { maxSpeed = 1.0f },
                         new SpriteComp { drawOrder = 1 },
                         new AnimComp

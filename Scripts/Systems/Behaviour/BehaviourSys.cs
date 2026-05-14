@@ -3,7 +3,6 @@ using Arch.System;
 using Components.Basic;
 using Components.Behaviour;
 using Components.Behaviours;
-using Components.Fighting;
 using Components.Physics;
 
 namespace Systems.Behaviour;
@@ -43,7 +42,6 @@ partial class BehaviourSys : BaseSystem<World, float>
         EntityContext entityCtx = new EntityContext
         {
             entity = entity,
-            behaviour = ref behaviour,
             trs = ref trs,
             animator = ref animator,
             rigid = ref rigid,
