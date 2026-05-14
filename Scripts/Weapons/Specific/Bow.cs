@@ -68,7 +68,6 @@ class Bow : BulletWeapon
         );
 
         ref ModComp modComp = ref owner.Get<ModComp>();
-
         if (bulletConfig.perforate)
         {
             for (int i = 0; i < overlap.Count; i++)

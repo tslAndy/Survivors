@@ -160,7 +160,7 @@ class EntitiesModule : Module
             .Register<CachedList<WeaponElem>>(x =>
             {
                 CachedList<WeaponElem> result = new CachedList<WeaponElem>();
-                result.Add(x.ResolveNamed<WeaponElem>("goblinSpear"));
+                result.Add(x.ResolveNamed<WeaponElem>("goblinBow"));
 
                 return result;
             })

@@ -25,17 +25,36 @@ class WeaponsModule : Module
                     baseDamage = 2,
                     critDamage = 5,
                     critChance = 30,
-                    attackTime = 1.0f,
-                    detectRadius = 2.0f,
+                    attackTime = 0.0f,
+                    detectRadius = 4.0f,
                     targetLayer = x.Resolve<LayerMap>()["PlayerEnts"],
                     maxEnemies = 10,
                 };
 
+                BulletConfig bulletConfig = new BulletConfig
+                {
+                    sprite = x.Resolve<SpriteAtlasManager>()
+                        .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")["arrow_2"],
+                    velocity = 8.0f,
+                    radius = 0.25f,
+                    lifetime = 4.0f,
+                    bulletLayer = x.Resolve<LayerMap>()["EnemyBullets"],
+                    drawOrder = 2,
+                    perforate = false,
+                    bounce = false,
+                };
+
                 WeaponCallbacks callbacks = new WeaponCallbacks { };
-                IWeapon weapon = new MeleeWeapon(config, callbacks, x.Resolve<WorldContext>());
+
+                IWeapon weapon = new Bow(
+                    bulletConfig,
+                    config,
+                    callbacks,
+                    x.Resolve<WorldContext>()
+                );
                 return new WeaponElem(weapon, null);
             })
-            .Named<WeaponElem>("goblinSpear")
+            .Named<WeaponElem>("goblinBow")
             .InstancePerDependency();
 
         builder

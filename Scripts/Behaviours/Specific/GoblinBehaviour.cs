@@ -31,7 +31,7 @@ class GoblinBehaviour : BaseBehaviour
 
 class DistanceLeaf : BaseLeaf
 {
-    private const float ATTACK_DIST = 1.0f;
+    private const float ATTACK_DIST = 3.0f;
 
     public DistanceLeaf(WorldContext context)
         : base(context) { }
@@ -84,7 +84,7 @@ class AttackLeaf : BaseLeaf
         for (int i = 0; i < weapons.Count; i++)
         {
             ref WeaponElem elem = ref weapons[i];
-            // elem.weapon.Update(ctx.entity, elem.entity, ctx.mod, ctx.trs.position);
+            elem.weapon.Update(ctx.entity, elem.entity, ref ctx.mod, ctx.trs.position, dt);
         }
 
         ctx.animator.SetAnimByGroup(AttackHash);

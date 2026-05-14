@@ -71,6 +71,7 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
         RigidComp rigid = new RigidComp
         {
             velocity = bulletConfig.velocity * direction * modComp[BulletSpeedHash],
+            layer = bulletConfig.bulletLayer,
         };
 
         BulletComp bullet = new BulletComp
