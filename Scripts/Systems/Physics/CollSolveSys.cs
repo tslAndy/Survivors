@@ -17,7 +17,7 @@ partial class CollSolveSys : BaseSystem<World, float>
     private readonly int _wallsLayer;
 
     private const float CORR_RATE = 0.4f,
-        CORR_SLOP = 0.001f;
+        CORR_SLOP = 0.005f;
 
     public CollSolveSys(
         World world,
