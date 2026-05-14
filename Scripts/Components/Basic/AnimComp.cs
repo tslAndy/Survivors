@@ -11,12 +11,8 @@ struct AnimComp
 
     public AnimAtlas atlas;
     public AnimDir animDir;
+
     private Anim _anim;
-
-    // some props for simplifying life
-
-    public bool isFinished => (!anim.repeating) && keyIndex == anim.keys.Length;
-
     public Anim anim
     {
         get => _anim;
@@ -28,16 +24,22 @@ struct AnimComp
         }
     }
 
+    public Hash groupHash { get; private set; }
+
     public void SetAnim(Hash groupHash)
     {
+        this.groupHash = groupHash;
         this.anim = atlas[groupHash, (int)animDir];
     }
 
     public void SetAnim(Hash groupHash, AnimDir animDir)
     {
+        this.groupHash = groupHash;
         this.animDir = animDir;
         this.anim = atlas[groupHash, (int)animDir];
     }
+
+    public bool isFinished => (!anim.repeating) && keyIndex == anim.keys.Length;
 }
 
 public enum AnimDir : byte
