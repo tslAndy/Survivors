@@ -17,7 +17,7 @@ class WorldContext
     public readonly LayerMap layerMap;
 
     public Entity player;
-    public Vector2 playerPos;
+    public Vector2 playerPosition;
 
     public WorldContext(
         World world,

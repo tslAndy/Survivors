@@ -3,6 +3,7 @@ using Arch.System;
 using Components.Basic;
 using Components.Behaviour;
 using Components.Behaviours;
+using Components.Fighting;
 using Components.Physics;
 
 namespace Systems.Behaviour;
@@ -19,13 +20,15 @@ partial class BehaviourSys : BaseSystem<World, float>
 
     [Query]
     [All(typeof(PlayerTag))]
+    [None(typeof(DeathComp))]
     private void UpdatePlayerInfo(Entity entity, ref TrsComp trs)
     {
         _context.player = entity;
-        _context.playerPos = trs.position;
+        _context.playerPosition = trs.position;
     }
 
     [Query]
+    [None(typeof(DeathComp))]
     private void UpdateBehaviour(
         Entity entity,
         ref BehaviourComp behaviour,

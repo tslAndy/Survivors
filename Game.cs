@@ -48,7 +48,7 @@ class Game : IDisposable
         LoadTilemaps();
 
         _scope.ResolveNamed<Entity>("player");
-        for (int i = 0; i < 500; i++)
+        for (int i = 0; i < 5; i++)
             _scope.ResolveNamed<Entity>("goblin");
     }
 
@@ -129,6 +129,7 @@ class EntitiesModule : Module
                             atlas = playerAnimAtlas,
                             anim = playerAnimAtlas["Idle_Up"],
                             animDir = AnimDir.Up,
+                            groupHash = AnimAtlas.CountHash("Idle"),
                         },
                         new TrsComp
                         {
@@ -151,10 +152,10 @@ class EntitiesModule : Module
                         new ModComp()
                     );
 
-                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleBoomerang");
-                weapons.Add(weaponElem);
-                if (weaponElem.entity != null)
-                    player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);
+                // WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleBoomerang");
+                // weapons.Add(weaponElem);
+                // if (weaponElem.entity != null)
+                //     player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);
                 return player;
             })
             .Named<Entity>("player")
@@ -195,6 +196,7 @@ class EntitiesModule : Module
                             atlas = goblinAtlas,
                             anim = goblinAtlas["Idle_Down"],
                             animDir = AnimDir.Down,
+                            groupHash = AnimAtlas.CountHash("Idle"),
                         },
                         new TrsComp
                         {

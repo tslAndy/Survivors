@@ -89,49 +89,49 @@ endkey
 
 endgroup
 ##-----------------------RUN---------------------##
-group Run
+group Attack
 
-anim Run_Up 
+anim Attack_Up 
 frametime 200
-repeat true
+repeat false
 
-key run_up_1
-key run_up_2
-key run_up_3
-key run_up_4
+key attack_up_1
+key attack_up_2
+key attack_up_3
+key attack_up_4
 
 endkey
 
-anim Run_Down 
+anim Attack_Down 
 frametime 200
-repeat true
+repeat false
 
-key run_down_1
-key run_down_2
-key run_down_3
-key run_down_4
+key attack_down_1
+key attack_down_2
+key attack_down_3
+key attack_down_4
 
 endkey
 
-anim Run_Left 
+anim Attack_Left 
 frametime 200
-repeat true
+repeat false
 
-key run_left_1
-key run_left_2
-key run_left_3
-key run_left_4
+key attack_left_1
+key attack_left_2
+key attack_left_3
+key attack_left_4
 
 endkey
 
-anim Run_Right 
+anim Attack_Right 
 frametime 200
-repeat true
+repeat false
 
-key run_right_1
-key run_right_2
-key run_right_3
-key run_right_4
+key attack_right_1
+key attack_right_2
+key attack_right_3
+key attack_right_4
 
 endkey
 

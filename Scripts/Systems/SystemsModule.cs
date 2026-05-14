@@ -46,6 +46,7 @@ class SystemsModule : Module
                     // fighting
                     x.Resolve<WeaponSys>(),
                     x.Resolve<ShieldSys>(),
+                    // damage
                     x.Resolve<StatusEffectSys>(),
                     x.Resolve<DamageSys>(),
                     // loot

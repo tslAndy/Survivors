@@ -26,13 +26,13 @@ struct AnimComp
 
     public Hash groupHash;
 
-    public void SetAnim(Hash groupHash)
+    public void SetAnimByGroup(Hash groupHash)
     {
         this.groupHash = groupHash;
         this.anim = atlas[groupHash, (int)animDir];
     }
 
-    public void SetAnim(Hash groupHash, AnimDir animDir)
+    public void SetAnimByGroup(Hash groupHash, AnimDir animDir)
     {
         this.groupHash = groupHash;
         this.animDir = animDir;
@@ -54,10 +54,11 @@ public static class AnimDirExtensions
 {
     public static AnimDir AsAnimDir(this Vector2 vec)
     {
-        if (MathF.Abs(vec.Y) > 0.001f)
-            return vec.Y < 0 ? AnimDir.Up : AnimDir.Down;
-        if (MathF.Abs(vec.X) > 0.001f)
-            return vec.X < 0 ? AnimDir.Left : AnimDir.Right;
+        Vector2 abs = Vector2.Abs(vec);
+        if (abs.Y >= abs.X)
+            return vec.Y <= 0.0f ? AnimDir.Up : AnimDir.Down;
+        else if (abs.X > abs.Y)
+            return vec.X <= 0.0f ? AnimDir.Left : AnimDir.Right;
         return AnimDir.Up;
     }
 }

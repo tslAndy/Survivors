@@ -81,7 +81,7 @@ class PlayerBehaviour : BaseBehaviour
         if (input.LengthSquared() < 0.001f)
             return;
 
-        entityCtx.animator.SetAnim(WalkGroupHash, input.AsAnimDir());
+        entityCtx.animator.SetAnimByGroup(WalkGroupHash, input.AsAnimDir());
         entityCtx.behaviour.state = (int)PlayerState.Walk;
     }
 
@@ -91,7 +91,7 @@ class PlayerBehaviour : BaseBehaviour
 
         if (input.LengthSquared() < 0.001f)
         {
-            entityCtx.animator.SetAnim(IdleGroupHash);
+            entityCtx.animator.SetAnimByGroup(IdleGroupHash);
             entityCtx.behaviour.state = (int)PlayerState.Idle;
             return;
         }
@@ -100,7 +100,7 @@ class PlayerBehaviour : BaseBehaviour
 
         AnimDir animDir = input.AsAnimDir();
         if (animDir != entityCtx.animator.animDir)
-            entityCtx.animator.SetAnim(WalkGroupHash, animDir);
+            entityCtx.animator.SetAnimByGroup(WalkGroupHash, animDir);
     }
 
     private enum PlayerState
