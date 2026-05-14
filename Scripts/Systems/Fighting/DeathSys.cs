@@ -27,9 +27,8 @@ partial class DeathSys : BaseSystem<World, float>
     }
 
     [Query]
-    private void HandleTimer([Data] in float dt, Entity entity, ref TimerComp timer)
+    private void HandleTimer([Data] in float dt, Entity entity, in TimerComp timer)
     {
-        timer.time -= dt;
         if (timer.time > 0.0f)
             return;
 

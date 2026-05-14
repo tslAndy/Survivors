@@ -88,7 +88,6 @@ partial class StatusEffectSys : BaseSystem<World, float>
         if (!death.isDead)
             return;
 
-        Console.WriteLine(Random.Shared.Next());
         effects.newEffects.Dispose();
         effects.runningEffects.Dispose();
     }

@@ -35,6 +35,8 @@ class SystemsModule : Module
                     x.Resolve<SpatialSys>(),
                     x.Resolve<TileCollSys>(),
                     x.Resolve<RigidSys>(),
+                    // timer
+                    x.Resolve<TimerSys>(),
                     // character systems
                     x.Resolve<BehaviourSys>(),
                     // fighting
