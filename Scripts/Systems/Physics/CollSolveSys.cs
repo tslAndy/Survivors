@@ -61,8 +61,8 @@ partial class CollSolveSys : BaseSystem<World, float>
             ref RigidComp otherRigid = ref comps.t1;
             ref CollComp otherColl = ref comps.t2;
 
-            if (Vector2.Dot(rigid.velocity, otherRigid.velocity) < 0.0f)
-                continue;
+            // if (Vector2.Dot(rigid.velocity, otherRigid.velocity) < 0.0f)
+            //     continue;
 
             Vector2 delta = trs.position - otherTrs.position;
             float targDist = coll.radius + otherColl.radius;

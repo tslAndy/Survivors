@@ -49,7 +49,7 @@ class Game : IDisposable
         LoadTilemaps();
 
         _scope.ResolveNamed<Entity>("player");
-        for (int i = 0; i < 300; i++)
+        for (int i = 0; i < 600; i++)
             _scope.ResolveNamed<Entity>("goblin");
     }
 
@@ -149,11 +149,11 @@ class EntitiesModule : Module
                         new ModComp()
                     );
 
-                // WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleSpin");
+                // WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleLaser");
                 // weapons.Add(weaponElem);
                 // if (weaponElem.entity != null)
                 //     player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);
-
+                //
                 return player;
             })
             .Named<Entity>("player")
@@ -207,8 +207,8 @@ class EntitiesModule : Module
                         new TrsComp
                         {
                             position = new Vector2(
-                                2.0f + Random.Shared.NextSingle() * 26.0f,
-                                2.0f + Random.Shared.NextSingle() * 16.0f
+                                2.0f + Random.Shared.NextSingle() * 36.0f,
+                                2.0f + Random.Shared.NextSingle() * 26.0f
                             ),
                             scale = 1.0f,
                         },

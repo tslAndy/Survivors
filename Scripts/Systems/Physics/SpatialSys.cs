@@ -1,6 +1,5 @@
 using System.Numerics;
 using Arch.Core;
-using Arch.Core.Extensions;
 using Arch.System;
 using Components.Basic;
 using Components.Physics;
@@ -14,9 +13,10 @@ partial class SpatialSys : BaseSystem<World, float>
     private readonly Dictionary<Key, CachedList<Entry>> _map;
 
     // Max cell size is 2^(MAX_LEVELS - 1)
-    // for example MAX_LEVELS=10 => maxSize = 2^9 = 512
-    // max collider size is 1/2 * maxSize = 256
-    private const int MAX_LEVELS = 10;
+    // for example MAX_LEVELS=5 => maxSize = 2^(5-1) = 16
+    // max collider size is 1/2 * maxSize = 8
+    private const int MIN_LEVEL = 1;
+    private const int MAX_LEVEL = 5;
 
     public SpatialSys(World world)
         : base(world)
@@ -30,7 +30,7 @@ partial class SpatialSys : BaseSystem<World, float>
         Vector2 rayStart,
         Vector2 rayEnd,
         int layer,
-        CachedList<Entity> result
+        CachedList<Entity> overlap
     )
     {
         Vector2 rayNorm = Vector2.Normalize(rayEnd - rayStart);
@@ -53,7 +53,7 @@ partial class SpatialSys : BaseSystem<World, float>
         int sx = Math.Sign(delta.X);
         int sy = Math.Sign(delta.Y);
 
-        for (int gridLevel = 0; gridLevel < MAX_LEVELS; gridLevel++)
+        for (int gridLevel = MIN_LEVEL; gridLevel < MAX_LEVEL; gridLevel++)
         {
             refSet.Reset();
 
@@ -91,20 +91,11 @@ partial class SpatialSys : BaseSystem<World, float>
                         for (int j = 0; j < list.Count; j++)
                         {
                             Entry entry = list[j];
-                            // Entity other = list[j];
                             if (entry.entity == entity)
                                 continue;
 
-                            // ref RigidComp otherRigid = ref entry.Get<RigidComp>();
                             if (layer != entry.layer)
                                 continue;
-
-                            // Components<CollComp, TrsComp> comps = entry.Get<CollComp, TrsComp>();
-                            // ref CollComp otherColl = ref comps.t0;
-                            // ref TrsComp otherTrs = ref comps.t1;
-                            //
-                            // Vector2 otherPosition = otherTrs.position;
-                            // float otherRadius = otherColl.radius * otherTrs.scale;
 
                             if (
                                 GeomUtil.RayCircleIntersect(
@@ -115,7 +106,9 @@ partial class SpatialSys : BaseSystem<World, float>
                                     rayNorm
                                 )
                             )
-                                result.Add(entry.entity);
+                            {
+                                overlap.Add(entry.entity);
+                            }
                         }
                     }
                 }
@@ -147,7 +140,7 @@ partial class SpatialSys : BaseSystem<World, float>
         Vector2 position,
         float radius,
         int layer,
-        CachedList<Entity> result
+        CachedList<Entity> overlap
     )
     {
         int minX = (int)MathF.Floor(position.X - radius);
@@ -155,7 +148,7 @@ partial class SpatialSys : BaseSystem<World, float>
         int maxX = (int)MathF.Floor(position.X + radius);
         int maxY = (int)MathF.Floor(position.Y + radius);
 
-        for (int gridLevel = 0; gridLevel < MAX_LEVELS; gridLevel++)
+        for (int gridLevel = MIN_LEVEL; gridLevel < MAX_LEVEL; gridLevel++)
         {
             int xStart = (minX >> gridLevel) - 1;
             int yStart = (minY >> gridLevel) - 1;
@@ -173,27 +166,18 @@ partial class SpatialSys : BaseSystem<World, float>
 
                     for (int i = 0; i < list.Count; i++)
                     {
-                        // Entity other = list[i];
                         Entry entry = list[i];
                         if (entry.entity == entity)
                             continue;
 
-                        // ref RigidComp otherRigid = ref other.Get<RigidComp>();
                         if (layer != entry.layer)
                             continue;
-
-                        // Components<CollComp, TrsComp> comps = other.Get<CollComp, TrsComp>();
-                        // ref CollComp otherColl = ref comps.t0;
-                        // ref TrsComp otherTrs = ref comps.t1;
-                        //
-                        // Vector2 otherPosition = otherTrs.position;
-                        // float otherRadius = otherColl.radius * otherTrs.scale;
 
                         float distSqr = Vector2.DistanceSquared(position, entry.position);
                         float targDistSqr = (radius + entry.radius) * (radius + entry.radius);
 
                         if (distSqr < targDistSqr)
-                            result.Add(entry.entity);
+                            overlap?.Add(entry.entity);
                     }
                 }
             }
@@ -232,8 +216,8 @@ partial class SpatialSys : BaseSystem<World, float>
             BitOperations.TrailingZeroCount(
                 BitOperations.RoundUpToPowerOf2((uint)MathF.Ceiling(radius * 2.0f))
             ),
-            0,
-            MAX_LEVELS - 1
+            MIN_LEVEL,
+            MAX_LEVEL
         );
         int x = (int)MathF.Floor(position.X) >> z;
         int y = (int)MathF.Floor(position.Y) >> z;
