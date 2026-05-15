@@ -32,10 +32,10 @@ class SystemsModule : Module
                 Group<float> systems = new Group<float>(
                     "Base Systems",
                     // basic
+                    x.Resolve<RigidSys>(),
                     x.Resolve<LocalTrsSys>(),
                     x.Resolve<SpatialSys>(),
                     x.Resolve<TileCollSys>(),
-                    x.Resolve<RigidSys>(),
                     // timer
                     x.Resolve<TimerSys>(),
                     // character systems

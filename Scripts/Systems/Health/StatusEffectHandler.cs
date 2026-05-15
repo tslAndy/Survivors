@@ -17,12 +17,14 @@ class StatusEffectHandler
         AnimTimeHash = ModRegistry.CountHash("animTimeFactor"),
         DetectRadiusHash = ModRegistry.CountHash("detectRadiusFactor"),
         AttackSpeedHash = ModRegistry.CountHash("attackSpeedFactor"),
+        BulletSpeedHash = ModRegistry.CountHash("bulletSpeedFactor"),
         DamageTakeHash = ModRegistry.CountHash("damageTakeFactor"),
         DamageGiveHash = ModRegistry.CountHash("damageGiveFactor"),
         LootIncomeHash = ModRegistry.CountHash("lootIncomeFactor"),
         LootRadiusHash = ModRegistry.CountHash("lootRadiusFactor"),
         LootDropHash = ModRegistry.CountHash("lootDropFactor");
 
+    // TODO: combine withh LONG_EFFECT enum
     public void CombineEffects(Entity entity, ref StatusEffect first, ref StatusEffect second)
     {
         switch (first.type)
@@ -41,7 +43,8 @@ class StatusEffectHandler
             case StatusEffectType.Armor:
             case StatusEffectType.Delicacy:
             case StatusEffectType.DamageIncrease:
-            case StatusEffectType.AttackSpeedIncrease:
+            case StatusEffectType.AttackFast:
+            case StatusEffectType.BulletFast:
             case StatusEffectType.FarSight:
             case StatusEffectType.Haste:
             case StatusEffectType.Greed:
@@ -55,7 +58,8 @@ class StatusEffectHandler
 
             // effects combined by min
             case StatusEffectType.DamageDecrease:
-            case StatusEffectType.AttackSpeedDescrease:
+            case StatusEffectType.AttackSlow:
+            case StatusEffectType.BulletSlow:
             case StatusEffectType.ShortSight:
             case StatusEffectType.Slowness:
             case StatusEffectType.Stuck:
@@ -87,21 +91,23 @@ class StatusEffectHandler
 
     private void MultiplyValue(Entity entity, StatusEffectType type, float value)
     {
+        ref ModComp mod = ref entity.Get<ModComp>();
+
         switch (type)
         {
             case StatusEffectType.Armor:
             case StatusEffectType.Delicacy:
-                entity.Get<ModComp>()[DamageTakeHash] *= value;
+                mod[DamageTakeHash] *= value;
                 break;
 
             case StatusEffectType.DamageDecrease:
             case StatusEffectType.DamageIncrease:
-                entity.Get<ModComp>()[DamageGiveHash] *= value;
+                mod[DamageGiveHash] *= value;
                 break;
 
-            case StatusEffectType.AttackSpeedIncrease:
-            case StatusEffectType.AttackSpeedDescrease:
-                entity.Get<ModComp>()[AttackSpeedHash] *= value;
+            case StatusEffectType.AttackFast:
+            case StatusEffectType.AttackSlow:
+                mod[AttackSpeedHash] *= value;
 
                 ref WeaponComp weapon = ref entity.Get<WeaponComp>();
                 for (int i = 0; i < weapon.weapons.Count; i++)
@@ -121,29 +127,34 @@ class StatusEffectHandler
 
                 break;
 
+            case StatusEffectType.BulletSlow:
+            case StatusEffectType.BulletFast:
+                mod[BulletSpeedHash] *= value;
+                break;
+
             case StatusEffectType.Haste:
             case StatusEffectType.Slowness:
-                entity.Get<ModComp>()[MoveHash] *= value;
+                mod[MoveHash] *= value;
                 break;
 
             case StatusEffectType.ShortSight:
             case StatusEffectType.FarSight:
-                entity.Get<ModComp>()[DetectRadiusHash] *= value;
+                mod[DetectRadiusHash] *= value;
                 break;
 
             case StatusEffectType.Greed:
             case StatusEffectType.Poverty:
-                entity.Get<ModComp>()[LootIncomeHash] *= value;
+                mod[LootIncomeHash] *= value;
                 break;
 
             case StatusEffectType.ShortHand:
             case StatusEffectType.LongHand:
-                entity.Get<ModComp>()[LootRadiusHash] *= value;
+                mod[LootRadiusHash] *= value;
                 break;
 
             case StatusEffectType.PoorDrop:
             case StatusEffectType.RichDrop:
-                entity.Get<ModComp>()[LootDropHash] *= value;
+                mod[LootDropHash] *= value;
                 break;
 
             default:

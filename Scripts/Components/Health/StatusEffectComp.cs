@@ -39,11 +39,17 @@ enum StatusEffectType : byte
     Armor,
     Delicacy,
 
-    // attack
+    // damage
     DamageIncrease,
     DamageDecrease,
-    AttackSpeedIncrease,
-    AttackSpeedDescrease,
+
+    // attack
+    AttackFast,
+    AttackSlow,
+
+    // bullet
+    BulletFast,
+    BulletSlow,
 
     // radius
     ShortSight,
@@ -76,17 +82,23 @@ enum LongStatEffType : long
     Shock = 1 << StatusEffectType.Shock,
     Regen = 1 << StatusEffectType.Regen,
 
-    // status effects
     // defense
     Armor = 1 << StatusEffectType.Armor,
     Delicacy = 1 << StatusEffectType.Delicacy,
 
-    // attack
+    // damage
     DamageIncrease = 1 << StatusEffectType.DamageIncrease,
     DamageDecrease = 1 << StatusEffectType.DamageDecrease,
-    AttackSpeedIncrease = 1 << StatusEffectType.AttackSpeedIncrease,
-    AttackSpeedDescrease = 1 << StatusEffectType.AttackSpeedDescrease,
 
+    // attack
+    AttackFast = 1 << StatusEffectType.AttackFast,
+    AttackSlow = 1 << StatusEffectType.AttackSlow,
+
+    // bullet speed
+    BulletFast = 1 << StatusEffectType.BulletFast,
+    BulletSlow = 1 << StatusEffectType.BulletSlow,
+
+    // radius
     ShortSight = 1 << StatusEffectType.ShortSight,
     FarSight = 1 << StatusEffectType.FarSight,
 

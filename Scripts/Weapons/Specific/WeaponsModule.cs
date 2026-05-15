@@ -270,7 +270,7 @@ class WeaponsModule : Module
                         attacker
                             .Get<StatusEffectComp>()
                             .newEffects.Add(
-                                new StatusEffect(StatusEffectType.AttackSpeedIncrease, 10.0f, 3.0f)
+                                new StatusEffect(StatusEffectType.AttackFast, 10.0f, 3.0f)
                             );
                     },
                 };
@@ -325,7 +325,7 @@ class WeaponsModule : Module
                         attacker
                             .Get<StatusEffectComp>()
                             .newEffects.Add(
-                                new StatusEffect(StatusEffectType.AttackSpeedIncrease, 10.0f, 3.0f)
+                                new StatusEffect(StatusEffectType.AttackFast, 10.0f, 3.0f)
                             );
                     },
                 };
