@@ -154,10 +154,6 @@ class EntitiesModule : Module
                 if (weaponElem.entity != null)
                     player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);
 
-                shields.Add(
-                    new ShieldElem(new DestroyShield(default, x.Resolve<WorldContext>()), null)
-                );
-
                 return player;
             })
             .Named<Entity>("player")
