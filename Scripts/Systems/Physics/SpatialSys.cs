@@ -11,7 +11,7 @@ namespace Systems.Physics;
 partial class SpatialSys : BaseSystem<World, float>
 {
     public readonly CollisionRegistry collRegistry;
-    private readonly Dictionary<Key, CachedList<Entity>> _map;
+    private readonly Dictionary<Key, CachedList<Entry>> _map;
 
     // Max cell size is 2^(MAX_LEVELS - 1)
     // for example MAX_LEVELS=10 => maxSize = 2^9 = 512
@@ -22,7 +22,7 @@ partial class SpatialSys : BaseSystem<World, float>
         : base(world)
     {
         this.collRegistry = new CollisionRegistry();
-        _map = new Dictionary<Key, CachedList<Entity>>();
+        _map = new Dictionary<Key, CachedList<Entry>>();
     }
 
     public void GetOverlap(
@@ -85,36 +85,37 @@ partial class SpatialSys : BaseSystem<World, float>
                             continue;
 
                         Key key = new Key(kx, ky, gridLevel);
-                        if (!_map.TryGetValue(key, out CachedList<Entity>? list))
+                        if (!_map.TryGetValue(key, out CachedList<Entry>? list))
                             continue;
 
                         for (int j = 0; j < list.Count; j++)
                         {
-                            Entity other = list[j];
-                            if (other == entity)
+                            Entry entry = list[j];
+                            // Entity other = list[j];
+                            if (entry.entity == entity)
                                 continue;
 
-                            ref RigidComp otherRigid = ref other.Get<RigidComp>();
-                            if (layer != otherRigid.layer)
+                            // ref RigidComp otherRigid = ref entry.Get<RigidComp>();
+                            if (layer != entry.layer)
                                 continue;
 
-                            Components<CollComp, TrsComp> comps = other.Get<CollComp, TrsComp>();
-                            ref CollComp otherColl = ref comps.t0;
-                            ref TrsComp otherTrs = ref comps.t1;
-
-                            Vector2 otherPosition = otherTrs.position;
-                            float otherRadius = otherColl.radius * otherTrs.scale;
+                            // Components<CollComp, TrsComp> comps = entry.Get<CollComp, TrsComp>();
+                            // ref CollComp otherColl = ref comps.t0;
+                            // ref TrsComp otherTrs = ref comps.t1;
+                            //
+                            // Vector2 otherPosition = otherTrs.position;
+                            // float otherRadius = otherColl.radius * otherTrs.scale;
 
                             if (
                                 GeomUtil.RayCircleIntersect(
-                                    otherPosition,
-                                    otherRadius,
+                                    entry.position,
+                                    entry.radius,
                                     rayStart,
                                     rayEnd,
                                     rayNorm
                                 )
                             )
-                                result.Add(other);
+                                result.Add(entry.entity);
                         }
                     }
                 }
@@ -167,31 +168,32 @@ partial class SpatialSys : BaseSystem<World, float>
                 {
                     Key key = new Key(x, y, gridLevel);
 
-                    if (!_map.TryGetValue(key, out CachedList<Entity>? list))
+                    if (!_map.TryGetValue(key, out CachedList<Entry>? list))
                         continue;
 
                     for (int i = 0; i < list.Count; i++)
                     {
-                        Entity other = list[i];
-                        if (other == entity)
+                        // Entity other = list[i];
+                        Entry entry = list[i];
+                        if (entry.entity == entity)
                             continue;
 
-                        ref RigidComp otherRigid = ref other.Get<RigidComp>();
-                        if (layer != otherRigid.layer)
+                        // ref RigidComp otherRigid = ref other.Get<RigidComp>();
+                        if (layer != entry.layer)
                             continue;
 
-                        Components<CollComp, TrsComp> comps = other.Get<CollComp, TrsComp>();
-                        ref CollComp otherColl = ref comps.t0;
-                        ref TrsComp otherTrs = ref comps.t1;
+                        // Components<CollComp, TrsComp> comps = other.Get<CollComp, TrsComp>();
+                        // ref CollComp otherColl = ref comps.t0;
+                        // ref TrsComp otherTrs = ref comps.t1;
+                        //
+                        // Vector2 otherPosition = otherTrs.position;
+                        // float otherRadius = otherColl.radius * otherTrs.scale;
 
-                        Vector2 otherPosition = otherTrs.position;
-                        float otherRadius = otherColl.radius * otherTrs.scale;
-
-                        float distSqr = Vector2.DistanceSquared(position, otherPosition);
-                        float targDistSqr = (radius + otherRadius) * (radius + otherRadius);
+                        float distSqr = Vector2.DistanceSquared(position, entry.position);
+                        float targDistSqr = (radius + entry.radius) * (radius + entry.radius);
 
                         if (distSqr < targDistSqr)
-                            result.Add(other);
+                            result.Add(entry.entity);
                     }
                 }
             }
@@ -201,7 +203,7 @@ partial class SpatialSys : BaseSystem<World, float>
     public override void Update(in float dt)
     {
         collRegistry.Update();
-        foreach (KeyValuePair<Key, CachedList<Entity>> kvp in _map)
+        foreach (KeyValuePair<Key, CachedList<Entry>> kvp in _map)
             kvp.Value.Dispose();
         _map.Clear();
 
@@ -210,19 +212,18 @@ partial class SpatialSys : BaseSystem<World, float>
 
     [Query]
     [None(typeof(DeathComp))]
-    [All(typeof(RigidComp))]
-    private void Fill(in Entity entity, in CollComp coll, in TrsComp trs)
+    private void Fill(in Entity entity, in TrsComp trs, in CollComp coll, in RigidComp rigid)
     {
         Vector2 position = trs.position;
         float radius = coll.radius * trs.scale;
 
         Key key = GetKey(position, radius);
-        if (!_map.TryGetValue(key, out CachedList<Entity>? list))
+        if (!_map.TryGetValue(key, out CachedList<Entry>? list))
         {
-            list = CachedList<Entity>.Create();
+            list = CachedList<Entry>.Create();
             _map[key] = list;
         }
-        list.Add(entity);
+        list.Add(new Entry(entity, position, radius, rigid.layer));
     }
 
     private Key GetKey(Vector2 position, float radius)
@@ -239,6 +240,8 @@ partial class SpatialSys : BaseSystem<World, float>
 
         return new Key(x, y, z);
     }
+
+    private record struct Entry(Entity entity, Vector2 position, float radius, int layer);
 
     private record struct Key(int x, int y, int z);
 }
