@@ -71,56 +71,98 @@ enum StatusEffectType : byte
     // money drop
     PoorDrop,
     RichDrop,
+
+    // effects time scale
+    LongNegativeEffect,
+    ShortNegativeEffect,
+
+    LongPositiveEffect,
+    ShortPositiveEffect,
 }
 
 enum LongStatEffType : long
 {
     // health effects
-    Burn = 1 << StatusEffectType.Burn,
-    Bleed = 1 << StatusEffectType.Bleed,
-    Poison = 1 << StatusEffectType.Poison,
-    Shock = 1 << StatusEffectType.Shock,
-    Regen = 1 << StatusEffectType.Regen,
+    Burn = 1L << StatusEffectType.Burn,
+    Bleed = 1L << StatusEffectType.Bleed,
+    Poison = 1L << StatusEffectType.Poison,
+    Shock = 1L << StatusEffectType.Shock,
+    Regen = 1L << StatusEffectType.Regen,
 
     // defense
-    Armor = 1 << StatusEffectType.Armor,
-    Delicacy = 1 << StatusEffectType.Delicacy,
+    Armor = 1L << StatusEffectType.Armor,
+    Delicacy = 1L << StatusEffectType.Delicacy,
 
     // damage
-    DamageIncrease = 1 << StatusEffectType.DamageIncrease,
-    DamageDecrease = 1 << StatusEffectType.DamageDecrease,
+    DamageIncrease = 1L << StatusEffectType.DamageIncrease,
+    DamageDecrease = 1L << StatusEffectType.DamageDecrease,
 
     // attack
-    AttackFast = 1 << StatusEffectType.AttackFast,
-    AttackSlow = 1 << StatusEffectType.AttackSlow,
+    AttackFast = 1L << StatusEffectType.AttackFast,
+    AttackSlow = 1L << StatusEffectType.AttackSlow,
 
     // bullet speed
-    BulletFast = 1 << StatusEffectType.BulletFast,
-    BulletSlow = 1 << StatusEffectType.BulletSlow,
+    BulletFast = 1L << StatusEffectType.BulletFast,
+    BulletSlow = 1L << StatusEffectType.BulletSlow,
 
     // radius
-    ShortSight = 1 << StatusEffectType.ShortSight,
-    FarSight = 1 << StatusEffectType.FarSight,
+    ShortSight = 1L << StatusEffectType.ShortSight,
+    FarSight = 1L << StatusEffectType.FarSight,
 
     // speed
-    Slowness = 1 << StatusEffectType.Slowness,
-    Haste = 1 << StatusEffectType.Haste,
-    Stuck = 1 << StatusEffectType.Stuck,
+    Slowness = 1L << StatusEffectType.Slowness,
+    Haste = 1L << StatusEffectType.Haste,
+    Stuck = 1L << StatusEffectType.Stuck,
 
     // money income
-    Greed = 1 << StatusEffectType.Greed,
-    Poverty = 1 << StatusEffectType.Poverty,
+    Greed = 1L << StatusEffectType.Greed,
+    Poverty = 1L << StatusEffectType.Poverty,
 
     // money collect
-    ShortHand = 1 << StatusEffectType.ShortHand,
-    LongHand = 1 << StatusEffectType.LongHand,
+    ShortHand = 1L << StatusEffectType.ShortHand,
+    LongHand = 1L << StatusEffectType.LongHand,
 
     // money drop
-    PoorDrop = 1 << StatusEffectType.PoorDrop,
-    RichDrop = 1 << StatusEffectType.RichDrop,
+    PoorDrop = 1L << StatusEffectType.PoorDrop,
+    RichDrop = 1L << StatusEffectType.RichDrop,
+
+    // effects time scale
+    LongNegativeEffect = 1L << StatusEffectType.LongNegativeEffect,
+    ShortNegativeEffect = 1L << StatusEffectType.ShortNegativeEffect,
+
+    LongPositiveEffect = 1L << StatusEffectType.LongPositiveEffect,
+    ShortPositiveEffect = 1L << StatusEffectType.ShortPositiveEffect,
 
     // combined
     SimpleEffects = Burn | Bleed | Poison | Shock | Regen,
+
+    NegativeEffects =
+        Burn
+        | Bleed
+        | Poison
+        | Shock
+        | Delicacy
+        | DamageDecrease
+        | AttackSlow
+        | BulletSlow
+        | ShortSight
+        | Slowness
+        | Stuck
+        | Poverty
+        | ShortHand
+        | PoorDrop,
+
+    PositiveEffects =
+        Regen
+        | Armor
+        | DamageIncrease
+        | AttackFast
+        | BulletFast
+        | FarSight
+        | Haste
+        | Greed
+        | LongHand
+        | RichDrop,
 }
 
 static class LongStatEffTypeExtensions

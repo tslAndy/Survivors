@@ -2,6 +2,8 @@ using Arch.Core;
 using Arch.System;
 using Components.Basic;
 using Components.Health;
+using Engine.Common;
+using Systems.Basic;
 
 namespace Systems.Health;
 
@@ -9,6 +11,9 @@ partial class StatusEffectSys : BaseSystem<World, float>
 {
     private StatusEffectHandler _effectHandler;
     private const float APPLY_TIME = 1.0f;
+
+    private readonly Hash NegativeEffectFactor = ModRegistry.CountHash("negativeEffectFactor"),
+        PositiveEffectFactor = ModRegistry.CountHash("positiveEffectFactor");
 
     public StatusEffectSys(World world, StatusEffectHandler effectHandler)
         : base(world)
@@ -18,11 +23,17 @@ partial class StatusEffectSys : BaseSystem<World, float>
 
     [Query]
     [None(typeof(DeathComp))]
-    private void ApplyNewEffects(Entity entity, ref StatusEffectComp effects)
+    private void ApplyNewEffects(Entity entity, ref StatusEffectComp effects, in ModComp mod)
     {
         for (int i = 0; i < effects.newEffects.Count; i++)
         {
             ref StatusEffect newEff = ref effects.newEffects[i];
+
+            if (LongStatEffType.PositiveEffects.CheckFlag(newEff.type))
+                newEff.duration *= mod[PositiveEffectFactor];
+            else if (LongStatEffType.NegativeEffects.CheckFlag(newEff.type))
+                newEff.duration *= mod[NegativeEffectFactor];
+
             int index = effects.runningEffects.IndexOf(
                 (eff, type) => eff.type == type,
                 newEff.type

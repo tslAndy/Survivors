@@ -22,7 +22,9 @@ class StatusEffectHandler
         DamageGiveHash = ModRegistry.CountHash("damageGiveFactor"),
         LootIncomeHash = ModRegistry.CountHash("lootIncomeFactor"),
         LootRadiusHash = ModRegistry.CountHash("lootRadiusFactor"),
-        LootDropHash = ModRegistry.CountHash("lootDropFactor");
+        LootDropHash = ModRegistry.CountHash("lootDropFactor"),
+        NegativeEffectHash = ModRegistry.CountHash("negativeEffectFactor"),
+        PositiveEffectHash = ModRegistry.CountHash("positiveEffectFactor");
 
     // TODO: combine withh LONG_EFFECT enum
     public void CombineEffects(Entity entity, ref StatusEffect first, ref StatusEffect second)
@@ -50,10 +52,11 @@ class StatusEffectHandler
             case StatusEffectType.Greed:
             case StatusEffectType.LongHand:
             case StatusEffectType.RichDrop:
-                float oldVal = first.val;
+            case StatusEffectType.LongNegativeEffect:
+            case StatusEffectType.LongPositiveEffect:
                 first.duration = Math.Clamp(first.duration + second.duration, 0.0f, MAX_DURATION);
                 first.val = Math.Max(first.val, second.val);
-                MultiplyValue(entity, first.type, first.val / oldVal);
+                SetValue(entity, first.type, first.val);
                 break;
 
             // effects combined by min
@@ -66,10 +69,11 @@ class StatusEffectHandler
             case StatusEffectType.Poverty:
             case StatusEffectType.ShortHand:
             case StatusEffectType.PoorDrop:
-                oldVal = first.val;
+            case StatusEffectType.ShortNegativeEffect:
+            case StatusEffectType.ShortPositiveEffect:
                 first.duration = Math.Clamp(first.duration + second.duration, 0.0f, MAX_DURATION);
                 first.val = Math.Min(first.val, second.val);
-                MultiplyValue(entity, first.type, first.val / oldVal);
+                SetValue(entity, first.type, first.val);
                 break;
 
             default:
@@ -80,16 +84,16 @@ class StatusEffectHandler
     public void AddEffect(Entity entity, ref StatusEffect effect)
     {
         // non multiply effects logic handling if necessary
-        MultiplyValue(entity, effect.type, effect.val);
+        SetValue(entity, effect.type, effect.val);
     }
 
     public void RemoveEffect(Entity entity, ref StatusEffect effect)
     {
         // non multiply effects logic handling if necessary
-        MultiplyValue(entity, effect.type, 1.0f / effect.val);
+        SetValue(entity, effect.type, 1.0f);
     }
 
-    private void MultiplyValue(Entity entity, StatusEffectType type, float value)
+    private void SetValue(Entity entity, StatusEffectType type, float value)
     {
         ref ModComp mod = ref entity.Get<ModComp>();
 
@@ -97,24 +101,24 @@ class StatusEffectHandler
         {
             case StatusEffectType.Armor:
             case StatusEffectType.Delicacy:
-                mod[DamageTakeHash] *= value;
+                mod[DamageTakeHash] = value;
                 break;
 
             case StatusEffectType.DamageDecrease:
             case StatusEffectType.DamageIncrease:
-                mod[DamageGiveHash] *= value;
+                mod[DamageGiveHash] = value;
                 break;
 
             case StatusEffectType.AttackFast:
             case StatusEffectType.AttackSlow:
-                mod[AttackSpeedHash] *= value;
+                mod[AttackSpeedHash] = value;
 
                 ref WeaponComp weapon = ref entity.Get<WeaponComp>();
                 for (int i = 0; i < weapon.weapons.Count; i++)
                 {
                     Entity? extra = weapon.weapons[i].entity;
                     if (extra != null && extra.Value.Has<ModComp>())
-                        extra.Value.Get<ModComp>()[AnimTimeHash] *= value;
+                        extra.Value.Get<ModComp>()[AnimTimeHash] = value;
                 }
 
                 ref ShieldComp shield = ref entity.Get<ShieldComp>();
@@ -122,39 +126,49 @@ class StatusEffectHandler
                 {
                     Entity? extra = shield.shields[i].entity;
                     if (extra != null && extra.Value.Has<ModComp>())
-                        extra.Value.Get<ModComp>()[AnimTimeHash] *= value;
+                        extra.Value.Get<ModComp>()[AnimTimeHash] = value;
                 }
 
                 break;
 
             case StatusEffectType.BulletSlow:
             case StatusEffectType.BulletFast:
-                mod[BulletSpeedHash] *= value;
+                mod[BulletSpeedHash] = value;
                 break;
 
             case StatusEffectType.Haste:
             case StatusEffectType.Slowness:
-                mod[MoveHash] *= value;
+                mod[MoveHash] = value;
                 break;
 
             case StatusEffectType.ShortSight:
             case StatusEffectType.FarSight:
-                mod[DetectRadiusHash] *= value;
+                mod[DetectRadiusHash] = value;
                 break;
 
             case StatusEffectType.Greed:
             case StatusEffectType.Poverty:
-                mod[LootIncomeHash] *= value;
+                mod[LootIncomeHash] = value;
                 break;
 
             case StatusEffectType.ShortHand:
             case StatusEffectType.LongHand:
-                mod[LootRadiusHash] *= value;
+                mod[LootRadiusHash] = value;
                 break;
 
             case StatusEffectType.PoorDrop:
             case StatusEffectType.RichDrop:
-                mod[LootDropHash] *= value;
+                mod[LootDropHash] = value;
+                break;
+
+            case StatusEffectType.ShortNegativeEffect:
+            case StatusEffectType.LongNegativeEffect:
+                mod[NegativeEffectHash] = value;
+                break;
+
+            case StatusEffectType.ShortPositiveEffect:
+            case StatusEffectType.LongPositiveEffect:
+                mod[PositiveEffectHash] = value;
                 break;
 
             default:
