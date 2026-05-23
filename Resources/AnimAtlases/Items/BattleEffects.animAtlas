@@ -251,7 +251,7 @@ endkey
 ##-----------------------FIREBALL_A---------------------##
 
 anim Fireball_1
-frametime 200
+frametime 60
 repeat true
 
 key fireball_1_1
@@ -276,7 +276,7 @@ endkey
 ##-----------------------FIREBALL_B---------------------##
 
 anim Fireball_2
-frametime 200
+frametime 60
 repeat true
 
 key fireball_2_1
@@ -301,7 +301,7 @@ endkey
 ##-----------------------FIREBALL_C---------------------##
 
 anim Fireball_3
-frametime 200
+frametime 60
 repeat true
 
 key fireball_3_1
@@ -326,7 +326,7 @@ endkey
 ##-----------------------FIREBALL_D---------------------##
 
 anim Fireball_4
-frametime 200
+frametime 60
 repeat true
 
 key fireball_4_1
@@ -350,7 +350,7 @@ endkey
 ##-----------------------FIREBALL_E---------------------##
 
 anim Fireball_5
-frametime 200
+frametime 60
 repeat true
 
 key fireball_5_1
@@ -374,7 +374,7 @@ endkey
 ##-----------------------FIREBALL_F---------------------##
 
 anim Fireball_6
-frametime 200
+frametime 60
 repeat true
 
 key fireball_6_1
@@ -398,7 +398,7 @@ endkey
 ##-----------------------FIREBALL_G---------------------##
 
 anim Fireball_7
-frametime 200
+frametime 60
 repeat true
 
 key fireball_7_1
@@ -422,7 +422,7 @@ endkey
 ##-----------------------FIREBALL_H---------------------##
 
 anim Fireball_8
-frametime 200
+frametime 60
 repeat true
 
 key fireball_8_1
@@ -446,7 +446,7 @@ endkey
 ##-----------------------FIREBALL_I---------------------##
 
 anim Fireball_9
-frametime 200
+frametime 60
 repeat true
 
 key fireball_9_1
@@ -470,7 +470,7 @@ endkey
 ##-----------------------FIREBALL_J---------------------##
 
 anim Fireball_10
-frametime 200
+frametime 60
 repeat true
 
 key fireball_10_1

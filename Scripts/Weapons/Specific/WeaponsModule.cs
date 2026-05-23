@@ -514,6 +514,43 @@ class WeaponsModule : Module
             })
             .Named<ShieldElem>("reflectShield")
             .InstancePerDependency();
-        ;
+
+        builder
+            .Register<WeaponElem>(x =>
+            {
+                WeaponConfig config = new WeaponConfig
+                {
+                    baseDamage = 20,
+                    critDamage = 50,
+                    critChance = 30,
+                    attackTime = 1.0f,
+                    detectRadius = 4.0f,
+                    targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    maxEnemies = 10,
+                };
+
+                BulletConfig bulletConfig = new BulletConfig
+                {
+                    anim = x.Resolve<AnimAtlasManager>()
+                        .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas")["Fireball_5"],
+                    velocity = 8.0f,
+                    radius = 0.25f,
+                    lifetime = 4.0f,
+                    bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
+                    drawOrder = 2,
+                    perforate = true,
+                    bounce = false,
+                };
+
+                IWeapon weapon = new Stave(
+                    bulletConfig,
+                    config,
+                    default,
+                    x.Resolve<WorldContext>()
+                );
+                return new WeaponElem(weapon, null);
+            })
+            .Named<WeaponElem>("simpleStave")
+            .InstancePerDependency();
     }
 }
