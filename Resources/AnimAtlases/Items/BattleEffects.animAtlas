@@ -494,7 +494,7 @@ endkey
 ##-----------------------EXPOSION_A---------------------##
 
 anim Explosion_1
-frametime 200
+frametime 100
 repeat false
 
 key explosion_1_1

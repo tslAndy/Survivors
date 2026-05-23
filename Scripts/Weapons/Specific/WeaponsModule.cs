@@ -381,5 +381,44 @@ class WeaponsModule : Module
             })
             .Named<WeaponElem>("simpleKunai")
             .InstancePerDependency();
+
+        builder
+            .Register<WeaponElem>(x =>
+            {
+                WeaponConfig config = new WeaponConfig
+                {
+                    baseDamage = 20,
+                    critDamage = 50,
+                    critChance = 30,
+                    attackTime = 1.0f,
+                    detectRadius = 8.0f,
+                    targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    maxEnemies = 20,
+                };
+
+                BulletConfig bulletConfig = new BulletConfig
+                {
+                    anim = x.Resolve<AnimAtlasManager>()
+                        .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas")[
+                        "Explosion_1"
+                    ],
+                    radius = 1.0f,
+                    lifetime = 0.7f,
+                    bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
+                    drawOrder = 2,
+                };
+
+                WeaponCallbacks callbacks = new WeaponCallbacks { };
+
+                IWeapon weapon = new Book(
+                    bulletConfig,
+                    config,
+                    callbacks,
+                    x.Resolve<WorldContext>()
+                );
+                return new WeaponElem(weapon, null);
+            })
+            .Named<WeaponElem>("simpleBook")
+            .InstancePerDependency();
     }
 }
