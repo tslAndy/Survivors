@@ -391,19 +391,18 @@ class WeaponsModule : Module
                     critDamage = 50,
                     critChance = 30,
                     attackTime = 1.0f,
-                    detectRadius = 8.0f,
+                    detectRadius = 4.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
-                    maxEnemies = 20,
+                    maxEnemies = 10,
                 };
 
+                Anim anim = x.Resolve<AnimAtlasManager>()
+                    .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas")["Explosion_1"];
                 BulletConfig bulletConfig = new BulletConfig
                 {
-                    anim = x.Resolve<AnimAtlasManager>()
-                        .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas")[
-                        "Explosion_1"
-                    ],
+                    anim = anim,
                     radius = 1.0f,
-                    lifetime = 0.7f,
+                    lifetime = anim.keys.Length * anim.frameTime,
                     bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
                     drawOrder = 2,
                 };

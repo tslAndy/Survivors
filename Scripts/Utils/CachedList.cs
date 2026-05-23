@@ -68,6 +68,15 @@ class CachedList<T> : IDisposable
         _index--;
     }
 
+    public T RandPop()
+    {
+        int k = Random.Shared.Next(0, _index);
+        T result = _elems[k];
+        _elems[k] = _elems[_index - 1];
+        _index--;
+        return result;
+    }
+
     public T Find<U>(Func<T, U, bool> func, U param) => _elems.Find(func, param, 0, _index);
 
     public int IndexOf<U>(Func<T, U, bool> func, U param) => _elems.IndexOf(func, param, 0, _index);

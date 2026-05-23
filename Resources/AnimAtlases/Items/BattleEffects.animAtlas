@@ -510,7 +510,7 @@ endkey
 ##-----------------------EXPOSION_B---------------------##
 
 anim Explosion_2
-frametime 200
+frametime 100
 repeat false
 
 key explosion_2_1
@@ -533,7 +533,7 @@ endkey
 ##-----------------------EXPOSION_C---------------------##
 
 anim Explosion_3
-frametime 200
+frametime 100
 repeat false
 
 key explosion_3_1
@@ -552,7 +552,7 @@ endkey
 ##-----------------------EXPOSION_D---------------------##
 
 anim Explosion_4
-frametime 200
+frametime 100
 repeat false
 
 key explosion_4_1
@@ -570,7 +570,7 @@ endkey
 ##-----------------------EXPOSION_E---------------------##
 
 anim Explosion_5
-frametime 200
+frametime 100
 repeat false
 
 key explosion_5_1
@@ -595,7 +595,7 @@ endkey
 ##-----------------------EXPOSION_F---------------------##
 
 anim Explosion_6
-frametime 200
+frametime 100
 repeat false
 
 key explosion_6_1

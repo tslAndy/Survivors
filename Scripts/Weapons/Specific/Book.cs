@@ -19,20 +19,23 @@ class Book : BulletWeapon
     )
         : base(bulletConfig, config, callbacks, context) { }
 
-    protected override void OnTimer(
-        Entity entity,
-        Entity? extra,
-        ref ModComp modComp,
-        Vector2 position
-    )
+    protected override void OnTimer(Entity entity, Entity? extra, ref ModComp mod, Vector2 position)
     {
-        float step = MathF.Tau / config.maxEnemies;
-        for (int i = 0; i < config.maxEnemies; i++)
+        using CachedList<Entity> overlap = CachedList<Entity>.Create();
+        context.spatialSys.GetOverlap(
+            entity,
+            position,
+            config.detectRadius * mod[DetectRadiusHash],
+            config.targetLayer,
+            overlap
+        );
+
+        int n = Math.Min(overlap.Count, config.maxEnemies);
+        while (n > 0)
         {
-            float angle = i * step;
-            Vector2 dir = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
-            float dist = (0.3f + 0.7f * Random.Shared.NextSingle()) * config.detectRadius;
-            InstantiateBullet(entity, extra, ref modComp, position + dir * dist, Vector2.Zero);
+            ref TrsComp enemyTrs = ref overlap.RandPop().Get<TrsComp>();
+            InstantiateBullet(entity, extra, ref mod, enemyTrs.position, Vector2.Zero);
+            n--;
         }
     }
 

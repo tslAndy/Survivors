@@ -37,9 +37,11 @@ class Bow : BulletWeapon
             config.targetLayer,
             overlap
         );
-        for (int i = 0; i < Math.Min(overlap.Count, config.maxEnemies); i++)
+
+        int n = Math.Min(overlap.Count, config.maxEnemies);
+        while (n > 0)
         {
-            Vector2 enemyPos = overlap[i].Get<TrsComp>().position;
+            Vector2 enemyPos = overlap.RandPop().Get<TrsComp>().position;
             InstantiateBullet(
                 entity,
                 extra,
@@ -47,6 +49,7 @@ class Bow : BulletWeapon
                 position,
                 Vector2.Normalize(enemyPos - position)
             );
+            n--;
         }
     }
 
