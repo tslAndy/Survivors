@@ -340,5 +340,45 @@ class WeaponsModule : Module
             })
             .Named<WeaponElem>("simpleLaser")
             .InstancePerDependency();
+
+        builder
+            .Register<WeaponElem>(x =>
+            {
+                WeaponConfig config = new WeaponConfig
+                {
+                    baseDamage = 20,
+                    critDamage = 50,
+                    critChance = 30,
+                    attackTime = 1.0f,
+                    detectRadius = 4.0f,
+                    targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    maxEnemies = 10,
+                };
+
+                BulletConfig bulletConfig = new BulletConfig
+                {
+                    sprite = x.Resolve<SpriteAtlasManager>()
+                        .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")["kunai_1"],
+                    velocity = 8.0f,
+                    radius = 0.25f,
+                    lifetime = 4.0f,
+                    bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
+                    drawOrder = 2,
+                    perforate = true,
+                    bounce = false,
+                };
+
+                WeaponCallbacks callbacks = new WeaponCallbacks { };
+
+                IWeapon weapon = new Kunai(
+                    bulletConfig,
+                    config,
+                    callbacks,
+                    x.Resolve<WorldContext>()
+                );
+                return new WeaponElem(weapon, null);
+            })
+            .Named<WeaponElem>("simpleKunai")
+            .InstancePerDependency();
     }
 }
