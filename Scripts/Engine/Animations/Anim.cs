@@ -9,6 +9,8 @@ class Anim
     public readonly float frameTime;
     public readonly bool repeating;
 
+    public float duration => keys.Length * frameTime;
+
     public Anim(Key[] keys, float frameTime, bool repeating)
     {
         this.keys = keys;

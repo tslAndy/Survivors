@@ -3,8 +3,8 @@ spriteAtlas ./Resources/SpriteAtlases/Items/BattleEffects.spriteAtlas
 ##-----------------------CAST_A---------------------##
 
 anim Cast_1
-frametime 200
-repeat true
+frametime 60
+repeat false 
 
 key cast_1_1
 key cast_1_2
@@ -28,8 +28,8 @@ endkey
 ##-----------------------CAST_B---------------------##
 
 anim Cast_2
-frametime 200
-repeat true
+frametime 60
+repeat false
 
 key cast_2_1
 key cast_2_2
@@ -53,8 +53,8 @@ endkey
 ##-----------------------CAST_C---------------------##
 
 anim Cast_3
-frametime 200
-repeat true
+frametime 60
+repeat false
 
 key cast_3_1
 key cast_3_2
@@ -78,8 +78,8 @@ endkey
 ##-----------------------CAST_D---------------------##
 
 anim Cast_4
-frametime 200
-repeat true
+frametime 60
+repeat false
 
 key cast_4_1
 key cast_4_2
@@ -103,8 +103,8 @@ endkey
 ##-----------------------CAST_E---------------------##
 
 anim Cast_5 
-frametime 200
-repeat true
+frametime 60
+repeat false
 
 key cast_5_1
 key cast_5_2

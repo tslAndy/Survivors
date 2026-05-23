@@ -195,12 +195,15 @@ class WeaponsModule : Module
         builder
             .Register<WeaponElem>(x =>
             {
+                Anim anim = x.Resolve<AnimAtlasManager>()
+                    .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas")["Swing_1"];
+
                 WeaponConfig config = new WeaponConfig
                 {
                     baseDamage = 20,
                     critDamage = 50,
                     critChance = 30,
-                    attackTime = 0.75f,
+                    attackTime = anim.duration,
                     detectRadius = 2.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
                     maxEnemies = 10,
@@ -208,15 +211,12 @@ class WeaponsModule : Module
 
                 WeaponCallbacks callbacks = new WeaponCallbacks { };
 
-                AnimAtlas swingAtlas = x.Resolve<AnimAtlasManager>()
-                    .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas");
-                //
                 Entity swing = x.Resolve<World>()
                     .Create<TrsComp, LocalTrsComp, SpriteComp, AnimComp, ModComp>(
                         new TrsComp { scale = 1.0f },
                         new LocalTrsComp { scale = 1.0f },
                         new SpriteComp { drawOrder = 2 },
-                        new AnimComp { anim = swingAtlas["Swing_1"], atlas = swingAtlas },
+                        new AnimComp { anim = anim },
                         new ModComp()
                     );
 
@@ -398,11 +398,12 @@ class WeaponsModule : Module
 
                 Anim anim = x.Resolve<AnimAtlasManager>()
                     .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas")["Explosion_1"];
+
                 BulletConfig bulletConfig = new BulletConfig
                 {
                     anim = anim,
                     radius = 1.0f,
-                    lifetime = anim.keys.Length * anim.frameTime,
+                    lifetime = anim.duration,
                     bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
                     drawOrder = 2,
                 };
@@ -418,6 +419,45 @@ class WeaponsModule : Module
                 return new WeaponElem(weapon, null);
             })
             .Named<WeaponElem>("simpleBook")
+            .InstancePerDependency();
+
+        builder
+            .Register<WeaponElem>(x =>
+            {
+                WeaponConfig config = new WeaponConfig
+                {
+                    baseDamage = 20,
+                    critDamage = 50,
+                    critChance = 30,
+                    attackTime = 2.0f,
+                    detectRadius = 8.0f,
+                    targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    maxEnemies = 30,
+                };
+
+                Anim anim = x.Resolve<AnimAtlasManager>()
+                    .Get("./Resources/AnimAtlases/Items/BattleEffects.animAtlas")["Cast_5"];
+
+                BulletConfig bulletConfig = new BulletConfig
+                {
+                    anim = anim,
+                    radius = 1.0f,
+                    lifetime = anim.duration,
+                    bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
+                    drawOrder = 2,
+                };
+
+                WeaponCallbacks callbacks = new WeaponCallbacks { };
+
+                IWeapon weapon = new Card(
+                    bulletConfig,
+                    config,
+                    callbacks,
+                    x.Resolve<WorldContext>()
+                );
+                return new WeaponElem(weapon, null);
+            })
+            .Named<WeaponElem>("simpleCard")
             .InstancePerDependency();
     }
 }

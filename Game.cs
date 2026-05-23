@@ -152,7 +152,7 @@ class EntitiesModule : Module
                         new ModComp()
                     );
 
-                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleBook");
+                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleCard");
                 weapons.Add(weaponElem);
                 if (weaponElem.entity != null)
                     player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);
