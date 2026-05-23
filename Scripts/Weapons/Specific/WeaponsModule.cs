@@ -79,6 +79,7 @@ class WeaponsModule : Module
                         "boomerang_1"
                     ],
                     velocity = 8.0f,
+                    rotVelocity = 180.0f,
                     radius = 0.5f,
                     lifetime = 10.0f,
                     bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
@@ -87,16 +88,9 @@ class WeaponsModule : Module
                     bounce = true,
                 };
 
-                BoomerangConfig boomrConfig = new BoomerangConfig
-                {
-                    maxDist = 10.0f,
-                    rotSpeed = 180.0f,
-                };
-
                 WeaponCallbacks callbacks = new WeaponCallbacks { };
 
                 IWeapon weapon = new Boomerang(
-                    boomrConfig,
                     bulletConfig,
                     config,
                     callbacks,
@@ -162,7 +156,7 @@ class WeaponsModule : Module
                     baseDamage = 20,
                     critDamage = 50,
                     critChance = 30,
-                    attackTime = 0.5f,
+                    attackTime = 1.5f,
                     detectRadius = 2.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
                     maxEnemies = 10,
@@ -170,7 +164,7 @@ class WeaponsModule : Module
 
                 BulletConfig bulletConfig = new BulletConfig
                 {
-                    velocity = 4.0f,
+                    velocity = 8.0f,
                     radius = 0.01f,
                     lifetime = 90.0f,
                     bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],

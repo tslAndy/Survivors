@@ -4,32 +4,19 @@ using Arch.Core.Extensions;
 using Components.Basic;
 using Components.Other;
 using Components.Physics;
-using Raylib_cs;
 using Systems;
 
 namespace Weapons.Specific;
 
-struct BoomerangConfig
-{
-    public float maxDist;
-    public float rotSpeed;
-}
-
 class Boomerang : Bow
 {
-    protected readonly BoomerangConfig boomrConfig;
-
     public Boomerang(
-        BoomerangConfig boomerangConfig,
         BulletConfig bulletConfig,
         WeaponConfig config,
         WeaponCallbacks callbacks,
         WorldContext context
     )
-        : base(bulletConfig, config, callbacks, context)
-    {
-        this.boomrConfig = boomerangConfig;
-    }
+        : base(bulletConfig, config, callbacks, context) { }
 
     public override void UpdateBullet(
         Entity owner,
@@ -43,11 +30,9 @@ class Boomerang : Bow
     {
         base.UpdateBullet(owner, extra, bullet, ref trs, ref rigid, ref coll, ref timer);
 
-        trs.rotation += Raylib.GetFrameTime() * boomrConfig.rotSpeed;
-
         ref TrsComp ownerTrs = ref owner.Get<TrsComp>();
         Vector2 delta = ownerTrs.position - trs.position;
-        if (delta.LengthSquared() < boomrConfig.maxDist * boomrConfig.maxDist)
+        if (delta.LengthSquared() < config.detectRadius * config.detectRadius)
             return;
 
         // if bullet moves towards player

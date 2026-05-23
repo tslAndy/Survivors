@@ -15,5 +15,6 @@ partial class RigidSys : BaseSystem<World, float>
     private void Move([Data] in float dt, ref TrsComp trs, in RigidComp rigid)
     {
         trs.position += rigid.velocity * dt;
+        trs.rotation += rigid.rotVelocity * dt;
     }
 }

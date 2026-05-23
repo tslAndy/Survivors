@@ -18,6 +18,7 @@ struct BulletConfig
     public Sprite? sprite;
 
     public float velocity,
+        rotVelocity,
         radius,
         lifetime;
 
@@ -72,6 +73,7 @@ abstract class BulletWeapon : Weapon, IBulletWeapon
         RigidComp rigid = new RigidComp
         {
             velocity = bulletConfig.velocity * direction * modComp[BulletSpeedHash],
+            rotVelocity = bulletConfig.rotVelocity,
             layer = bulletConfig.bulletLayer,
         };
 

@@ -22,6 +22,8 @@ class TrailBow : Bow
 {
     protected readonly TrailConfig trailConfig;
 
+    private const int MAX_REFLECTIONS = 5;
+
     public TrailBow(
         TrailConfig trailConfig,
         BulletConfig bulletConfig,
@@ -55,7 +57,8 @@ class TrailBow : Bow
         Vector2 dir = -Vector2.Normalize(rigid.velocity);
         float len = trailConfig.length;
 
-        for (int i = 0; i < 100; i++)
+        // max 5 reflections
+        for (int i = 0; i < MAX_REFLECTIONS; i++)
         {
             if (len <= 0.0f)
                 break;
