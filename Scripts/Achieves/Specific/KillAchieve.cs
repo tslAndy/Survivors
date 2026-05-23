@@ -5,25 +5,15 @@ using Events;
 
 namespace Achieves.Specific;
 
-partial class KillAchieve : Achieve
+partial class KillAchieve : CountAchieve
 {
-    private readonly int _target;
-    private int _count;
-
     public KillAchieve(int target, string name, string description)
-        : base(name, description)
-    {
-        _target = target;
-        Hook();
-    }
+        : base(target, name, description) => Hook();
 
     [Event]
-    public void OnDeathEvent(ref DeathEvent @event)
+    public void OnDeath(ref DeathEvent @event)
     {
         if (@event.entity.Has<EnemyTag>())
-            _count++;
-
-        if (_count >= _target)
-            TryUnlock();
+            IncrementCount();
     }
 }

@@ -1,4 +1,5 @@
 using System.Numerics;
+using Arch.Bus;
 using Arch.Core;
 using Arch.Core.Extensions;
 using Arch.System;
@@ -6,6 +7,7 @@ using Components.Basic;
 using Components.Loot;
 using Components.Other;
 using Engine.Common;
+using Events;
 using Systems.Basic;
 using Systems.Physics;
 using Utils;
@@ -67,6 +69,13 @@ partial class LootCollectSys : BaseSystem<World, float>
             targTimerDestroy.time = 0.0f;
         }
 
-        lootColl.amount += (int)MathF.Floor(totalAmount * modComp[IncomeFactorHash]);
+        int amount = (int)MathF.Floor(totalAmount * modComp[IncomeFactorHash]);
+        lootColl.amount += amount;
+
+        if (amount != 0)
+        {
+            ExpCollectEvent expCollectEvent = new ExpCollectEvent { amount = amount };
+            EventBus.Send(ref expCollectEvent);
+        }
     }
 }

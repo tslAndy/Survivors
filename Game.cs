@@ -237,7 +237,7 @@ class EntitiesModule : Module
                             newEffects = CachedList<StatusEffect>.Create(),
                             runningEffects = CachedList<StatusEffect>.Create(),
                         },
-                        new DropComp { amount = Random.Shared.Next(1, 5000) },
+                        new DropComp { amount = 1000 },
                         new ModComp(),
                         new WeaponComp
                         {
