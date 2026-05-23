@@ -237,6 +237,7 @@ class WeaponsModule : Module
                     lifetime = float.MaxValue,
                     bulletLayer = x.Resolve<LayerMap>()["PlayerBullets"],
                     drawOrder = 2,
+                    rotVelocity = 360.0f,
                 };
 
                 SpinConfig spinConfig = new SpinConfig
