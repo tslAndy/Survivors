@@ -1,4 +1,5 @@
 using System.Numerics;
+using Achieves;
 using Arch.Buffer;
 using Arch.Core;
 using Arch.Core.Extensions;
@@ -18,6 +19,7 @@ using Engine.Common;
 using Engine.Tilemaps;
 using Raylib_cs;
 using Systems;
+using UI;
 using Utils;
 using Weapons;
 using Weapons.Specific;
@@ -38,6 +40,8 @@ class Game : IDisposable
         builder.RegisterModule(new WeaponsModule());
         builder.RegisterModule(new BehavioursModule());
         builder.RegisterModule(new EntitiesModule());
+        builder.RegisterModule(new UIModule());
+        builder.RegisterModule(new AchievesModule());
 
         IContainer container = builder.Build();
         _scope = container.BeginLifetimeScope();
@@ -46,6 +50,10 @@ class Game : IDisposable
         _commandBuffer = _scope.Resolve<CommandBuffer>();
         _systems = _scope.Resolve<Group<float>>();
 
+        _scope.Resolve<AchieveUI>();
+        _scope.Resolve<AchiveContainer>();
+
+        // TODO: Level class with tilemap and waves list
         LoadTilemaps();
 
         _scope.ResolveNamed<Entity>("player");
