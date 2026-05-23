@@ -47,8 +47,6 @@ partial class StatusEffectSys : BaseSystem<World, float>
             }
 
             ref StatusEffect oldEff = ref effects.runningEffects[index];
-
-            float oldVal = oldEff.val;
             _effectHandler.CombineEffects(entity, ref oldEff, ref newEff);
         }
 

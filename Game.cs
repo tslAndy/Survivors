@@ -149,10 +149,10 @@ class EntitiesModule : Module
                         new ModComp()
                     );
 
-                // WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleLaser");
-                // weapons.Add(weaponElem);
-                // if (weaponElem.entity != null)
-                //     player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);
+                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleLaser");
+                weapons.Add(weaponElem);
+                if (weaponElem.entity != null)
+                    player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);
                 //
                 return player;
             })
