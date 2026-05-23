@@ -152,11 +152,16 @@ class EntitiesModule : Module
                         new ModComp()
                     );
 
-                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleCard");
-                weapons.Add(weaponElem);
-                if (weaponElem.entity != null)
-                    player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);
-                //
+                // WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleCard");
+                // weapons.Add(weaponElem);
+                // if (weaponElem.entity != null)
+                //     player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);
+
+                ShieldElem shieldElem = x.ResolveNamed<ShieldElem>("reflectShield");
+                shields.Add(shieldElem);
+                if (shieldElem.entity != null)
+                    player.Get<TrsComp>().descs?.Add(shieldElem.entity.Value);
+
                 return player;
             })
             .Named<Entity>("player")
@@ -166,7 +171,7 @@ class EntitiesModule : Module
             .Register<CachedList<WeaponElem>>(x =>
             {
                 CachedList<WeaponElem> result = new CachedList<WeaponElem>();
-                // result.Add(x.ResolveNamed<WeaponElem>("goblinBow"));
+                result.Add(x.ResolveNamed<WeaponElem>("goblinBow"));
 
                 return result;
             })

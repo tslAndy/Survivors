@@ -432,7 +432,7 @@ class WeaponsModule : Module
                     attackTime = 2.0f,
                     detectRadius = 8.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
-                    maxEnemies = 30,
+                    maxEnemies = 50,
                 };
 
                 Anim anim = x.Resolve<AnimAtlasManager>()
@@ -459,5 +459,61 @@ class WeaponsModule : Module
             })
             .Named<WeaponElem>("simpleCard")
             .InstancePerDependency();
+
+        builder
+            .Register<ShieldElem>(x =>
+            {
+                ShieldConfig config = new ShieldConfig
+                {
+                    detectRadius = 2.0f,
+                    entityLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    projectileLayer = x.Resolve<LayerMap>()["EnemyBullets"],
+                };
+
+                IShield shield = new DestroyShield(config, default, x.Resolve<WorldContext>());
+                return new ShieldElem(shield, null);
+            })
+            .Named<ShieldElem>("destroyShield")
+            .InstancePerDependency();
+
+        builder
+            .Register<ShieldElem>(x =>
+            {
+                WeaponConfig weaponConfig = new WeaponConfig
+                {
+                    baseDamage = 20,
+                    critDamage = 50,
+                    critChance = 30,
+                    targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                };
+
+                BulletConfig bulletConfig = new BulletConfig { perforate = false, bounce = false };
+
+                IBulletWeapon weapon = new Bow(
+                    bulletConfig,
+                    weaponConfig,
+                    default,
+                    x.Resolve<WorldContext>()
+                );
+
+                ShieldConfig shieldConfig = new ShieldConfig
+                {
+                    detectRadius = 1.0f,
+                    entityLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    projectileLayer = x.Resolve<LayerMap>()["EnemyBullets"],
+                };
+
+                IShield shield = new ReflectShield(
+                    weapon,
+                    shieldConfig,
+                    default,
+                    x.Resolve<WorldContext>()
+                );
+
+                return new ShieldElem(shield, null);
+            })
+            .Named<ShieldElem>("reflectShield")
+            .InstancePerDependency();
+        ;
     }
 }

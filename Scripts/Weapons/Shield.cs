@@ -3,7 +3,9 @@ using Arch.Core;
 using Components.Basic;
 using Components.Fighting;
 using Components.Health;
+using Engine.Common;
 using Systems;
+using Systems.Basic;
 
 namespace Weapons;
 
@@ -26,13 +28,15 @@ struct ShieldConfig
 
 class Shield : IShield
 {
-    protected readonly ShieldConfig shieldConfig;
+    protected readonly ShieldConfig config;
     protected readonly ShieldCallbacks callbacks;
     protected readonly WorldContext context;
 
-    public Shield(ShieldConfig shieldConfig, ShieldCallbacks callbacks, WorldContext context)
+    protected readonly Hash DetectRadiusHash = ModRegistry.CountHash("detectRadiusFactor");
+
+    public Shield(ShieldConfig config, ShieldCallbacks callbacks, WorldContext context)
     {
-        this.shieldConfig = shieldConfig;
+        this.config = config;
         this.callbacks = callbacks;
         this.context = context;
     }
