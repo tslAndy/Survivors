@@ -1,4 +1,3 @@
-using Arch.Core;
 using Engine.Tilemaps;
 
 namespace Systems.Basic;
@@ -7,7 +6,8 @@ class Level : IDisposable
 {
     public float time { get; protected set; }
 
-    private readonly World _world;
+    public readonly string name;
+
     private readonly Action _createPlayer;
     private readonly EnemyWave[] _waves;
     private readonly Tilemap _floor,
@@ -16,9 +16,10 @@ class Level : IDisposable
     private int _waveIndex;
     private float _waveTime;
 
-    public Level(World world, Tilemap floor, Tilemap walls, Action createPlayer, EnemyWave[] waves)
+    public Level(string name, Tilemap floor, Tilemap walls, Action createPlayer, EnemyWave[] waves)
     {
-        this._world = world;
+        this.name = name;
+
         this._floor = floor;
         this._walls = walls;
 

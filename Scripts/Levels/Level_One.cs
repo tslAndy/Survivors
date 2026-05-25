@@ -26,7 +26,7 @@ static class Level_One
         );
 
         Level level = new Level(
-            world,
+            "level_1",
             floor,
             walls,
             () => x.ResolveNamed<Entity>("player"),

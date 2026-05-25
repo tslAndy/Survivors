@@ -43,6 +43,20 @@ class AchievesModule : Module
                     5_000,
                     "Cannon fodder plus",
                     "Take 5_000 damage"
+                ),
+                // surviving
+                new SurviveAchieve(
+                    "level_1",
+                    30,
+                    "30 sec",
+                    "survive for thirty seconds on level one"
+                ),
+                new SurviveAchieve("level_1", 60, "1 min", "survive for a minute on level one"),
+                new SurviveAchieve(
+                    "level_1",
+                    90,
+                    "1.5 sec",
+                    "survive for minute and half on level one"
                 )
             ))
             .InstancePerLifetimeScope();
