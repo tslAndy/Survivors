@@ -35,35 +35,41 @@ class Game : IDisposable
     public Game()
     {
         ContainerBuilder builder = new ContainerBuilder();
+
         builder.RegisterModule(new EngineModule());
         builder.RegisterModule(new SystemsModule());
         builder.RegisterModule(new WeaponsModule());
         builder.RegisterModule(new BehavioursModule());
         builder.RegisterModule(new EntitiesModule());
-        builder.RegisterModule(new UIModule());
         builder.RegisterModule(new AchievesModule());
+        builder.RegisterModule(new UIModule());
 
         IContainer container = builder.Build();
         _scope = container.BeginLifetimeScope();
 
+        // main stuff
         _world = _scope.Resolve<World>();
         _commandBuffer = _scope.Resolve<CommandBuffer>();
         _systems = _scope.Resolve<Group<float>>();
 
-        _scope.Resolve<AchieveUI>();
-        _scope.Resolve<AchiveContainer>();
+        // other stuff
+        _scope.Resolve<AchieveVault>();
+        _scope.Resolve<MainUI>();
+
+        // LEVEL
 
         // TODO: Level class with tilemap and waves list
         LoadTilemaps();
-
+        //
         _scope.ResolveNamed<Entity>("player");
-
+        //
         Entity enemy = _scope.ResolveNamed<Entity>("goblin");
         _world.EnsureCapacity(_world.GetSignature(enemy), 200);
         for (int i = 0; i < 200; i++)
             _scope.ResolveNamed<Entity>("goblin");
     }
 
+    //
     public void Update()
     {
         _systems.Update(Raylib.GetFrameTime());

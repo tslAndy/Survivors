@@ -8,7 +8,7 @@ class AchievesModule : Module
     protected override void Load(ContainerBuilder builder)
     {
         builder
-            .Register<AchiveContainer>(x => new AchiveContainer(
+            .Register<AchieveVault>(x => new AchieveVault(
                 new KillAchieve(10, "10 kills", "Kill ten enemies"),
                 new KillAchieve(50, "50 kills", "Kill fifty enemies"),
                 new KillAchieve(100, "100 kills", "Kill hundred enemies"),

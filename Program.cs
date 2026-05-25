@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using ImGuiNET;
 using Raylib_cs;
 using rlImGui_cs;
 
@@ -22,20 +21,6 @@ class Program
             game.Update();
             Raylib.DrawFPS(20, 20);
 
-            rlImGui.Begin();
-            ImGui.Begin("heh", ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoTitleBar);
-
-            ImGui.PushStyleColor(ImGuiCol.PlotHistogram, new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-            ImGui.ProgressBar(0.7f, new Vector2(800, 20));
-            ImGui.PopStyleColor();
-
-            ImGui.PushStyleColor(ImGuiCol.PlotHistogram, new Vector4(0.0f, 0.0f, 1.0f, 1.0f));
-            ImGui.ProgressBar(1.0f, new Vector2(800, 20));
-            ImGui.PopStyleColor();
-
-            ImGui.End();
-            rlImGui.End();
-
             Raylib.EndDrawing();
         }
 
@@ -56,7 +41,8 @@ class Program
  * разница в том что есть узел который проверяет расстояние до игрока
  * если подходящее то пытается достать до игрока, и наносит самому себе большой урон
  *
- * Пауза. Разделить системы на две части, одна работает независимо от паузы, другая только если нет паузы
+ * Пауза. Разделить системы на две части, одна работает независимо от паузы, другая только если нет паузы.
+ * Сделать событие паузы для шины. Например, система звука ставит звуки на паузу
  *
  * Звуки для оружия игрока
  *

@@ -10,5 +10,6 @@ class DrawingModule : Module
         builder.RegisterType<SpriteDrawSys>().InstancePerLifetimeScope();
         builder.RegisterType<LineDrawSys>().InstancePerLifetimeScope();
         builder.RegisterType<TextDrawSys>().InstancePerLifetimeScope();
+        builder.RegisterType<UISys>().InstancePerLifetimeScope();
     }
 }

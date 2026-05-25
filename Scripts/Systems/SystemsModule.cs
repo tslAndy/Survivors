@@ -60,6 +60,7 @@ class SystemsModule : Module
                     x.Resolve<LineDrawSys>(),
                     x.Resolve<TextDrawSys>(),
                     x.Resolve<SoundSys>(),
+                    x.Resolve<UISys>(),
                     // death
                     x.Resolve<DeathSys>()
                 );
