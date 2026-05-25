@@ -37,6 +37,9 @@ partial class SpriteDrawSys : BaseSystem<World, float>
     [Query]
     private void FillLayers(Entity entity, in SpriteComp spriteComp, in TrsComp trsComp)
     {
+        if (spriteComp.sprite == null)
+            return;
+
         Vector2 size = 0.0625f * trsComp.scale * spriteComp.sprite.rect.Size;
         Vector2 position = trsComp.position;
 
@@ -73,6 +76,9 @@ partial class SpriteDrawSys : BaseSystem<World, float>
         Components<SpriteComp, TrsComp> comps = entity.Get<SpriteComp, TrsComp>();
         ref SpriteComp spriteComp = ref comps.t0;
         ref TrsComp trsComp = ref comps.t1;
+
+        if (spriteComp.sprite == null)
+            return;
 
         Vector2 size = 0.0625f * trsComp.scale * spriteComp.sprite.rect.Size;
         Vector2 position = trsComp.position;

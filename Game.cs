@@ -1,10 +1,12 @@
 using Achieves;
 using Arch.Buffer;
+using Arch.Bus;
 using Arch.Core;
 using Arch.System;
 using Autofac;
 using Behaviours.Specific;
 using Engine;
+using Events;
 using Levels;
 using Other;
 using Raylib_cs;
@@ -22,7 +24,17 @@ class Game : IDisposable
     private readonly Group<float> _gameplaySystems,
         _renderingSystems;
 
-    public bool isPaused;
+    private bool _isPaused;
+    public bool isPaused
+    {
+        get => _isPaused;
+        set
+        {
+            _isPaused = value;
+            PausedEvent @event = new PausedEvent { isPaused = _isPaused };
+            EventBus.Send(ref @event);
+        }
+    }
 
     public Game()
     {

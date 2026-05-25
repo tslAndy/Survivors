@@ -3,7 +3,10 @@ using Autofac;
 using Components.Other;
 using Components.Physics;
 using Engine.Common;
+using Engine.Sounds;
 using Engine.Tilemaps;
+using Raylib_cs;
+using Systems.Animation;
 using Systems.Basic;
 
 namespace Levels;
@@ -24,6 +27,9 @@ static class Level_One
             new TilemapComp { tilemap = walls, drawOrder = 1 },
             new RigidComp { layer = layerMap["Walls"] }
         );
+        //
+        x.Resolve<SoundSys>().music = x.Resolve<MusicManager>()
+            .Get("./Resources/Music/01_Invitation.mp3");
 
         Level level = new Level(
             "level_1",
@@ -33,7 +39,7 @@ static class Level_One
             new EnemyWave[]
             {
                 new EnemyWave(
-                    30.0f,
+                    20.0f,
                     () =>
                     {
                         const int GOBLIN_COUNT = 500;

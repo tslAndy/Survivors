@@ -16,6 +16,7 @@ class EngineModule : Module
         builder.RegisterType<TextureManager>().InstancePerLifetimeScope();
         builder.RegisterType<SpriteAtlasManager>().InstancePerLifetimeScope();
 
+        builder.RegisterType<MusicManager>().InstancePerLifetimeScope();
         builder.RegisterType<SoundManager>().InstancePerLifetimeScope();
         builder.RegisterType<SoundAtlasManager>().InstancePerLifetimeScope();
 
