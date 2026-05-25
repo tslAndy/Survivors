@@ -4,10 +4,11 @@ using rlImGui_cs;
 
 namespace Systems.Drawing;
 
-public abstract class ElemUI
+public class ElemUI
 {
-    public abstract void Update(float dt);
-    public abstract void Draw();
+    public virtual void Update(float dt) { }
+
+    public virtual void Draw() { }
 }
 
 partial class UISys : BaseSystem<World, float>
