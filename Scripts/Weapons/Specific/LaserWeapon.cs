@@ -46,6 +46,8 @@ class LaserWeapon : Weapon
             return;
 
         ref LineComp lineComp = ref extra.Value.Get<LineComp>();
+        lineComp.lines.Reset();
+
         ref LocalTrsComp localTrs = ref extra.Value.Get<LocalTrsComp>();
 
         using CachedList<TileColl> overlap = CachedList<TileColl>.Create();

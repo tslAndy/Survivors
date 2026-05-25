@@ -51,6 +51,8 @@ class TrailBow : Bow
             return;
 
         ref LineComp lineComp = ref extra.Value.Get<LineComp>();
+        lineComp.lines.Reset();
+
         using CachedList<TileColl> overlap = CachedList<TileColl>.Create();
 
         Vector2 pos = trs.position;

@@ -1,4 +1,7 @@
-﻿using Raylib_cs;
+﻿using System.Numerics;
+using ImGuiNET;
+using Raylib_cs;
+using rlImGui_cs;
 
 class Program
 {
@@ -7,32 +10,68 @@ class Program
         Raylib.InitWindow(1280, 720, "Survivors");
         Raylib.InitAudioDevice();
 
+        rlImGui.Setup(true);
+
         using Game game = new Game();
 
-        Font font = Raylib.GetFontDefault();
         while (!Raylib.WindowShouldClose())
         {
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.Black);
-            game.Update();
 
+            game.Update();
             Raylib.DrawFPS(20, 20);
+
+            rlImGui.Begin();
+            ImGui.Begin("heh", ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoTitleBar);
+
+            ImGui.PushStyleColor(ImGuiCol.PlotHistogram, new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+            ImGui.ProgressBar(0.7f, new Vector2(800, 20));
+            ImGui.PopStyleColor();
+
+            ImGui.PushStyleColor(ImGuiCol.PlotHistogram, new Vector4(0.0f, 0.0f, 1.0f, 1.0f));
+            ImGui.ProgressBar(1.0f, new Vector2(800, 20));
+            ImGui.PopStyleColor();
+
+            ImGui.End();
+            rlImGui.End();
 
             Raylib.EndDrawing();
         }
 
-        game.Dispose();
+        rlImGui.Shutdown();
+
         Raylib.CloseAudioDevice();
         Raylib.CloseWindow();
     }
 }
 
 /*
+ *
+ * TODO: UI system который будет содержать все нужные вызовы
+ *
+ *
+ *
  * TODO: для камикадзе сделать так что анимации взрыва это анимация смерти
  * разница в том что есть узел который проверяет расстояние до игрока
  * если подходящее то пытается достать до игрока, и наносит самому себе большой урон
  *
  * Пауза. Разделить системы на две части, одна работает независимо от паузы, другая только если нет паузы
+ *
+ * Звуки для оружия игрока
+ *
+ * Конкретное оружие
+ *
+ *
+ * доп враги
+ *
+ * система уровней
+ *
+ * сделать разблокировку оружия
+ * сделаьт запоминание разблокированного оружия
+ * сделать запоминание разблокированных достижений
+ * сделать разные уровни
+ *
  *
  * TODO: разделить Weapon Module на подмодули для каждого типа оружия
  *

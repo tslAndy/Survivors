@@ -75,6 +75,5 @@ partial class LineDrawSys : BaseSystem<World, float>
             float thick = _cam.pixelsPerUnit * line.thick;
             Raylib.DrawLineEx(start, end, thick, line.color);
         }
-        lineComp.lines.Reset();
     }
 }
