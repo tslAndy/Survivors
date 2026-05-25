@@ -62,7 +62,9 @@ class SystemsModule : Module
                     x.Resolve<SoundSys>(),
                     x.Resolve<UISys>(),
                     // death
-                    x.Resolve<DeathSys>()
+                    x.Resolve<DeathSys>(),
+                    // levels
+                    x.Resolve<LevelSys>()
                 );
                 systems.Initialize();
                 return systems;

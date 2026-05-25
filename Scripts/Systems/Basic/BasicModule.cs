@@ -8,5 +8,6 @@ class BasicModule : Module
     {
         builder.RegisterType<LocalTrsSys>().InstancePerLifetimeScope();
         builder.RegisterType<TimerSys>().InstancePerLifetimeScope();
+        builder.RegisterType<LevelSys>().InstancePerLifetimeScope();
     }
 }

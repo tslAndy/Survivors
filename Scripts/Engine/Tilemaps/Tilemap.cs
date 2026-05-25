@@ -2,7 +2,7 @@ using Utils;
 
 namespace Engine.Tilemaps;
 
-class Tilemap
+class Tilemap : IDisposable
 {
     private readonly Dictionary<(int, int), TileChunk> _chunks;
     private CachedChunk _lastChunk;
@@ -80,6 +80,18 @@ class Tilemap
 
         public bool Check(int cx, int cy) => this.chunk != null && this.cx == cx && this.cy == cy;
     }
+
+    public void Dispose()
+    {
+        foreach (KeyValuePair<(int, int), TileChunk> kvp in _chunks)
+        {
+            kvp.Value.Reset();
+            ObjectPool<TileChunk>.Shared.Return(kvp.Value);
+        }
+
+        _chunks.Clear();
+        _lastChunk = default;
+    }
 }
 
 class TileChunk
@@ -92,6 +104,12 @@ class TileChunk
     public TileChunk() => _tiles = new Tile[SIZE * SIZE];
 
     public bool IsEmpty => _count == 0;
+
+    public void Reset()
+    {
+        Array.Fill(_tiles, default);
+        _count = 0;
+    }
 
     public Tile? this[int x, int y]
     {
