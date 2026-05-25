@@ -1,15 +1,15 @@
-using Systems.Drawing;
-
 namespace UI;
 
 class MainUI
 {
-    public readonly AchievesUI achievesUI;
+    public readonly NotifyUI notifyUI;
+    public readonly StatsUI statsUI;
+    public readonly DamageUI damageUI;
 
-    public MainUI(UISys uiSys)
+    public MainUI(NotifyUI notifyUI, StatsUI statsUI, DamageUI damageUI)
     {
-        achievesUI = new AchievesUI();
-
-        uiSys.AddElem(achievesUI);
+        this.notifyUI = notifyUI;
+        this.statsUI = statsUI;
+        this.damageUI = damageUI;
     }
 }

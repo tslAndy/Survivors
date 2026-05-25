@@ -24,7 +24,7 @@ struct StatusEffect
     }
 }
 
-enum StatusEffectType : byte
+public enum StatusEffectType : byte
 {
     None,
 

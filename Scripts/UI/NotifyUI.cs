@@ -5,13 +5,13 @@ using Systems.Drawing;
 
 namespace UI;
 
-partial class AchievesUI : ElemUI
+partial class NotifyUI : ElemUI
 {
     private readonly List<Elem> _elems = new List<Elem>();
 
     private const float NOTIFICATION_TIME = 5.0f;
 
-    public AchievesUI() => Hook();
+    public NotifyUI() => Hook();
 
     public override void Update(float dt)
     {
@@ -36,20 +36,24 @@ partial class AchievesUI : ElemUI
 
     public override void Draw()
     {
-        ImGui.Begin("Achieves", ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoTitleBar);
+        ImGui.Begin(
+            "Notifications",
+            ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoTitleBar
+        );
 
         for (int i = 0; i < _elems.Count; i++)
-        {
-            Achieve achieve = _elems[i].achieve;
-            ImGui.Text(achieve.name);
-        }
+            ImGui.Text(_elems[i].text);
 
         ImGui.End();
     }
 
+    // other notifications
+    // for example level up
+    // weapon unlock etc
+
     [Event]
     public void OnAchieveUnlocked(Achieve achieve) =>
-        _elems.Add(new Elem(achieve, NOTIFICATION_TIME));
+        _elems.Add(new Elem($"{achieve.name}: {achieve.description}", NOTIFICATION_TIME));
 
-    private record struct Elem(Achieve achieve, float time);
+    private record struct Elem(string text, float time);
 }

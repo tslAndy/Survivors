@@ -1,13 +1,11 @@
-using System.Numerics;
 using Arch.Buffer;
+using Arch.Bus;
 using Arch.Core;
 using Arch.System;
 using Components.Basic;
 using Components.Health;
-using Components.Other;
-using Components.Physics;
 using Engine.Common;
-using Raylib_cs;
+using Events;
 using Systems.Basic;
 
 namespace Systems.Health;
@@ -41,15 +39,21 @@ partial class DamageSys : BaseSystem<World, float>
             // if hit.damage > 0 it's damage, and should be scaled
             // else it's a regeneration, should not be scaled
         }
+        damage.hits.Reset();
 
         int floored = (int)MathF.Floor(total);
-        if (floored != 0)
-        {
-            health.currentHP = Math.Clamp(health.currentHP - floored, 0, health.maxHP);
-            DamageNumSpawner.Spawn(World, trs.position, floored);
-        }
+        if (floored == 0)
+            return;
 
-        damage.hits.Reset();
+        health.currentHP = Math.Clamp(health.currentHP - floored, 0, health.maxHP);
+
+        DamageEvent damageEvent = new DamageEvent
+        {
+            target = entity,
+            damage = floored,
+            position = trs.position,
+        };
+        EventBus.Send(ref damageEvent);
     }
 
     [Query]
@@ -57,39 +61,5 @@ partial class DamageSys : BaseSystem<World, float>
     {
         if (death.isDead)
             damage.hits.Dispose();
-    }
-}
-
-static class DamageNumSpawner
-{
-    private static readonly Dictionary<int, string> _numCache = new Dictionary<int, string>();
-
-    public static void Spawn(World world, Vector2 position, int damage)
-    {
-        bool positive = damage > 0;
-
-        damage = Math.Abs(damage);
-        if (!_numCache.TryGetValue(damage, out string? numStr))
-        {
-            numStr = damage.ToString();
-            _numCache[damage] = numStr;
-        }
-
-        const float BASE_FONT_SIZE = 0.4f;
-
-        float randOffset = (Random.Shared.NextSingle() - 0.5f) * 0.8f; // -0.4f +0.4f
-        position += new Vector2(randOffset, randOffset);
-
-        world.Create<TextComp, TrsComp, RigidComp, TimerComp>(
-            new TextComp
-            {
-                text = numStr,
-                fontSize = BASE_FONT_SIZE,
-                color = positive ? Color.Red : Color.Green,
-            },
-            new TrsComp { position = position, scale = 1.0f },
-            new RigidComp { velocity = new Vector2(0.0f, -1.0f) },
-            new TimerComp { time = 1.0f }
-        );
     }
 }
