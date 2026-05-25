@@ -183,9 +183,11 @@ class WeaponsModule : Module
                     x.Resolve<WorldContext>()
                 );
 
+                CachedList<Line> lines = CachedList<Line>.Create();
                 Entity extra = x.Resolve<World>()
-                    .Create<LineComp, TrsComp, LocalTrsComp>(
-                        new LineComp { lines = CachedList<Line>.Create() }
+                    .Create<LineComp, DispComp, TrsComp, LocalTrsComp>(
+                        new LineComp { lines = lines },
+                        new DispComp(lines)
                     );
                 return new WeaponElem(weapon, extra);
             })
@@ -258,17 +260,7 @@ class WeaponsModule : Module
                     maxEnemies = 10,
                 };
 
-                WeaponCallbacks callbacks = new WeaponCallbacks
-                {
-                    onBaseDamage = (attacker, target, ref val) =>
-                    {
-                        attacker
-                            .Get<StatusEffectComp>()
-                            .newEffects.Add(
-                                new StatusEffect(StatusEffectType.AttackFast, 10.0f, 3.0f)
-                            );
-                    },
-                };
+                WeaponCallbacks callbacks = new WeaponCallbacks { };
 
                 IWeapon weapon = new SpinWeapon(
                     spinConfig,
@@ -278,10 +270,12 @@ class WeaponsModule : Module
                     x.Resolve<WorldContext>()
                 );
 
+                CachedList<Entity> descs = CachedList<Entity>.Create();
                 Entity center = x.Resolve<World>()
-                    .Create<TrsComp, LocalTrsComp>(
-                        new TrsComp { scale = 1.0f, descs = CachedList<Entity>.Create() },
-                        new LocalTrsComp { scale = 1.0f }
+                    .Create<TrsComp, LocalTrsComp, DispComp>(
+                        new TrsComp { scale = 1.0f, descs = descs },
+                        new LocalTrsComp { scale = 1.0f },
+                        new DispComp(descs)
                     );
 
                 return new WeaponElem(weapon, center);
@@ -332,9 +326,11 @@ class WeaponsModule : Module
                     x.Resolve<WorldContext>()
                 );
 
+                CachedList<Line> lines = CachedList<Line>.Create();
                 Entity extra = x.Resolve<World>()
-                    .Create<LineComp, TrsComp, LocalTrsComp>(
-                        new LineComp { lines = CachedList<Line>.Create() }
+                    .Create<LineComp, DispComp, TrsComp, LocalTrsComp>(
+                        new LineComp { lines = lines },
+                        new DispComp(lines)
                     );
 
                 return new WeaponElem(weapon, extra);

@@ -39,13 +39,6 @@ partial class LineDrawSys : BaseSystem<World, float>
         layer.Add(entity);
     }
 
-    [Query]
-    private void HandleDeath(in DeathComp death, in LineComp lineComp)
-    {
-        if (death.isDead)
-            lineComp.lines.Dispose();
-    }
-
     private void DrawLayers()
     {
         for (int i = 0; i < _layers.Length; i++)

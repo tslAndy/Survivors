@@ -92,14 +92,4 @@ partial class StatusEffectSys : BaseSystem<World, float>
             }
         }
     }
-
-    [Query]
-    private void HandleDeath(in DeathComp death, ref StatusEffectComp effects)
-    {
-        if (!death.isDead)
-            return;
-
-        effects.newEffects.Dispose();
-        effects.runningEffects.Dispose();
-    }
 }

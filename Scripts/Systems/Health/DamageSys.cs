@@ -55,11 +55,4 @@ partial class DamageSys : BaseSystem<World, float>
         };
         EventBus.Send(ref damageEvent);
     }
-
-    [Query]
-    private void HandleDeath(in DamageComp damage, in DeathComp death)
-    {
-        if (death.isDead)
-            damage.hits.Dispose();
-    }
 }

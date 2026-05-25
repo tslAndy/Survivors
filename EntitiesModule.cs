@@ -24,9 +24,14 @@ class EntitiesModule : Module
                 AnimAtlas playerAnimAtlas = x.Resolve<AnimAtlasManager>()
                     .Get("./Resources/AnimAtlases/Entities/Player.animAtlas");
 
+                CachedList<Entity> descs = CachedList<Entity>.Create();
+
                 CachedList<WeaponElem> weapons = CachedList<WeaponElem>.Create();
                 CachedList<ShieldElem> shields = CachedList<ShieldElem>.Create();
-                CachedList<Line> lines = CachedList<Line>.Create();
+
+                CachedList<StatusEffect> newEffects = CachedList<StatusEffect>.Create();
+                CachedList<StatusEffect> runningEffects = CachedList<StatusEffect>.Create();
+                CachedList<Hit> hits = CachedList<Hit>.Create();
 
                 Entity player = x.Resolve<World>()
                     .Create<
@@ -44,7 +49,8 @@ class EntitiesModule : Module
                         HealthComp,
                         StatusEffectComp,
                         LootCollComp,
-                        ModComp
+                        ModComp,
+                        DispComp
                     >(
                         new PlayerTag(),
                         new BehaviourComp { behaviour = x.Resolve<PlayerBehaviour>() },
@@ -61,21 +67,22 @@ class EntitiesModule : Module
                         {
                             position = new Vector2(15.0f, 10.0f),
                             scale = 1.0f,
-                            descs = CachedList<Entity>.Create(),
+                            descs = descs,
                         },
                         new RigidComp { layer = x.Resolve<LayerMap>()["PlayerEnts"] },
                         new CollComp { radius = 0.5f },
                         new ShieldComp { shields = shields },
                         new WeaponComp { weapons = weapons },
-                        new DamageComp { hits = CachedList<Hit>.Create() },
+                        new DamageComp { hits = hits },
                         new HealthComp { currentHP = 100, maxHP = 100 },
                         new StatusEffectComp
                         {
-                            newEffects = CachedList<StatusEffect>.Create(),
-                            runningEffects = CachedList<StatusEffect>.Create(),
+                            newEffects = newEffects,
+                            runningEffects = runningEffects,
                         },
                         new LootCollComp { radius = 15.0f, speed = 10.0f },
-                        new ModComp()
+                        new ModComp(),
+                        new DispComp(weapons, shields, newEffects, runningEffects, hits, descs)
                     );
 
                 WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleLaser");
@@ -111,6 +118,10 @@ class EntitiesModule : Module
                 AnimAtlas goblinAtlas = x.Resolve<AnimAtlasManager>()
                     .Get("./Resources/AnimAtlases/Entities/Goblin.animAtlas");
 
+                CachedList<StatusEffect> newEffects = CachedList<StatusEffect>.Create();
+                CachedList<StatusEffect> runningEffects = CachedList<StatusEffect>.Create();
+                CachedList<Hit> hits = CachedList<Hit>.Create();
+
                 Entity enemy = x.Resolve<World>()
                     .Create<
                         EnemyTag,
@@ -126,7 +137,8 @@ class EntitiesModule : Module
                         StatusEffectComp,
                         DropComp,
                         ModComp,
-                        WeaponComp
+                        WeaponComp,
+                        DispComp
                     >(
                         new EnemyTag(),
                         new BehaviourComp { behaviour = x.Resolve<GoblinBehaviour>() },
@@ -161,7 +173,8 @@ class EntitiesModule : Module
                         new WeaponComp
                         {
                             weapons = x.ResolveNamed<CachedList<WeaponElem>>("goblinWeapons"),
-                        }
+                        },
+                        new DispComp(newEffects, runningEffects, hits)
                     );
 
                 return enemy;

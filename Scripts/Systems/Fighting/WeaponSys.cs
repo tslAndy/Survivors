@@ -31,14 +31,4 @@ partial class WeaponSys : BaseSystem<World, float>
             elem.weapon.Update(entity, elem.entity, ref modComp, trs.position, dts);
         }
     }
-
-    // WARNING: enemy weapons should be disposed manually
-    // because list is shared
-    [Query]
-    [None(typeof(EnemyTag))]
-    private void HandleDeath(in DeathComp death, ref WeaponComp weapon)
-    {
-        if (death.isDead)
-            weapon.weapons?.Dispose();
-    }
 }

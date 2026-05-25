@@ -5,7 +5,8 @@ using Arch.System;
 using Autofac;
 using Behaviours.Specific;
 using Engine;
-using Levels;
+using Engine.Common;
+using Engine.Tilemaps;
 using Other;
 using Raylib_cs;
 using Systems;
@@ -49,7 +50,7 @@ class Game : IDisposable
 
         // LEVEL
 
-        _scope.Resolve<LevelSys>().level = new Level_One(_scope.Resolve<World>());
+        _scope.Resolve<LevelSys>().level = Level_One.Get(_scope);
     }
 
     //
