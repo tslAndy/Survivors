@@ -20,6 +20,9 @@ class UIModule : Module
                 StatsUI statsUI = new StatsUI(x.Resolve<WorldContext>());
                 uiSys.AddElem(statsUI);
 
+                ModsUI modsUI = new ModsUI(x.Resolve<WorldContext>());
+                uiSys.AddElem(modsUI);
+
                 DamageUI damageUI = new DamageUI(x.Resolve<World>());
 
                 return new MainUI(achievesUI, statsUI, damageUI);
