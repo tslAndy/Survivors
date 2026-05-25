@@ -1,5 +1,6 @@
 using Arch.Core;
 using Autofac;
+using Other;
 using Systems;
 using Systems.Drawing;
 
@@ -17,7 +18,7 @@ class UIModule : Module
                 NotifyUI achievesUI = new NotifyUI();
                 uiSys.AddElem(achievesUI);
 
-                StatsUI statsUI = new StatsUI(x.Resolve<WorldContext>());
+                StatsUI statsUI = new StatsUI(x.Resolve<WorldContext>(), x.Resolve<ExpSys>());
                 uiSys.AddElem(statsUI);
 
                 ModsUI modsUI = new ModsUI(x.Resolve<WorldContext>());

@@ -17,6 +17,7 @@ using Engine;
 using Engine.Animations;
 using Engine.Common;
 using Engine.Tilemaps;
+using Other;
 using Raylib_cs;
 using Systems;
 using UI;
@@ -42,6 +43,7 @@ class Game : IDisposable
         builder.RegisterModule(new BehavioursModule());
         builder.RegisterModule(new EntitiesModule());
         builder.RegisterModule(new AchievesModule());
+        builder.RegisterModule(new OtherModule());
         builder.RegisterModule(new UIModule());
 
         IContainer container = builder.Build();
@@ -53,7 +55,8 @@ class Game : IDisposable
         _systems = _scope.Resolve<Group<float>>();
 
         // other stuff
-        _scope.Resolve<AchieveVault>();
+        _scope.Resolve<AchieveSys>();
+        _scope.Resolve<ExpSys>();
         _scope.Resolve<MainUI>();
 
         // LEVEL
