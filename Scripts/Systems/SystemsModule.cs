@@ -30,7 +30,7 @@ class SystemsModule : Module
             .Register<Group<float>>(x =>
             {
                 Group<float> systems = new Group<float>(
-                    "Base Systems",
+                    "Gameplay systems",
                     // basic
                     x.Resolve<RigidSys>(),
                     x.Resolve<LocalTrsSys>(),
@@ -55,20 +55,32 @@ class SystemsModule : Module
                     x.Resolve<CollSolveSys>(),
                     // audio and drawing
                     x.Resolve<AnimSys>(),
-                    x.Resolve<TilemapDrawSys>(),
-                    x.Resolve<SpriteDrawSys>(),
-                    x.Resolve<LineDrawSys>(),
-                    x.Resolve<TextDrawSys>(),
                     x.Resolve<SoundSys>(),
-                    x.Resolve<UISys>(),
-                    // death
+                    // other
                     x.Resolve<DeathSys>(),
-                    // levels
                     x.Resolve<LevelSys>()
                 );
                 systems.Initialize();
                 return systems;
             })
+            .Named<Group<float>>("gameplaySystems")
+            .InstancePerLifetimeScope();
+
+        builder
+            .Register<Group<float>>(x =>
+            {
+                Group<float> systems = new Group<float>(
+                    "Rendering Systems",
+                    x.Resolve<TilemapDrawSys>(),
+                    x.Resolve<SpriteDrawSys>(),
+                    x.Resolve<LineDrawSys>(),
+                    x.Resolve<TextDrawSys>(),
+                    x.Resolve<UISys>()
+                );
+                systems.Initialize();
+                return systems;
+            })
+            .Named<Group<float>>("renderingSystems")
             .InstancePerLifetimeScope();
 
         builder.Register<World>(_ => World.Create()).InstancePerLifetimeScope();

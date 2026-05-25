@@ -20,6 +20,9 @@ class Program
             game.Update();
             Raylib.DrawFPS(20, 20);
 
+            if (Raylib.IsKeyPressed(KeyboardKey.Space))
+                game.isPaused = !game.isPaused;
+
             Raylib.EndDrawing();
         }
 

@@ -19,15 +19,6 @@ partial class DeathSys : BaseSystem<World, float>
         _commandBuffer = commandBuffer;
     }
 
-    public override void Update(in float dt)
-    {
-        // WARNING: order of methods should not be changed
-
-        HandleDeathQuery(World);
-        HandleTimerQuery(World, dt);
-        HandleAnimQuery(World);
-    }
-
     [Query]
     private void HandleDeath(Entity entity, in DeathComp death)
     {
@@ -52,10 +43,6 @@ partial class DeathSys : BaseSystem<World, float>
             death.isDead = true;
     }
 
-    [Query]
-    private void HandleDispose(in DispComp disp) => DisposeComp(in disp);
-
-    // WARNING: add to dispose lines, weapons, shields, new/old effects, hits, trs descs
     private void Destroy(Entity entity)
     {
         DeathEvent deathEvent = new DeathEvent { entity = entity };

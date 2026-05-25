@@ -19,7 +19,10 @@ class Game : IDisposable
 
     private readonly World _world;
     private readonly CommandBuffer _commandBuffer;
-    private readonly Group<float> _systems;
+    private readonly Group<float> _gameplaySystems,
+        _renderingSystems;
+
+    public bool isPaused;
 
     public Game()
     {
@@ -40,7 +43,8 @@ class Game : IDisposable
         // main stuff
         _world = _scope.Resolve<World>();
         _commandBuffer = _scope.Resolve<CommandBuffer>();
-        _systems = _scope.Resolve<Group<float>>();
+        _gameplaySystems = _scope.ResolveNamed<Group<float>>("gameplaySystems");
+        _renderingSystems = _scope.ResolveNamed<Group<float>>("renderingSystems");
 
         // other stuff
         _scope.Resolve<AchieveSys>();
@@ -55,7 +59,11 @@ class Game : IDisposable
     //
     public void Update()
     {
-        _systems.Update(Raylib.GetFrameTime());
+        if (!isPaused)
+            _gameplaySystems.Update(Raylib.GetFrameTime());
+
+        _renderingSystems.Update(Raylib.GetFrameTime());
+
         _commandBuffer.Playback(_world, true);
     }
 
