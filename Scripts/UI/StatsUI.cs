@@ -32,8 +32,14 @@ class StatsUI : ElemUI
 
         using (var sb = ZString.CreateStringBuilder())
         {
+            sb.AppendFormat("Lvl: {0}", _expSys.level);
+            ImGui.Text(sb.AsSpan());
+        }
+
+        using (var sb = ZString.CreateStringBuilder())
+        {
             int time = (int)MathF.Floor(_levelSys.level?.time ?? 0);
-            sb.AppendFormat("{0:00}:{1:00}", time / 60, time % 60);
+            sb.AppendFormat("Time: {0:00}:{1:00}", time / 60, time % 60);
             ImGui.Text(sb.AsSpan());
         }
 

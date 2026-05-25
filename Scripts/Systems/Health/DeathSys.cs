@@ -79,10 +79,7 @@ partial class DeathSys : BaseSystem<World, float>
     {
         for (int i = 0; i < 8; i++)
             if (disp[i] != null)
-            {
-                Console.WriteLine(disp[i].GetType());
                 disp[i]!.Dispose();
-            }
             else
                 break;
     }

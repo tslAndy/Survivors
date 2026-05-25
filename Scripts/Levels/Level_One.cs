@@ -6,6 +6,8 @@ using Engine.Common;
 using Engine.Tilemaps;
 using Systems.Basic;
 
+namespace Levels;
+
 static class Level_One
 {
     public static Level Get(ILifetimeScope x)

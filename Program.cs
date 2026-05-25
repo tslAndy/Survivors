@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Raylib_cs;
+﻿using Raylib_cs;
 using rlImGui_cs;
 
 class Program
