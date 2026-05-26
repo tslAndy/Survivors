@@ -107,7 +107,7 @@ public class EntitiesModule : Module
             .Register<CachedList<WeaponElem>>(x =>
             {
                 CachedList<WeaponElem> result = new CachedList<WeaponElem>();
-                // result.Add(x.ResolveNamed<WeaponElem>("goblinBow"));
+                result.Add(x.ResolveNamed<WeaponElem>("goblinSword"));
                 return result;
             })
             .Named<CachedList<WeaponElem>>("goblinWeapons")
@@ -170,7 +170,7 @@ public class EntitiesModule : Module
                             newEffects = CachedList<StatusEffect>.Create(),
                             runningEffects = CachedList<StatusEffect>.Create(),
                         },
-                        new DropComp { amount = 1000 },
+                        new DropComp { amount = 100 },
                         new ModComp(),
                         new WeaponComp
                         {

@@ -1,27 +1,20 @@
 using Arch.Core;
 using Arch.Core.Extensions;
+using Autofac;
 using Components.Basic;
 using Components.Fighting;
-using Engine.Sprites;
 using Other;
 
 namespace Weapons;
 
 public class WeaponItem : Item
 {
-    private readonly Func<string, WeaponElem> _resolver;
+    public WeaponItem(ItemInfo info)
+        : base(info) { }
 
-    public WeaponItem(
-        Func<string, WeaponElem> resolver,
-        string name,
-        string description,
-        Sprite sprite
-    )
-        : base(name, description, sprite) => _resolver = resolver;
-
-    public override void Pickup(Entity entity)
+    public override void Pickup(ILifetimeScope scope, Entity entity)
     {
-        WeaponElem elem = _resolver(name);
+        WeaponElem elem = scope.ResolveNamed<WeaponElem>(info.prefabName);
         ref WeaponComp weapon = ref entity.Get<WeaponComp>();
         weapon.weapons.Add(elem);
         if (elem.entity != null)

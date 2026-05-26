@@ -1,16 +1,15 @@
 using Arch.Core;
 using Autofac;
-using Components.Fighting;
 using Components.Other;
 using Components.Physics;
 using Engine.Common;
 using Engine.Sounds;
+using Engine.Sprites;
 using Engine.Tilemaps;
 using Other;
 using Systems.Animation;
 using Systems.Basic;
 using Utils;
-using Weapons;
 
 namespace Levels;
 
@@ -34,49 +33,83 @@ static class Level_One
         x.Resolve<SoundSys>().music = x.Resolve<MusicManager>()
             .Get("./Resources/Music/01_Invitation.mp3");
 
+        SpriteAtlas itemsAtlas = x.Resolve<SpriteAtlasManager>()
+            .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas");
+
+        // TODO: change x in delegates to PrefabCreator
         Level level = new Level(
             "level_1",
             floor,
             walls,
-            () => x.ResolveNamed<Entity>("player"),
             new EnemyWave[]
             {
-                // new EnemyWave(
-                //     20.0f,
-                //     () =>
-                //     {
-                //         const int GOBLIN_COUNT = 500;
-                //
-                //         Entity goblin = x.ResolveNamed<Entity>("goblin");
-                //         world.EnsureCapacity(x.Resolve<World>().GetSignature(goblin), GOBLIN_COUNT);
-                //         for (int i = 1; i < GOBLIN_COUNT; i++)
-                //             x.ResolveNamed<Entity>("goblin");
-                //
-                //         // other enemies in same manner
-                //     }
-                // ),
-                // new EnemyWave(
-                //     10.0f,
-                //     () =>
-                //     {
-                //         const int GOBLIN_COUNT = 200;
-                //
-                //         Entity goblin = x.ResolveNamed<Entity>("goblin");
-                //         world.EnsureCapacity(x.Resolve<World>().GetSignature(goblin), GOBLIN_COUNT);
-                //         for (int i = 1; i < GOBLIN_COUNT; i++)
-                //             x.ResolveNamed<Entity>("goblin");
-                //
-                //         // other enemies in same manner
-                //     }
-                // ),
+                new EnemyWave(
+                    30.0f,
+                    x =>
+                    {
+                        const int GOBLIN_COUNT = 100;
+                        Entity goblin = x.ResolveNamed<Entity>("goblin");
+                        world.EnsureCapacity(x.Resolve<World>().GetSignature(goblin), GOBLIN_COUNT);
+                        for (int i = 1; i < GOBLIN_COUNT; i++)
+                            x.ResolveNamed<Entity>("goblin");
+                    }
+                ),
+                new EnemyWave(
+                    30.0f,
+                    x =>
+                    {
+                        const int GOBLIN_COUNT = 200;
+                        Entity goblin = x.ResolveNamed<Entity>("goblin");
+                        world.EnsureCapacity(x.Resolve<World>().GetSignature(goblin), GOBLIN_COUNT);
+                        for (int i = 1; i < GOBLIN_COUNT; i++)
+                            x.ResolveNamed<Entity>("goblin");
+                    }
+                ),
+                new EnemyWave(
+                    30.0f,
+                    x =>
+                    {
+                        const int GOBLIN_COUNT = 300;
+                        Entity goblin = x.ResolveNamed<Entity>("goblin");
+                        world.EnsureCapacity(x.Resolve<World>().GetSignature(goblin), GOBLIN_COUNT);
+                        for (int i = 1; i < GOBLIN_COUNT; i++)
+                            x.ResolveNamed<Entity>("goblin");
+                    }
+                ),
+                new EnemyWave(
+                    30.0f,
+                    x =>
+                    {
+                        const int GOBLIN_COUNT = 200;
+                        Entity goblin = x.ResolveNamed<Entity>("goblin");
+                        world.EnsureCapacity(x.Resolve<World>().GetSignature(goblin), GOBLIN_COUNT);
+                        for (int i = 1; i < GOBLIN_COUNT; i++)
+                            x.ResolveNamed<Entity>("goblin");
+                    }
+                ),
+                new EnemyWave(
+                    30.0f,
+                    x =>
+                    {
+                        const int GOBLIN_COUNT = 200;
+                        Entity goblin = x.ResolveNamed<Entity>("goblin");
+                        world.EnsureCapacity(x.Resolve<World>().GetSignature(goblin), GOBLIN_COUNT);
+                        for (int i = 1; i < GOBLIN_COUNT; i++)
+                            x.ResolveNamed<Entity>("goblin");
+                    }
+                ),
             },
             new ShuffleSelector<Item>(
-                new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleBow", "____"),
-                new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleLaser", "____"),
-                new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleBoomerang", "____"),
-                new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleSpin", "____"),
-                new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleKunai", "____")
-            )
+                x.ResolveNamed<Item>("simpleBowItem"),
+                x.ResolveNamed<Item>("simpleSpinItem"),
+                x.ResolveNamed<Item>("simpleKunaiItem"),
+                x.ResolveNamed<Item>("simpleBoomerangItem"),
+                x.ResolveNamed<Item>("simpleTrailBowItem"),
+                x.ResolveNamed<Item>("simpleLaserItem"),
+                x.ResolveNamed<Item>("simpleBookItem"),
+                x.ResolveNamed<Item>("simpleCardItem")
+            ),
+            x
         );
 
         return level;

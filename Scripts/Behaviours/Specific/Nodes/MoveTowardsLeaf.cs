@@ -13,6 +13,7 @@ public class MoveTowardsLeaf : BaseLeaf
 {
     private readonly Hash WalkHash = AnimAtlas.CountHash("Walk");
     private readonly Hash MoveHash = ModRegistry.CountHash("moveFactor");
+    private readonly Hash AnimFactorHash = ModRegistry.CountHash("animTimeFactor");
 
     public MoveTowardsLeaf(WorldContext context)
         : base(context) { }
@@ -24,7 +25,10 @@ public class MoveTowardsLeaf : BaseLeaf
 
         AnimDir animDir = delta.AsAnimDir();
         if (ctx.animator.groupHash != WalkHash || ctx.animator.animDir != animDir)
+        {
             ctx.animator.SetAnimByGroup(WalkHash, animDir);
+            ctx.mod[AnimFactorHash] = 1.0f;
+        }
 
         return State.Success;
     }

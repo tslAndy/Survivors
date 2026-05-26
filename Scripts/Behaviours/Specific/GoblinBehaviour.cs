@@ -12,7 +12,7 @@ public class GoblinBehaviour : BaseBehaviour
     public GoblinBehaviour(WorldContext context)
         : base(context)
     {
-        INode run = new Sequence(new DistanceLeaf(context), new MoveTowardsLeaf(context));
+        INode run = new Sequence(new DistanceLeaf(context, 1.0f), new MoveTowardsLeaf(context));
         INode attack = new AttackLeaf(context);
 
         _node = new Selector(run, attack);

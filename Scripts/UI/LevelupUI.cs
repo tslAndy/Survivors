@@ -6,7 +6,6 @@ using Other;
 using Systems;
 using Systems.Basic;
 using Systems.Drawing;
-using Utils;
 
 namespace UI;
 
@@ -26,31 +25,32 @@ partial class LevelupUI : ElemUI
 
     public override void Draw()
     {
-        ShuffleSelector<Item>? selector = _levelSys.level?.itemSelector;
-        if (selector == null || selector.Count == 0)
+        Level? level = _levelSys.level;
+        if (level == null || level.itemSelector.Count == 0)
         {
             Finish();
             return;
         }
 
-        ImGui.Begin("levelUp");
+        ImGui.Begin("levelUp", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.AlwaysAutoResize);
 
-        ImGui.Text("huhu");
-        ImGui.SameLine();
-        ImGui.Text(" klklkl");
+        // ImGui.Image()
+        // ImGui.Text("huhu");
+        // ImGui.SameLine();
+        // ImGui.Text(" klklkl");
 
         using var sb = ZString.CreateStringBuilder();
-        for (int i = 0; i < Math.Min(selector.Count, ITEMS_AMOUNT); i++)
+        for (int i = 0; i < Math.Min(level.itemSelector.Count, ITEMS_AMOUNT); i++)
         {
-            Item item = selector[i];
+            Item item = level.itemSelector[i];
 
             sb.Clear();
-            sb.AppendFormat("{0}: {1}", item.name, item.description);
+            sb.AppendFormat("{0}: {1}", item.info.name, item.info.description);
             if (!ImGui.Button(sb.AsSpan()))
                 continue;
 
-            item.Pickup(_context.player);
-            selector.Exclude(i);
+            item.Pickup(level.scope, _context.player);
+            level.itemSelector.Exclude(i);
 
             Finish();
             break;

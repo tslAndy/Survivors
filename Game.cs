@@ -13,6 +13,7 @@ using Raylib_cs;
 using Systems;
 using Systems.Basic;
 using UI;
+using Weapons;
 using Weapons.Specific;
 
 namespace Scripts;
@@ -47,6 +48,7 @@ public partial class Game : IDisposable
         builder.RegisterModule(new EngineModule());
         builder.RegisterModule(new SystemsModule());
         builder.RegisterModule(new WeaponsModule());
+        builder.RegisterModule(new ItemsModule());
         builder.RegisterModule(new BehavioursModule());
         builder.RegisterModule(new EntitiesModule());
         builder.RegisterModule(new AchievesModule());
@@ -64,8 +66,6 @@ public partial class Game : IDisposable
         // other stuff
         _scope.Resolve<AchieveSys>();
         _scope.Resolve<MainUI>();
-
-        // LEVEL
 
         _scope.Resolve<LevelSys>().level = Level_One.Get(_scope);
 

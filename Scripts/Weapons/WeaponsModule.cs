@@ -8,11 +8,13 @@ using Engine.Animations;
 using Engine.Common;
 using Engine.Sounds;
 using Engine.Sprites;
+using Other;
 using Raylib_cs;
 using Systems;
 using Utils;
+using Weapons.Specific;
 
-namespace Weapons.Specific;
+namespace Weapons;
 
 public class WeaponsModule : Module
 {
@@ -27,35 +29,17 @@ public class WeaponsModule : Module
                     critDamage = 2,
                     critChance = 30,
                     attackTime = 0.0f,
-                    detectRadius = 4.0f,
+                    detectRadius = 1.0f,
                     targetLayer = x.Resolve<LayerMap>()["PlayerEnts"],
                     maxEnemies = 10,
                 };
 
-                BulletConfig bulletConfig = new BulletConfig
-                {
-                    sprite = x.Resolve<SpriteAtlasManager>()
-                        .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")["arrow_2"],
-                    velocity = 8.0f,
-                    radius = 0.25f,
-                    lifetime = 4.0f,
-                    bulletLayer = x.Resolve<LayerMap>()["EnemyBullets"],
-                    drawOrder = 2,
-                    perforate = false,
-                    bounce = false,
-                };
-
                 WeaponCallbacks callbacks = new WeaponCallbacks { };
 
-                IWeapon weapon = new Bow(
-                    bulletConfig,
-                    config,
-                    callbacks,
-                    x.Resolve<WorldContext>()
-                );
+                IWeapon weapon = new MeleeWeapon(config, callbacks, x.Resolve<WorldContext>());
                 return new WeaponElem(weapon, null);
             })
-            .Named<WeaponElem>("goblinBow")
+            .Named<WeaponElem>("goblinSword")
             .InstancePerDependency();
 
         builder
@@ -206,7 +190,7 @@ public class WeaponsModule : Module
                     critDamage = 50,
                     critChance = 30,
                     attackTime = anim.duration,
-                    detectRadius = 2.0f,
+                    detectRadius = 3.0f,
                     targetLayer = x.Resolve<LayerMap>()["EnemyEnts"],
                     maxEnemies = 10,
                 };
@@ -260,7 +244,17 @@ public class WeaponsModule : Module
                     maxEnemies = 10,
                 };
 
-                WeaponCallbacks callbacks = new WeaponCallbacks { };
+                WeaponCallbacks callbacks = new WeaponCallbacks
+                {
+                    onBaseDamage = (attacker, target, ref val) =>
+                    {
+                        attacker
+                            .Get<StatusEffectComp>()
+                            .newEffects.Add(
+                                new StatusEffect(StatusEffectType.AttackFast, 10.0f, 3.0f)
+                            );
+                    },
+                };
 
                 IWeapon weapon = new SpinWeapon(
                     spinConfig,
@@ -291,7 +285,7 @@ public class WeaponsModule : Module
                     raysCount = 10,
                     start = 0.5f,
                     end = 10.0f,
-                    thick = 0.3f,
+                    thick = 0.1f,
                     rotSpeed = 40,
                     color = Color.Red,
                 };
@@ -548,5 +542,151 @@ public class WeaponsModule : Module
             })
             .Named<WeaponElem>("simpleStave")
             .InstancePerDependency();
+    }
+}
+
+class ItemsModule : Module
+{
+    protected override void Load(ContainerBuilder builder)
+    {
+        builder
+            .Register<Item>(x =>
+            {
+                return new WeaponItem(
+                    new ItemInfo(
+                        "simpleBow",
+                        x.Resolve<SpriteAtlasManager>()
+                            .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")[
+                            "small_bow_1"
+                        ],
+                        "Simple Bow",
+                        "Just a bow----"
+                    )
+                );
+            })
+            .Named<Item>("simpleBowItem")
+            .InstancePerLifetimeScope();
+
+        builder
+            .Register<Item>(x =>
+            {
+                return new WeaponItem(
+                    new ItemInfo(
+                        "simpleSpin",
+                        x.Resolve<SpriteAtlasManager>()
+                            .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")[
+                            "chakram_1"
+                        ],
+                        "Simple Spin",
+                        "Just a spin----"
+                    )
+                );
+            })
+            .Named<Item>("simpleSpinItem")
+            .InstancePerLifetimeScope();
+
+        builder
+            .Register<Item>(x =>
+            {
+                return new WeaponItem(
+                    new ItemInfo(
+                        "simpleBoomerang",
+                        x.Resolve<SpriteAtlasManager>()
+                            .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")[
+                            "boomerang_1"
+                        ],
+                        "Simple Boomerang",
+                        "Just a boomerang----"
+                    )
+                );
+            })
+            .Named<Item>("simpleBoomerangItem")
+            .InstancePerLifetimeScope();
+
+        builder
+            .Register<Item>(x =>
+            {
+                return new WeaponItem(
+                    new ItemInfo(
+                        "simpleKunai",
+                        x.Resolve<SpriteAtlasManager>()
+                            .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")[
+                            "kunai_1"
+                        ],
+                        "Simple Kunai",
+                        "Just a kunai----"
+                    )
+                );
+            })
+            .Named<Item>("simpleKunaiItem")
+            .InstancePerLifetimeScope();
+
+        builder
+            .Register<Item>(x =>
+            {
+                return new WeaponItem(
+                    new ItemInfo(
+                        "simpleTrailBow",
+                        x.Resolve<SpriteAtlasManager>()
+                            .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")[
+                            "small_bow_1"
+                        ],
+                        "Simple Trail Bow",
+                        "Just a trail bow----"
+                    )
+                );
+            })
+            .Named<Item>("simpleTrailBowItem")
+            .InstancePerLifetimeScope();
+
+        builder
+            .Register<Item>(x =>
+            {
+                return new WeaponItem(
+                    new ItemInfo(
+                        "simpleLaser",
+                        x.Resolve<SpriteAtlasManager>()
+                            .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")[
+                            "stave_4"
+                        ],
+                        "Simple laser",
+                        "Just a laser----"
+                    )
+                );
+            })
+            .Named<Item>("simpleLaserItem")
+            .InstancePerLifetimeScope();
+
+        builder
+            .Register<Item>(x =>
+            {
+                return new WeaponItem(
+                    new ItemInfo(
+                        "simpleBook",
+                        x.Resolve<SpriteAtlasManager>()
+                            .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")["book_1"],
+                        "Simple book",
+                        "Just a book----"
+                    )
+                );
+            })
+            .Named<Item>("simpleBookItem")
+            .InstancePerLifetimeScope();
+
+        builder
+            .Register<Item>(x =>
+            {
+                return new WeaponItem(
+                    new ItemInfo(
+                        "simpleCard",
+                        x.Resolve<SpriteAtlasManager>()
+                            .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")["card_1"],
+                        "Simple card",
+                        "Just a card----"
+                    )
+                );
+            })
+            .Named<Item>("simpleCardItem")
+            .InstancePerLifetimeScope();
     }
 }
