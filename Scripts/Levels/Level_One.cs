@@ -41,40 +41,41 @@ static class Level_One
             () => x.ResolveNamed<Entity>("player"),
             new EnemyWave[]
             {
-                new EnemyWave(
-                    20.0f,
-                    () =>
-                    {
-                        const int GOBLIN_COUNT = 500;
-
-                        Entity goblin = x.ResolveNamed<Entity>("goblin");
-                        world.EnsureCapacity(x.Resolve<World>().GetSignature(goblin), GOBLIN_COUNT);
-                        for (int i = 1; i < GOBLIN_COUNT; i++)
-                            x.ResolveNamed<Entity>("goblin");
-
-                        // other enemies in same manner
-                    }
-                ),
-                new EnemyWave(
-                    10.0f,
-                    () =>
-                    {
-                        const int GOBLIN_COUNT = 200;
-
-                        Entity goblin = x.ResolveNamed<Entity>("goblin");
-                        world.EnsureCapacity(x.Resolve<World>().GetSignature(goblin), GOBLIN_COUNT);
-                        for (int i = 1; i < GOBLIN_COUNT; i++)
-                            x.ResolveNamed<Entity>("goblin");
-
-                        // other enemies in same manner
-                    }
-                ),
+                // new EnemyWave(
+                //     20.0f,
+                //     () =>
+                //     {
+                //         const int GOBLIN_COUNT = 500;
+                //
+                //         Entity goblin = x.ResolveNamed<Entity>("goblin");
+                //         world.EnsureCapacity(x.Resolve<World>().GetSignature(goblin), GOBLIN_COUNT);
+                //         for (int i = 1; i < GOBLIN_COUNT; i++)
+                //             x.ResolveNamed<Entity>("goblin");
+                //
+                //         // other enemies in same manner
+                //     }
+                // ),
+                // new EnemyWave(
+                //     10.0f,
+                //     () =>
+                //     {
+                //         const int GOBLIN_COUNT = 200;
+                //
+                //         Entity goblin = x.ResolveNamed<Entity>("goblin");
+                //         world.EnsureCapacity(x.Resolve<World>().GetSignature(goblin), GOBLIN_COUNT);
+                //         for (int i = 1; i < GOBLIN_COUNT; i++)
+                //             x.ResolveNamed<Entity>("goblin");
+                //
+                //         // other enemies in same manner
+                //     }
+                // ),
             },
             new ShuffleSelector<Item>(
                 new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleBow", "____"),
                 new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleLaser", "____"),
                 new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleBoomerang", "____"),
-                new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleSpin", "____")
+                new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleSpin", "____"),
+                new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleKunai", "____")
             )
         );
 

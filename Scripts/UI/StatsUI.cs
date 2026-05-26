@@ -3,10 +3,10 @@ using Arch.Core.Extensions;
 using Components.Health;
 using Cysharp.Text;
 using ImGuiNET;
-using Other;
 using Systems;
 using Systems.Basic;
 using Systems.Drawing;
+using Systems.Loot;
 
 namespace UI;
 
@@ -30,18 +30,15 @@ public class StatsUI : ElemUI
     {
         ImGui.Begin("Stats", ImGuiWindowFlags.NoTitleBar);
 
-        using (var sb = ZString.CreateStringBuilder())
-        {
-            sb.AppendFormat("Lvl: {0}", _expSys.level);
-            ImGui.Text(sb.AsSpan());
-        }
+        using var sb = ZString.CreateStringBuilder();
 
-        using (var sb = ZString.CreateStringBuilder())
-        {
-            int time = (int)MathF.Floor(_levelSys.level?.time ?? 0);
-            sb.AppendFormat("Time: {0:00}:{1:00}", time / 60, time % 60);
-            ImGui.Text(sb.AsSpan());
-        }
+        sb.AppendFormat("Lvl: {0}", _expSys.level);
+        ImGui.Text(sb.AsSpan());
+        sb.Clear();
+
+        int time = (int)MathF.Floor(_levelSys.level?.time ?? 0);
+        sb.AppendFormat("Time: {0:00}:{1:00}", time / 60, time % 60);
+        ImGui.Text(sb.AsSpan());
 
         ImGui.PushStyleColor(ImGuiCol.PlotHistogram, healthbarColor);
         ref HealthComp health = ref _context.player.Get<HealthComp>();

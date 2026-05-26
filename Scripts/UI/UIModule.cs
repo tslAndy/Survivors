@@ -1,9 +1,9 @@
 using Arch.Core;
 using Autofac;
-using Other;
 using Systems;
 using Systems.Basic;
 using Systems.Drawing;
+using Systems.Loot;
 
 namespace UI;
 
@@ -14,24 +14,28 @@ public class UIModule : Module
         builder
             .Register<MainUI>(x =>
             {
-                UISys uiSys = x.Resolve<UISys>();
-
-                NotifyUI achievesUI = new NotifyUI();
-                uiSys.AddElem(achievesUI);
-
-                StatsUI statsUI = new StatsUI(
-                    x.Resolve<WorldContext>(),
-                    x.Resolve<ExpSys>(),
-                    x.Resolve<LevelSys>()
+                MainUI mainUI = new MainUI(
+                    new NotifyUI(),
+                    new StatsUI(
+                        x.Resolve<WorldContext>(),
+                        x.Resolve<ExpSys>(),
+                        x.Resolve<LevelSys>()
+                    ),
+                    new ModsUI(x.Resolve<WorldContext>()),
+                    new LevelupUI(x.Resolve<LevelSys>(), x.Resolve<WorldContext>())
+                    {
+                        isActive = false,
+                    },
+                    new DamageUI(x.Resolve<World>())
                 );
-                uiSys.AddElem(statsUI);
 
-                ModsUI modsUI = new ModsUI(x.Resolve<WorldContext>());
-                uiSys.AddElem(modsUI);
+                UISys uiSys = x.Resolve<UISys>();
+                uiSys.AddElem(mainUI.statsUI);
+                uiSys.AddElem(mainUI.modsUI);
+                uiSys.AddElem(mainUI.notifyUI);
+                uiSys.AddElem(mainUI.levelupUI);
 
-                DamageUI damageUI = new DamageUI(x.Resolve<World>());
-
-                return new MainUI(achievesUI, statsUI, damageUI);
+                return mainUI;
             })
             .InstancePerLifetimeScope();
     }

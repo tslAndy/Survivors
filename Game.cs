@@ -17,7 +17,6 @@ using Weapons.Specific;
 
 namespace Scripts;
 
-
 public partial class Game : IDisposable
 {
     private readonly ILifetimeScope _scope;
@@ -51,7 +50,6 @@ public partial class Game : IDisposable
         builder.RegisterModule(new BehavioursModule());
         builder.RegisterModule(new EntitiesModule());
         builder.RegisterModule(new AchievesModule());
-        builder.RegisterModule(new OtherModule());
         builder.RegisterModule(new UIModule());
 
         IContainer container = builder.Build();
@@ -65,7 +63,6 @@ public partial class Game : IDisposable
 
         // other stuff
         _scope.Resolve<AchieveSys>();
-        _scope.Resolve<ExpSys>();
         _scope.Resolve<MainUI>();
 
         // LEVEL

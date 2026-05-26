@@ -51,6 +51,7 @@ public class SystemsModule : Module
                     // loot
                     x.Resolve<LootDropSys>(),
                     x.Resolve<LootCollectSys>(),
+                    x.Resolve<ExpSys>(),
                     // correction
                     x.Resolve<CollSolveSys>(),
                     // audio and drawing

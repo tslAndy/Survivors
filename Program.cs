@@ -1,8 +1,9 @@
+using Arch.Bus;
+using Events;
 using Raylib_cs;
 using rlImGui_cs;
 
 namespace Scripts;
-
 
 public class Program
 {
@@ -25,6 +26,12 @@ public class Program
 
             if (Raylib.IsKeyPressed(KeyboardKey.Space))
                 game.isPaused = !game.isPaused;
+
+            if (Raylib.IsKeyPressed(KeyboardKey.F))
+            {
+                ExpCollectEvent ev = new ExpCollectEvent { amount = 10_000 };
+                EventBus.Send(ref ev);
+            }
 
             Raylib.EndDrawing();
         }

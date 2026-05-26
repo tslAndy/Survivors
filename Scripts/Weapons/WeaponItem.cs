@@ -2,6 +2,7 @@ using Arch.Core;
 using Arch.Core.Extensions;
 using Components.Basic;
 using Components.Fighting;
+using Engine.Sprites;
 using Other;
 
 namespace Weapons;
@@ -10,8 +11,13 @@ public class WeaponItem : Item
 {
     private readonly Func<string, WeaponElem> _resolver;
 
-    public WeaponItem(Func<string, WeaponElem> resolver, string name, string description)
-        : base(name, description) => _resolver = resolver;
+    public WeaponItem(
+        Func<string, WeaponElem> resolver,
+        string name,
+        string description,
+        Sprite sprite
+    )
+        : base(name, description, sprite) => _resolver = resolver;
 
     public override void Pickup(Entity entity)
     {

@@ -6,6 +6,8 @@ namespace Systems.Drawing;
 
 public class ElemUI
 {
+    public bool isActive = true;
+
     public virtual void Update(float dt) { }
 
     public virtual void Draw() { }
@@ -25,11 +27,13 @@ public partial class UISys : BaseSystem<World, float>
     public override void Update(in float dt)
     {
         foreach (ElemUI elem in _elems)
-            elem.Update(dt);
+            if (elem.isActive)
+                elem.Update(dt);
 
         rlImGui.Begin();
         foreach (ElemUI elem in _elems)
-            elem.Draw();
+            if (elem.isActive)
+                elem.Draw();
         rlImGui.End();
     }
 }

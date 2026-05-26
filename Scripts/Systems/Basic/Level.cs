@@ -38,7 +38,9 @@ public class Level : IDisposable
         this._waves = waves;
 
         _createPlayer();
-        InitWave(0);
+
+        if (waves.Length > 0)
+            InitWave(0);
     }
 
     public void Update(float dt)

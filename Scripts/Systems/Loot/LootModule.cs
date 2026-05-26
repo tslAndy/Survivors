@@ -19,5 +19,6 @@ public class LootModule : Module
             .InstancePerLifetimeScope();
 
         builder.RegisterType<LootCollectSys>().InstancePerLifetimeScope();
+        builder.RegisterType<ExpSys>().InstancePerLifetimeScope();
     }
 }

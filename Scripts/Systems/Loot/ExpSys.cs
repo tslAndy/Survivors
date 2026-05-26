@@ -1,9 +1,11 @@
 using Arch.Bus;
+using Arch.Core;
+using Arch.System;
 using Events;
 
-namespace Other;
+namespace Systems.Loot;
 
-public partial class ExpSys
+public partial class ExpSys : BaseSystem<World, float>
 {
     public int currentExp { get; private set; } = 0;
     public int totalExp { get; private set; } = START_EXP;
@@ -13,12 +15,11 @@ public partial class ExpSys
     private const int START_EXP = 1000;
     private const float RATE = 1.5f; // next level requires 1.5 exp
 
-    public ExpSys() => Hook();
+    public ExpSys(World world)
+        : base(world) => Hook();
 
-    [Event]
-    public void OnExpCollect(ref ExpCollectEvent @event)
+    public override void Update(in float dt)
     {
-        currentExp += @event.amount;
         if (currentExp < totalExp)
             return;
 
@@ -28,5 +29,11 @@ public partial class ExpSys
 
         LevelupEvent levelupEvent = new LevelupEvent { level = level };
         EventBus.Send(ref levelupEvent);
+    }
+
+    [Event]
+    public void OnExpCollect(ref ExpCollectEvent @event)
+    {
+        currentExp += @event.amount;
     }
 }

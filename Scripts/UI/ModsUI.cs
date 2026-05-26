@@ -20,14 +20,14 @@ public class ModsUI : ElemUI
         ref ModComp mod = ref _context.player.Get<ModComp>();
 
         ImGui.Begin("Mods", ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoTitleBar);
+
+        using var sb = ZString.CreateStringBuilder();
         for (int i = 0; i < ModRegistry.GetCount(); i++)
         {
             (Hash hash, string modName) = ModRegistry.GetElement(i);
-            using (var sb = ZString.CreateStringBuilder())
-            {
-                sb.AppendFormat("{0}: {1:.##}", modName, mod[hash]);
-                ImGui.Text(sb.AsSpan());
-            }
+            sb.AppendFormat("{0}: {1:.##}", modName, mod[hash]);
+            ImGui.Text(sb.AsSpan());
+            sb.Clear();
         }
         ImGui.End();
     }
