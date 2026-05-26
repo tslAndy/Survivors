@@ -6,7 +6,7 @@ using Utils;
 
 namespace Weapons.Specific;
 
-class MeleeWeapon : Weapon
+public class MeleeWeapon : Weapon
 {
     public MeleeWeapon(WeaponConfig config, WeaponCallbacks callbacks, WorldContext context)
         : base(config, callbacks, context) { }

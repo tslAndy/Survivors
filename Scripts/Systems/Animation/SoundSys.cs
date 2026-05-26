@@ -7,7 +7,7 @@ using Utils;
 
 namespace Systems.Animation;
 
-partial class SoundSys : BaseSystem<World, float>
+public partial class SoundSys : BaseSystem<World, float>
 {
     private readonly CachedList<Sound> playing;
     private readonly CircularSet<Sound> queue;

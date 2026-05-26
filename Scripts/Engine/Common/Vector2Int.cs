@@ -1,6 +1,6 @@
 namespace Engine.Common;
 
-struct Vector2Int
+public struct Vector2Int
 {
     public int x,
         y;

@@ -8,7 +8,7 @@ using Utils;
 
 namespace Weapons.Specific;
 
-class ReflectShield : Shield
+public class ReflectShield : Shield
 {
     private readonly IBulletWeapon _bulletWeapon;
 

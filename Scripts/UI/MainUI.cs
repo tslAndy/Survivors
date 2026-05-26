@@ -1,6 +1,6 @@
 namespace UI;
 
-class MainUI
+public class MainUI
 {
     public readonly NotifyUI notifyUI;
     public readonly StatsUI statsUI;

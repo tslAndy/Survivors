@@ -5,7 +5,7 @@ using Systems;
 
 namespace Behaviours.Specific;
 
-class GoblinBehaviour : BaseBehaviour
+public class GoblinBehaviour : BaseBehaviour
 {
     private readonly INode _node;
 

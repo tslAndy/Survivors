@@ -7,7 +7,7 @@ using Systems.Basic;
 
 namespace Systems.Animation;
 
-partial class AnimSys : BaseSystem<World, float>
+public partial class AnimSys : BaseSystem<World, float>
 {
     private readonly SoundSys soundSys;
     private readonly Hash TimeFactorHash = ModRegistry.CountHash("animTimeFactor");

@@ -13,7 +13,9 @@ using Engine.Animations;
 using Engine.Common;
 using Utils;
 
-class EntitiesModule : Module
+namespace Scripts;
+
+public class EntitiesModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
@@ -85,7 +87,7 @@ class EntitiesModule : Module
                         new DispComp(weapons, shields, newEffects, runningEffects, hits, descs)
                     );
 
-                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleLaser");
+                WeaponElem weaponElem = x.ResolveNamed<WeaponElem>("simpleSword");
                 weapons.Add(weaponElem);
                 if (weaponElem.entity != null)
                     player.Get<TrsComp>().descs?.Add(weaponElem.entity.Value);

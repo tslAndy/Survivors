@@ -3,7 +3,7 @@ using Utils;
 
 namespace Engine.ResourceManagement;
 
-class Atlas<T>
+public class Atlas<T>
 {
     private readonly Entry[] _entries;
     private readonly Group[]? _groups;

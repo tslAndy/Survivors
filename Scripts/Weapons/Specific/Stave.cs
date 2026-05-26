@@ -5,7 +5,7 @@ using Systems;
 
 namespace Weapons.Specific;
 
-class Stave : Bow
+public class Stave : Bow
 {
     private readonly float SPREAD_ANGLE = Single.DegreesToRadians(45.0f);
 

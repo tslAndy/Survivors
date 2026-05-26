@@ -9,7 +9,7 @@ using Utils;
 
 namespace Systems.Drawing;
 
-partial class LineDrawSys : BaseSystem<World, float>
+public partial class LineDrawSys : BaseSystem<World, float>
 {
     private const int MAX_LAYERS = 64;
 

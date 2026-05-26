@@ -1,7 +1,7 @@
 namespace Components.Loot;
 
 // in enemy
-struct DropComp
+public struct DropComp
 {
     public int amount;
 }

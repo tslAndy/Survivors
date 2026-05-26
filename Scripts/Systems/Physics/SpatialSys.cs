@@ -7,7 +7,7 @@ using Utils;
 
 namespace Systems.Physics;
 
-partial class SpatialSys : BaseSystem<World, float>
+public partial class SpatialSys : BaseSystem<World, float>
 {
     public readonly CollisionRegistry collRegistry;
     private readonly Dictionary<Key, CachedList<Entry>> _map;

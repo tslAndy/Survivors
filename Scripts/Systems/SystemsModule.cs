@@ -13,7 +13,7 @@ using Systems.Physics;
 
 namespace Systems;
 
-class SystemsModule : Module
+public class SystemsModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

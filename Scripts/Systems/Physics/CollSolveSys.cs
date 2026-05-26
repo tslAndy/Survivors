@@ -8,7 +8,7 @@ using Engine.Common;
 using Systems.Physics;
 using Utils;
 
-partial class CollSolveSys : BaseSystem<World, float>
+public partial class CollSolveSys : BaseSystem<World, float>
 {
     private readonly LayerMap _layerMap;
     private readonly SpatialSys _spatialSys;

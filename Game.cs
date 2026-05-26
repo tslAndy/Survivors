@@ -15,7 +15,10 @@ using Systems.Basic;
 using UI;
 using Weapons.Specific;
 
-class Game : IDisposable
+namespace Scripts;
+
+
+public partial class Game : IDisposable
 {
     private readonly ILifetimeScope _scope;
 
@@ -30,11 +33,13 @@ class Game : IDisposable
         get => _isPaused;
         set
         {
-            _isPaused = value;
-            PausedEvent @event = new PausedEvent { isPaused = _isPaused };
+            PausedEvent @event = new PausedEvent { isPaused = value };
             EventBus.Send(ref @event);
         }
     }
+
+    [Event]
+    public void OnPaused(ref PausedEvent @event) => _isPaused = @event.isPaused;
 
     public Game()
     {
@@ -66,17 +71,20 @@ class Game : IDisposable
         // LEVEL
 
         _scope.Resolve<LevelSys>().level = Level_One.Get(_scope);
+
+        Hook();
     }
 
     //
     public void Update()
     {
         if (!isPaused)
+        {
+            _commandBuffer.Playback(_world, true);
             _gameplaySystems.Update(Raylib.GetFrameTime());
+        }
 
         _renderingSystems.Update(Raylib.GetFrameTime());
-
-        _commandBuffer.Playback(_world, true);
     }
 
     public void Dispose()

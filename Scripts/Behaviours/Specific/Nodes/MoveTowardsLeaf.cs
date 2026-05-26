@@ -9,7 +9,7 @@ using Systems.Basic;
 
 namespace Behaviours.Specific.Nodes;
 
-class MoveTowardsLeaf : BaseLeaf
+public class MoveTowardsLeaf : BaseLeaf
 {
     private readonly Hash WalkHash = AnimAtlas.CountHash("Walk");
     private readonly Hash MoveHash = ModRegistry.CountHash("moveFactor");

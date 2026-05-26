@@ -10,7 +10,7 @@ using Systems.Drawing;
 
 namespace UI;
 
-class StatsUI : ElemUI
+public class StatsUI : ElemUI
 {
     private readonly WorldContext _context;
     private readonly ExpSys _expSys;

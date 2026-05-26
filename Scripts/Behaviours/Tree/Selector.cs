@@ -2,7 +2,7 @@ using Components.Behaviour;
 
 namespace Behaviours.Tree;
 
-class Selector : INode
+public class Selector : INode
 {
     private readonly INode[] _children;
 

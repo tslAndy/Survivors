@@ -10,7 +10,7 @@ using Systems.Basic;
 
 namespace Systems.Health;
 
-partial class DamageSys : BaseSystem<World, float>
+public partial class DamageSys : BaseSystem<World, float>
 {
     private readonly CommandBuffer _commandBuffer;
     private readonly Hash DamageTakeHash = ModRegistry.CountHash("damageTakeFactor");

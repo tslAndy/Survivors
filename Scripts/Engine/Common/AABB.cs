@@ -2,7 +2,7 @@ using System.Numerics;
 
 namespace Engine.Common;
 
-struct AABB
+public struct AABB
 {
     public Vector2 min,
         max;

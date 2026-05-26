@@ -9,7 +9,7 @@ namespace Systems.Physics;
 // таким образом пуля может проверя
 //
 // переделать в систему
-class CollisionRegistry
+public class CollisionRegistry
 {
     private readonly Dictionary<(Entity, Entity), CollState> _collStates;
     private readonly CachedList<(Entity, Entity)> _removeList;

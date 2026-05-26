@@ -5,12 +5,12 @@ using Components.Physics;
 
 namespace Components.Behaviour;
 
-struct BehaviourComp
+public struct BehaviourComp
 {
     public IBehaviour behaviour;
 }
 
-ref struct EntityContext
+public ref struct EntityContext
 {
     public Entity entity;
     public ref TrsComp trs;
@@ -22,7 +22,7 @@ ref struct EntityContext
     public ref WeaponComp weapon;
 }
 
-interface IBehaviour
+public interface IBehaviour
 {
     void Update(float dt, ref EntityContext entityCtx);
 }

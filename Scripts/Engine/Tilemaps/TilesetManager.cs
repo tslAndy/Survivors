@@ -4,7 +4,7 @@ using Raylib_cs;
 
 namespace Engine.Tilemaps;
 
-class TilesetManager : ResourceManager<Tileset>
+public class TilesetManager : ResourceManager<Tileset>
 {
     private TextureManager _textureManager;
 

@@ -12,7 +12,7 @@ using Systems.Basic;
 
 namespace Weapons;
 
-struct BulletConfig
+public struct BulletConfig
 {
     public Anim? anim;
     public Sprite? sprite;
@@ -29,7 +29,7 @@ struct BulletConfig
         bounce;
 }
 
-abstract class BulletWeapon : Weapon, IBulletWeapon
+public abstract class BulletWeapon : Weapon, IBulletWeapon
 {
     protected readonly BulletConfig bulletConfig;
     protected readonly Hash BulletSpeedHash = ModRegistry.CountHash("bulletSpeedFactor");

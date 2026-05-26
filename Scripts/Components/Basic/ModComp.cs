@@ -3,7 +3,7 @@ using Engine.Common;
 namespace Components.Basic;
 
 [System.Runtime.CompilerServices.InlineArray(32)]
-struct ModComp
+public struct ModComp
 {
     private float num;
 

@@ -2,7 +2,7 @@ using Autofac;
 
 namespace Systems.Drawing;
 
-class DrawingModule : Module
+public class DrawingModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

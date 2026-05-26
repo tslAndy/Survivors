@@ -3,7 +3,7 @@ using System.Numerics;
 namespace Engine.Common;
 
 // TODO: cache aspect and inverted size
-class Camera
+public class Camera
 {
     public readonly int width,
         height;

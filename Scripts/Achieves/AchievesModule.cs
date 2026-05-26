@@ -5,7 +5,7 @@ using Components.Basic;
 
 namespace Achieves;
 
-class AchievesModule : Module
+public class AchievesModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

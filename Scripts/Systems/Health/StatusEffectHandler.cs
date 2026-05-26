@@ -8,7 +8,7 @@ using Systems.Basic;
 
 namespace Systems.Health;
 
-class StatusEffectHandler
+public class StatusEffectHandler
 {
     private const float MAX_DURATION = 5.0f;
     private const float MAX_DPS = 100;

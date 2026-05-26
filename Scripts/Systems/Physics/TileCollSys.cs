@@ -9,7 +9,7 @@ using Utils;
 
 namespace Systems.Physics;
 
-partial class TileCollSys : BaseSystem<World, float>
+public partial class TileCollSys : BaseSystem<World, float>
 {
     public TileCollSys(World world)
         : base(world) { }
@@ -256,7 +256,7 @@ partial class TileCollSys : BaseSystem<World, float>
     }
 }
 
-struct TileColl
+public struct TileColl
 {
     public Vector2Int tile;
     public Vector2 point,

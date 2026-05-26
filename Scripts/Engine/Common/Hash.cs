@@ -1,6 +1,6 @@
 namespace Engine.Common;
 
-struct Hash : IEquatable<Hash>
+public struct Hash : IEquatable<Hash>
 {
     public int val;
 

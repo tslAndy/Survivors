@@ -3,7 +3,7 @@ using Systems;
 
 namespace Behaviours.Tree;
 
-abstract class BaseLeaf : INode
+public abstract class BaseLeaf : INode
 {
     protected readonly WorldContext context;
 

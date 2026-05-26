@@ -5,7 +5,7 @@ using Engine.Sprites;
 
 namespace Systems.Loot;
 
-class LootModule : Module
+public class LootModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

@@ -2,7 +2,7 @@ using Utils;
 
 namespace Engine.Tilemaps;
 
-class Tilemap : IDisposable
+public class Tilemap : IDisposable
 {
     private readonly Dictionary<(int, int), TileChunk> _chunks;
     private CachedChunk _lastChunk;
@@ -94,7 +94,7 @@ class Tilemap : IDisposable
     }
 }
 
-class TileChunk
+public class TileChunk
 {
     private int _count;
     private Tile?[] _tiles;

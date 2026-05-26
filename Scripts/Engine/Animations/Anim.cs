@@ -3,7 +3,7 @@ using Raylib_cs;
 
 namespace Engine.Animations;
 
-class Anim
+public class Anim
 {
     public readonly Key[] keys;
     public readonly float frameTime;

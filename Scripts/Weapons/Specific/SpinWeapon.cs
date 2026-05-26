@@ -10,14 +10,14 @@ using Utils;
 
 namespace Weapons.Specific;
 
-struct SpinConfig
+public struct SpinConfig
 {
     public float rotSpeed,
         circleRadius;
     public int bulletsCount;
 }
 
-class SpinWeapon : BulletWeapon
+public class SpinWeapon : BulletWeapon
 {
     protected readonly SpinConfig spinConfig;
 

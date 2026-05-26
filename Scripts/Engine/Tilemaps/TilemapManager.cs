@@ -2,7 +2,7 @@ using Engine.ResourceManagement;
 
 namespace Engine.Tilemaps;
 
-class TilemapManager : ResourceManager<Tilemap>
+public class TilemapManager : ResourceManager<Tilemap>
 {
     private readonly TilesetManager _tilesetManager;
 

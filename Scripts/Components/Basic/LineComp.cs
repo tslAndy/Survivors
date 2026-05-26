@@ -4,13 +4,13 @@ using Utils;
 
 namespace Components.Basic;
 
-struct LineComp
+public struct LineComp
 {
     public CachedList<Line> lines;
     public int drawOrder;
 }
 
-struct Line
+public struct Line
 {
     public Color color;
     public Vector2 start,

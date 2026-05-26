@@ -3,7 +3,7 @@ using Systems;
 
 namespace Behaviours;
 
-abstract class BaseBehaviour : IBehaviour
+public abstract class BaseBehaviour : IBehaviour
 {
     protected readonly WorldContext context;
 

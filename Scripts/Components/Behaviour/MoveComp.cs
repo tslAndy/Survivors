@@ -1,6 +1,6 @@
 namespace Components.Behaviour;
 
-struct MoveComp
+public struct MoveComp
 {
     public float maxSpeed;
 }

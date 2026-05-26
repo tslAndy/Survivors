@@ -5,14 +5,14 @@ using Components.Physics;
 
 namespace Components.Fighting;
 
-struct BulletComp
+public struct BulletComp
 {
     public Entity owner;
     public Entity? extra;
     public IBulletWeapon weapon;
 }
 
-interface IBulletWeapon
+public interface IBulletWeapon
 {
     void UpdateBullet(
         Entity owner,

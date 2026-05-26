@@ -1,7 +1,7 @@
 namespace Components.Basic;
 
 [System.Runtime.CompilerServices.InlineArray(8)]
-struct DispComp
+public struct DispComp
 {
     private IDisposable? disp;
 

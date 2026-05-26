@@ -5,7 +5,7 @@ using Components.Physics;
 
 namespace Systems.Physics;
 
-partial class RigidSys : BaseSystem<World, float>
+public partial class RigidSys : BaseSystem<World, float>
 {
     public RigidSys(World world)
         : base(world) { }

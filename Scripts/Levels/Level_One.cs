@@ -1,13 +1,16 @@
 using Arch.Core;
 using Autofac;
+using Components.Fighting;
 using Components.Other;
 using Components.Physics;
 using Engine.Common;
 using Engine.Sounds;
 using Engine.Tilemaps;
-using Raylib_cs;
+using Other;
 using Systems.Animation;
 using Systems.Basic;
+using Utils;
+using Weapons;
 
 namespace Levels;
 
@@ -66,7 +69,13 @@ static class Level_One
                         // other enemies in same manner
                     }
                 ),
-            }
+            },
+            new ShuffleSelector<Item>(
+                new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleBow", "____"),
+                new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleLaser", "____"),
+                new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleBoomerang", "____"),
+                new WeaponItem(x.ResolveNamed<WeaponElem>, "simpleSpin", "____")
+            )
         );
 
         return level;

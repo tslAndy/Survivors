@@ -7,7 +7,7 @@ using Components.Physics;
 
 namespace Systems.Fighting;
 
-partial class BulletWeaponSys : BaseSystem<World, float>
+public partial class BulletWeaponSys : BaseSystem<World, float>
 {
     public BulletWeaponSys(World world)
         : base(world) { }

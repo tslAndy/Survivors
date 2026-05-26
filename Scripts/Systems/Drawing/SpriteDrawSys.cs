@@ -8,7 +8,7 @@ using Utils;
 
 namespace Systems.Drawing;
 
-partial class SpriteDrawSys : BaseSystem<World, float>
+public partial class SpriteDrawSys : BaseSystem<World, float>
 {
     private const int MAX_LAYERS = 64;
 

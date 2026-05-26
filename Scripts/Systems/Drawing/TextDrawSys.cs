@@ -7,7 +7,7 @@ using Raylib_cs;
 
 namespace Systems.Drawing;
 
-partial class TextDrawSys : BaseSystem<World, float>
+public partial class TextDrawSys : BaseSystem<World, float>
 {
     private readonly Font _font;
     private readonly Camera _cam;

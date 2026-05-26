@@ -1,12 +1,15 @@
 using Engine.Tilemaps;
+using Other;
+using Utils;
 
 namespace Systems.Basic;
 
-class Level : IDisposable
+public class Level : IDisposable
 {
     public float time { get; protected set; }
 
     public readonly string name;
+    public readonly ShuffleSelector<Item> itemSelector;
 
     private readonly Action _createPlayer;
     private readonly EnemyWave[] _waves;
@@ -16,9 +19,17 @@ class Level : IDisposable
     private int _waveIndex;
     private float _waveTime;
 
-    public Level(string name, Tilemap floor, Tilemap walls, Action createPlayer, EnemyWave[] waves)
+    public Level(
+        string name,
+        Tilemap floor,
+        Tilemap walls,
+        Action createPlayer,
+        EnemyWave[] waves,
+        ShuffleSelector<Item> itemSelector
+    )
     {
         this.name = name;
+        this.itemSelector = itemSelector;
 
         this._floor = floor;
         this._walls = walls;
@@ -63,7 +74,7 @@ class Level : IDisposable
     }
 }
 
-class EnemyWave
+public class EnemyWave
 {
     // цикл встроен в функцию создания
     public readonly float time;

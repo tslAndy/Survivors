@@ -1,6 +1,6 @@
 namespace Components.Physics;
 
-struct CollComp
+public struct CollComp
 {
     public float radius;
 }

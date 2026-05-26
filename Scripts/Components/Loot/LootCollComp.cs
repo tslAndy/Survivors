@@ -1,6 +1,6 @@
 namespace Components.Loot;
 
-struct LootCollComp
+public struct LootCollComp
 {
     public int amount;
     public float radius,

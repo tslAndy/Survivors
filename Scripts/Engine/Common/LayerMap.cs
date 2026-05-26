@@ -1,6 +1,6 @@
 namespace Engine.Common;
 
-class LayerMap
+public class LayerMap
 {
     private readonly string[] _layers;
     private readonly bool[] _collSolve;

@@ -3,7 +3,7 @@ using Raylib_cs;
 
 namespace Engine.Sounds;
 
-class SoundAtlasManager : ResourceManager<SoundAtlas>
+public class SoundAtlasManager : ResourceManager<SoundAtlas>
 {
     private readonly SoundManager _soundManager;
 

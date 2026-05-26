@@ -9,7 +9,7 @@ using Raylib_cs;
 
 namespace UI;
 
-partial class DamageUI
+public partial class DamageUI
 {
     private readonly Dictionary<int, string> _numCache;
     private World _world;

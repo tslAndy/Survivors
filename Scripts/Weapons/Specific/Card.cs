@@ -5,7 +5,7 @@ using Systems;
 
 namespace Weapons.Specific;
 
-class Card : Book
+public class Card : Book
 {
     public Card(
         BulletConfig bulletConfig,

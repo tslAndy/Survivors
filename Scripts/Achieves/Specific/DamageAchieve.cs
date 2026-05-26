@@ -5,7 +5,7 @@ using Events;
 
 namespace Achieves.Specific;
 
-partial class DamageAchieve : CountAchieve
+public partial class DamageAchieve : CountAchieve
 {
     private readonly ComponentType _tag;
 

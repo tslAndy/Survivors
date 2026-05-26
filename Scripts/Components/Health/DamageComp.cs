@@ -3,14 +3,14 @@ using Utils;
 
 namespace Components.Health;
 
-struct DamageComp
+public struct DamageComp
 {
     public CachedList<Hit> hits;
 }
 
 // if direct hit from entity, effect type is default (because stat effects are applied separately)
 // if hit from status effect, source entity is default (because effect can be applied by two or more entitites)
-struct Hit
+public struct Hit
 {
     public int damage;
 

@@ -7,7 +7,7 @@ using Systems.Physics;
 
 namespace Systems;
 
-class WorldContext
+public class WorldContext
 {
     public readonly World world;
     public readonly SpatialSys spatialSys;

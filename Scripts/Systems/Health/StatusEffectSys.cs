@@ -7,7 +7,7 @@ using Systems.Basic;
 
 namespace Systems.Health;
 
-partial class StatusEffectSys : BaseSystem<World, float>
+public partial class StatusEffectSys : BaseSystem<World, float>
 {
     private StatusEffectHandler _effectHandler;
     private const float APPLY_TIME = 1.0f;

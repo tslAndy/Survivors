@@ -8,7 +8,7 @@ using Utils;
 
 namespace Weapons.Specific;
 
-class DestroyShield : Shield
+public class DestroyShield : Shield
 {
     public DestroyShield(ShieldConfig config, ShieldCallbacks callbacks, WorldContext context)
         : base(config, callbacks, context) { }

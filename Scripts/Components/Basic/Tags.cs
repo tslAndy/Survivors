@@ -1,5 +1,5 @@
 namespace Components.Basic;
 
-struct PlayerTag { }
+public struct PlayerTag { }
 
-struct EnemyTag { }
+public struct EnemyTag { }

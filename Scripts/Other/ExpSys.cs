@@ -3,7 +3,7 @@ using Events;
 
 namespace Other;
 
-partial class ExpSys
+public partial class ExpSys
 {
     public int currentExp { get; private set; } = 0;
     public int totalExp { get; private set; } = START_EXP;
@@ -25,5 +25,8 @@ partial class ExpSys
         currentExp -= totalExp;
         totalExp = (int)MathF.Floor(RATE * totalExp);
         level++;
+
+        LevelupEvent levelupEvent = new LevelupEvent { level = level };
+        EventBus.Send(ref levelupEvent);
     }
 }

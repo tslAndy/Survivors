@@ -1,6 +1,6 @@
 namespace Utils;
 
-class ObjectPool<T>
+public class ObjectPool<T>
     where T : class, new()
 {
     public static readonly ObjectPool<T> Shared = new ObjectPool<T>();

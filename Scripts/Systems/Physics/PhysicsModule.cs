@@ -2,7 +2,7 @@ using Autofac;
 
 namespace Systems.Physics;
 
-class PhysicsModule : Module
+public class PhysicsModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

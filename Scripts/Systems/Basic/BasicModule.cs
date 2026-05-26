@@ -2,7 +2,7 @@ using Autofac;
 
 namespace Systems.Basic;
 
-class BasicModule : Module
+public class BasicModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

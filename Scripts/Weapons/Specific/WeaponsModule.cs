@@ -14,7 +14,7 @@ using Utils;
 
 namespace Weapons.Specific;
 
-class WeaponsModule : Module
+public class WeaponsModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

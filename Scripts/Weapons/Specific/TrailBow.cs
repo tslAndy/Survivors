@@ -11,14 +11,14 @@ using Utils;
 
 namespace Weapons.Specific;
 
-struct TrailConfig
+public struct TrailConfig
 {
     public float length,
         thick;
     public Color color;
 }
 
-class TrailBow : Bow
+public class TrailBow : Bow
 {
     protected readonly TrailConfig trailConfig;
 

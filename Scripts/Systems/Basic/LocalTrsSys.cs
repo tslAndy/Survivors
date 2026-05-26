@@ -6,7 +6,7 @@ using Components.Basic;
 
 namespace Systems.Basic;
 
-partial class LocalTrsSys : BaseSystem<World, float>
+public partial class LocalTrsSys : BaseSystem<World, float>
 {
     private readonly CommandBuffer _buffer;
 

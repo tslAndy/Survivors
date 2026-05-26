@@ -2,7 +2,7 @@ using System.Buffers;
 
 namespace Utils;
 
-class CachedList<T> : IDisposable
+public class CachedList<T> : IDisposable
 {
     private T[] _elems;
     private int _index;

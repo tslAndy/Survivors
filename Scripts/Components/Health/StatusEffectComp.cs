@@ -2,7 +2,7 @@ using Utils;
 
 namespace Components.Health;
 
-struct StatusEffectComp
+public struct StatusEffectComp
 {
     public float time;
 
@@ -10,7 +10,7 @@ struct StatusEffectComp
         runningEffects;
 }
 
-struct StatusEffect
+public struct StatusEffect
 {
     public StatusEffectType type;
     public float duration;

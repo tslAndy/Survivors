@@ -7,7 +7,7 @@ using Components.Physics;
 
 namespace Systems.Behaviour;
 
-partial class BehaviourSys : BaseSystem<World, float>
+public partial class BehaviourSys : BaseSystem<World, float>
 {
     private readonly WorldContext _context;
 

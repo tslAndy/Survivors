@@ -3,7 +3,7 @@ using Raylib_cs;
 
 namespace Engine.Sprites;
 
-class TextureManager : ResourceManager<Texture2D>
+public class TextureManager : ResourceManager<Texture2D>
 {
     protected override Texture2D Load(string path) => Raylib.LoadTexture(path);
 

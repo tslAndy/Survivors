@@ -1,6 +1,6 @@
 namespace Utils;
 
-class CircularSet<T>
+public class CircularSet<T>
 {
     private readonly T[] _elems;
     private int _index,

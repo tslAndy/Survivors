@@ -2,7 +2,7 @@ using Autofac;
 
 namespace Behaviours.Specific;
 
-class BehavioursModule : Module
+public class BehavioursModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

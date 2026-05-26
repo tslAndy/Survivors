@@ -5,7 +5,7 @@ using Events;
 
 namespace Achieves.Specific;
 
-partial class KillAchieve : CountAchieve
+public partial class KillAchieve : CountAchieve
 {
     public KillAchieve(int target, string name, string description)
         : base(target, name, description) => Hook();

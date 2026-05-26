@@ -2,7 +2,7 @@ using Raylib_cs;
 
 namespace Engine.Sprites;
 
-class Sprite
+public class Sprite
 {
     public readonly Texture2D texture;
     public readonly Rectangle rect;

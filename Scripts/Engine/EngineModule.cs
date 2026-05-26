@@ -9,7 +9,7 @@ using Engine.Tilemaps;
 
 namespace Engine;
 
-class EngineModule : Module
+public class EngineModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

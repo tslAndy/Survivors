@@ -5,7 +5,7 @@ using Systems;
 
 namespace Weapons.Specific;
 
-class Kunai : Bow
+public class Kunai : Bow
 {
     public Kunai(
         BulletConfig bulletConfig,

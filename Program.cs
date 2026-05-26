@@ -1,7 +1,10 @@
-﻿using Raylib_cs;
+using Raylib_cs;
 using rlImGui_cs;
 
-class Program
+namespace Scripts;
+
+
+public class Program
 {
     public static void Main(string[] args)
     {
@@ -59,8 +62,6 @@ class Program
  * 6. Щит мести - наносит врагу такой же урон
  * 9. Щиты накладывающие разные
  *
- *
- * TODO: посмотреть какие достижения есть в vampire survivors
  *
  * */
 

@@ -11,7 +11,7 @@ public class ElemUI
     public virtual void Draw() { }
 }
 
-partial class UISys : BaseSystem<World, float>
+public partial class UISys : BaseSystem<World, float>
 {
     private readonly List<ElemUI> _elems;
 

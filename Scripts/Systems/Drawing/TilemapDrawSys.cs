@@ -10,7 +10,7 @@ using Utils;
 
 namespace Systems.Drawing;
 
-partial class TilemapDrawSys : BaseSystem<World, float>
+public partial class TilemapDrawSys : BaseSystem<World, float>
 {
     private readonly CachedList<TilemapItem> _tilemapItems;
     private readonly IComparer<TilemapItem> _comparer;

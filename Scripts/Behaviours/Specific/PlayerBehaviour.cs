@@ -9,7 +9,7 @@ using Systems.Basic;
 
 namespace Behaviours.Specific;
 
-class PlayerBehaviour : BaseBehaviour
+public class PlayerBehaviour : BaseBehaviour
 {
     private readonly InputHandler _inputHandler;
     private readonly int _wallsLayer;

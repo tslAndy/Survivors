@@ -3,7 +3,7 @@ using Raylib_cs;
 
 namespace Engine.Sprites;
 
-class SpriteAtlasManager : ResourceManager<SpriteAtlas>
+public class SpriteAtlasManager : ResourceManager<SpriteAtlas>
 {
     private readonly TextureManager _textureManager;
 

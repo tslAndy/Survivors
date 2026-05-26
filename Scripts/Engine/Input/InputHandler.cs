@@ -3,7 +3,7 @@ using Raylib_cs;
 
 namespace Engine.Input;
 
-class InputHandler
+public class InputHandler
 {
     public Vector2 GetInput()
     {

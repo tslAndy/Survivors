@@ -3,7 +3,7 @@ using Events;
 
 namespace Achieves.Specific;
 
-partial class SurviveAchieve : CountAchieve
+public partial class SurviveAchieve : CountAchieve
 {
     private readonly string _levelName;
 

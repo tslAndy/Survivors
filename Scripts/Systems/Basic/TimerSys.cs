@@ -4,7 +4,7 @@ using Components.Other;
 
 namespace Systems.Basic;
 
-partial class TimerSys : BaseSystem<World, float>
+public partial class TimerSys : BaseSystem<World, float>
 {
     public TimerSys(World world)
         : base(world) { }

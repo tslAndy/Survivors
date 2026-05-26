@@ -4,7 +4,7 @@ using Engine.Common;
 
 namespace Components.Basic;
 
-struct AnimComp
+public struct AnimComp
 {
     public int keyIndex;
     public float time;

@@ -3,7 +3,7 @@ using Raylib_cs;
 
 namespace Engine.Sounds;
 
-class MusicManager : ResourceManager<Music>
+public class MusicManager : ResourceManager<Music>
 {
     protected override Music Load(string path) => Raylib.LoadMusicStream(path);
 

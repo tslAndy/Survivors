@@ -9,7 +9,7 @@ using Systems.Basic;
 
 namespace Weapons;
 
-struct ShieldCallbacks
+public struct ShieldCallbacks
 {
     public HitCallback? hitCallback;
     public EffectCallback? runningEffectCallback,
@@ -19,14 +19,14 @@ struct ShieldCallbacks
     public delegate void EffectCallback(Entity entity, ref StatusEffect effect);
 }
 
-struct ShieldConfig
+public struct ShieldConfig
 {
     public float detectRadius;
     public int entityLayer,
         projectileLayer;
 }
 
-class Shield : IShield
+public class Shield : IShield
 {
     protected readonly ShieldConfig config;
     protected readonly ShieldCallbacks callbacks;

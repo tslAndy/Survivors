@@ -9,7 +9,7 @@ using Events;
 
 namespace Systems.Health;
 
-partial class DeathSys : BaseSystem<World, float>
+public partial class DeathSys : BaseSystem<World, float>
 {
     private readonly CommandBuffer _commandBuffer;
 

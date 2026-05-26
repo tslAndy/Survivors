@@ -2,7 +2,7 @@ using Raylib_cs;
 
 namespace Engine.Tilemaps;
 
-class Tile
+public class Tile
 {
     public readonly Texture2D texture;
     public readonly Rectangle rect;

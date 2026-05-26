@@ -11,7 +11,7 @@ using Systems.Basic;
 
 namespace Systems.Loot;
 
-partial class LootDropSys : BaseSystem<World, float>
+public partial class LootDropSys : BaseSystem<World, float>
 {
     private readonly Hash THOUSAND_HASH = SpriteAtlas.CountHash("money_thousand");
     private readonly Hash HUNDRED_HASH = SpriteAtlas.CountHash("money_hundred");

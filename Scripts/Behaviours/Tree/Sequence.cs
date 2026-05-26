@@ -2,7 +2,7 @@ using Components.Behaviour;
 
 namespace Behaviours.Tree;
 
-class Sequence : INode
+public class Sequence : INode
 {
     private readonly INode[] _children;
 

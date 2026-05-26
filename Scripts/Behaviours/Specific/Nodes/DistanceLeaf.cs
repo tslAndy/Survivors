@@ -5,7 +5,7 @@ using Systems;
 
 namespace Behaviours.Specific.Nodes;
 
-class DistanceLeaf : BaseLeaf
+public class DistanceLeaf : BaseLeaf
 {
     private const float ATTACK_DIST = 4.0f;
 

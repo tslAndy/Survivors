@@ -1,6 +1,6 @@
 namespace Components.Health;
 
-struct HealthComp
+public struct HealthComp
 {
     public int currentHP,
         maxHP;

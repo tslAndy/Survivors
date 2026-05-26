@@ -1,7 +1,7 @@
 namespace Components.Loot;
 
 // in world
-struct LootComp
+public struct LootComp
 {
     public int amount;
 }

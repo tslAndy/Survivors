@@ -7,7 +7,7 @@ using Systems.Drawing;
 
 namespace UI;
 
-class UIModule : Module
+public class UIModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

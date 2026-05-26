@@ -9,7 +9,7 @@ using Systems.Drawing;
 
 namespace UI;
 
-class ModsUI : ElemUI
+public class ModsUI : ElemUI
 {
     private readonly WorldContext _context;
 

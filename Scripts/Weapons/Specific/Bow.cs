@@ -10,7 +10,7 @@ using Utils;
 
 namespace Weapons.Specific;
 
-class Bow : BulletWeapon
+public class Bow : BulletWeapon
 {
     public Bow(
         BulletConfig bulletConfig,

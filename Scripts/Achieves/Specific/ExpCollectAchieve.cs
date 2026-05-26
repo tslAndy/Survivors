@@ -3,7 +3,7 @@ using Events;
 
 namespace Achieves.Specific;
 
-partial class ExpCollectAchieve : CountAchieve
+public partial class ExpCollectAchieve : CountAchieve
 {
     public ExpCollectAchieve(int target, string name, string description)
         : base(target, name, description) => Hook();

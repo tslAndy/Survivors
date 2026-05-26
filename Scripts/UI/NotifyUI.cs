@@ -1,11 +1,12 @@
 using Achieves;
 using Arch.Bus;
+using Events;
 using ImGuiNET;
 using Systems.Drawing;
 
 namespace UI;
 
-partial class NotifyUI : ElemUI
+public partial class NotifyUI : ElemUI
 {
     private readonly List<Elem> _elems = new List<Elem>();
 
@@ -47,9 +48,9 @@ partial class NotifyUI : ElemUI
         ImGui.End();
     }
 
-    // other notifications
-    // for example level up
-    // weapon unlock etc
+    [Event]
+    public void OnLevelup(ref LevelupEvent @event) =>
+        _elems.Add(new Elem($"Got new level: {@event.level}", NOTIFICATION_TIME));
 
     [Event]
     public void OnAchieveUnlocked(Achieve achieve) =>

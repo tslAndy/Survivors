@@ -2,12 +2,12 @@ using Components.Behaviour;
 
 namespace Behaviours.Tree;
 
-interface INode
+public interface INode
 {
     State Update(float dt, ref EntityContext ctx);
 }
 
-enum State
+public enum State
 {
     Failure,
     Running,

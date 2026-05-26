@@ -2,7 +2,7 @@ using System.Numerics;
 
 namespace Components.Physics;
 
-struct RigidComp
+public struct RigidComp
 {
     public Vector2 velocity;
     public float rotVelocity;

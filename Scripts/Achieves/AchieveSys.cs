@@ -1,7 +1,6 @@
 namespace Achieves;
 
-// TODO: save system
-class AchieveSys
+public class AchieveSys
 {
     private readonly Achieve[] _achieves;
 

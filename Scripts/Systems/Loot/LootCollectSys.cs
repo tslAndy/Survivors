@@ -14,7 +14,7 @@ using Utils;
 
 namespace Systems.Loot;
 
-partial class LootCollectSys : BaseSystem<World, float>
+public partial class LootCollectSys : BaseSystem<World, float>
 {
     private readonly SpatialSys _spatial;
     private readonly int _lootLayer;

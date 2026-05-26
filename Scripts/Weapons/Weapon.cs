@@ -11,7 +11,7 @@ using Systems.Basic;
 
 namespace Weapons;
 
-struct WeaponConfig
+public struct WeaponConfig
 {
     public int targetLayer;
 
@@ -27,7 +27,7 @@ struct WeaponConfig
     public Sound? sound;
 }
 
-struct WeaponCallbacks
+public struct WeaponCallbacks
 {
     public delegate void Callback(Entity attacker, Entity target, ref float val);
     public Callback? getCritChance,
@@ -37,7 +37,7 @@ struct WeaponCallbacks
         onCritDamage;
 }
 
-abstract class Weapon : IWeapon
+public abstract class Weapon : IWeapon
 {
     private float _time;
 

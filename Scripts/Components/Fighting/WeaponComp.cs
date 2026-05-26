@@ -9,17 +9,17 @@ namespace Components.Fighting;
 // weapon also should be shared
 // list of enemy weapons should be updated manually
 
-struct WeaponComp
+public struct WeaponComp
 {
     public CachedList<WeaponElem> weapons;
 }
 
-interface IWeapon
+public interface IWeapon
 {
     void Update(Entity entity, Entity? extra, ref ModComp modComp, Vector2 position, float dt);
 }
 
-struct WeaponElem
+public struct WeaponElem
 {
     public IWeapon weapon;
     public Entity? entity;

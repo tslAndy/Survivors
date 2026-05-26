@@ -5,7 +5,7 @@ using Events;
 
 namespace Systems.Basic;
 
-class LevelSys : BaseSystem<World, float>
+public class LevelSys : BaseSystem<World, float>
 {
     public Level? level;
 

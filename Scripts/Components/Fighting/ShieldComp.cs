@@ -6,12 +6,12 @@ using Utils;
 
 namespace Components.Fighting;
 
-struct ShieldComp
+public struct ShieldComp
 {
     public CachedList<ShieldElem> shields;
 }
 
-interface IShield
+public interface IShield
 {
     void Update(
         Entity entity,
@@ -24,7 +24,7 @@ interface IShield
     );
 }
 
-struct ShieldElem
+public struct ShieldElem
 {
     public IShield shield;
     public Entity? entity;

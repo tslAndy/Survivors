@@ -7,7 +7,7 @@ using Systems.Basic;
 
 namespace Systems.Fighting;
 
-partial class WeaponSys : BaseSystem<World, float>
+public partial class WeaponSys : BaseSystem<World, float>
 {
     private readonly Hash AttackSpeedHash = ModRegistry.CountHash("attackSpeedFactor");
 

@@ -9,7 +9,7 @@ using Utils;
 
 namespace Weapons.Specific;
 
-class Book : BulletWeapon
+public class Book : BulletWeapon
 {
     public Book(
         BulletConfig bulletConfig,

@@ -8,7 +8,7 @@ using Engine.Common;
 
 namespace Systems.Health;
 
-partial class HealthSys : BaseSystem<World, float>
+public partial class HealthSys : BaseSystem<World, float>
 {
     private readonly CommandBuffer _commandBuffer;
     private readonly Hash DieHash = AnimAtlas.CountHash("Die");

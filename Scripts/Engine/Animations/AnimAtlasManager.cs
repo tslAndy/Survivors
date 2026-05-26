@@ -5,7 +5,7 @@ using Raylib_cs;
 
 namespace Engine.Animations;
 
-class AnimAtlasManager : ResourceManager<AnimAtlas>
+public class AnimAtlasManager : ResourceManager<AnimAtlas>
 {
     private readonly SpriteAtlasManager _spriteAtlasManager;
     private readonly SoundAtlasManager _soundAtlasManager;

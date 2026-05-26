@@ -2,7 +2,7 @@ using Autofac;
 
 namespace Systems.Animation;
 
-class AnimSysModule : Module
+public class AnimSysModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

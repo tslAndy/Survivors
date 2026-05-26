@@ -1,6 +1,6 @@
 namespace Engine.ResourceManagement;
 
-abstract class ResourceManager<T> : IDisposable
+public abstract class ResourceManager<T> : IDisposable
 {
     private readonly Dictionary<string, T> _resources;
 

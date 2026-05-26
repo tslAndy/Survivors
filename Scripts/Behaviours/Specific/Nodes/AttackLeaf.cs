@@ -9,7 +9,7 @@ using Utils;
 
 namespace Behaviours.Specific.Nodes;
 
-class AttackLeaf : BaseLeaf
+public class AttackLeaf : BaseLeaf
 {
     private readonly Hash AttackHash = AnimAtlas.CountHash("Attack");
 

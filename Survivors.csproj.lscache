@@ -1,0 +1,468 @@
+version=1
+
+# This file caches language service data to improve the performance of C# Dev Kit.
+# It is not intended for manual editing. It can safely be deleted and will be
+# regenerated automatically. For more information, see https://aka.ms/lscache
+#
+# To control where cache files are stored, use the following VS Code setting:
+#   "dotnet.projectsystem.cacheInProjectFolder": true
+
+[project]
+language=C#
+primary
+lastDtbSucceeded
+
+[properties]
+AssemblyName=Survivors
+CommandLineArgsForDesignTimeEvaluation=-langversion:14.0 -define:TRACE;EVENTS
+CompilerGeneratedFilesOutputPath=
+MaxSupportedLangVersion=14.0
+ProjectAssetsFile=<PATH>obj/project.assets.json
+RootNamespace=Survivors
+RunAnalyzers=
+RunAnalyzersDuringLiveAnalysis=
+SolutionPath=*Undefined*
+TargetFrameworkIdentifier=.NETCoreApp
+TargetPath=<PATH>bin/Debug/net10.0/Survivors.dll
+TargetRefPath=<PATH>obj/Debug/net10.0/ref/Survivors.dll
+TemporaryDependencyNodeTargetIdentifier=net10.0
+
+[commandLineArguments]
+/noconfig
+/unsafe-
+/checked-
+/nowarn:1701,1702,1701,1702
+/fullpaths
+/nostdlib+
+/errorreport:prompt
+/warn:10
+/define:TRACE;EVENTS;DEBUG;NET;NET10_0;NETCOREAPP;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NET10_0_OR_GREATER;NETCOREAPP1_0_OR_GREATER;NETCOREAPP1_1_OR_GREATER;NETCOREAPP2_0_OR_GREATER;NETCOREAPP2_1_OR_GREATER;NETCOREAPP2_2_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER
+/highentropyva+
+/nullable:enable
+/features:"InterceptorsNamespaces=;Microsoft.Extensions.Validation.Generated"
+/debug+
+/debug:portable
+/filealign:512
+/optimize-
+/out:obj/Debug/net10.0/Survivors.dll
+/refout:obj/Debug/net10.0/refint/Survivors.dll
+/target:exe
+/warnaserror-
+/utf8output
+/deterministic+
+/langversion:14.0
+/warnaserror+:NU1605,SYSLIB0011
+
+[sourceFiles]
+EntitiesModule.cs
+Game.cs
+obj/Debug/net10.0/
+ .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
+ Survivors.AssemblyInfo.cs
+ Survivors.GlobalUsings.g.cs
+Program.cs
+Scripts/Achieves/
+ Achieve.cs
+ AchievesModule.cs
+ AchieveSys.cs
+ Specific/
+  CountAchieve.cs
+  DamageAchieve.cs
+  ExpCollectAchieve.cs
+  KillAchieve.cs
+  SurviveAchieve.cs
+Scripts/Behaviours/
+ BaseBehaviour.cs
+ Specific/
+  BehavioursModule.cs
+  GoblinBehaviour.cs
+  Nodes/
+   AttackLeaf.cs
+   DistanceLeaf.cs
+   MoveTowardsLeaf.cs
+  PlayerBehaviour.cs
+ Tree/
+  BaseLeaf.cs
+  Node.cs
+  Selector.cs
+  Sequence.cs
+Scripts/Components/Basic/
+ AnimComp.cs
+ DeathComp.cs
+ DispComp.cs
+ LineComp.cs
+ LocalTrsComp.cs
+ ModComp.cs
+ SpriteComp.cs
+ Tags.cs
+ TextComp.cs
+ TrsComp.cs
+Scripts/Components/Behaviour/
+ BehaviourComp.cs
+ MoveComp.cs
+Scripts/Components/Fighting/
+ BulletComp.cs
+ ShieldComp.cs
+ WeaponComp.cs
+Scripts/Components/Health/
+ DamageComp.cs
+ HealthComp.cs
+ StatusEffectComp.cs
+Scripts/Components/Loot/
+ DropComp.cs
+ Loot.cs
+ LootCollComp.cs
+Scripts/Components/Other/
+ TilemapComp.cs
+ TimerComp.cs
+Scripts/Components/Physics/
+ CollComp.cs
+ RigidComp.cs
+Scripts/Engine/Animations/
+ Anim.cs
+ AnimAtlas.cs
+ AnimAtlasManager.cs
+Scripts/Engine/Common/
+ AABB.cs
+ Camera.cs
+ Hash.cs
+ LayerMap.cs
+ Vector2Int.cs
+Scripts/Engine/
+ EngineModule.cs
+ Input/InputHandler.cs
+ ResourceManagement/
+  Atlas.cs
+  ResourceManager.cs
+ Sounds/
+  MusicManager.cs
+  SoundAtlas.cs
+  SoundAtlasManager.cs
+  SoundManager.cs
+ Sprites/
+  Sprite.cs
+  SpriteAtlas.cs
+  SpriteAtlasManager.cs
+  TextureManager.cs
+ Tilemaps/
+  Tile.cs
+  Tilemap.cs
+  TilemapManager.cs
+  Tileset.cs
+  TilesetManager.cs
+Scripts/Events/
+ DamageEvent.cs
+ DeathEvent.cs
+ ExpCollectEvent.cs
+ LevelupEvent.cs
+ PausedEvent.cs
+ SecPassEvent.cs
+Scripts/
+ Levels/Level_One.cs
+ Other/
+  ExpSys.cs
+  Item.cs
+  OtherModule.cs
+ Systems/Animation/
+  AnimSys.cs
+  AnimSysModule.cs
+  SoundSys.cs
+ Systems/Basic/
+  BasicModule.cs
+  Level.cs
+  LevelSys.cs
+  LocalTrsSys.cs
+  ModRegistry.cs
+  TimerSys.cs
+ Systems/Behaviour/
+  BehaviourModule.cs
+  BehaviourSys.cs
+ Systems/Drawing/
+  DrawingModule.cs
+  LineDrawSys.cs
+  SpriteDrawSys.cs
+  TextDrawSys.cs
+  TilemapDrawSys.cs
+  UISys.cs
+ Systems/Fighting/
+  BulletWeaponSys.cs
+  FightingModule.cs
+  ShieldSys.cs
+  WeaponSys.cs
+ Systems/Health/
+  DamageSys.cs
+  DeathSys.cs
+  HealthModule.cs
+  HealthSys.cs
+  StatusEffectHandler.cs
+  StatusEffectSys.cs
+ Systems/Loot/
+  LootCollectSys.cs
+  LootDropSys.cs
+  LootModule.cs
+ Systems/Physics/
+  CollisionRegistry.cs
+  CollSolveSys.cs
+  PhysicsModule.cs
+  RigidSys.cs
+  SpatialSys.cs
+  TileCollSys.cs
+ Systems/
+  SystemsModule.cs
+  WorldContext.cs
+ UI/
+  DamageUI.cs
+  LevelupUI.cs
+  MainUI.cs
+  ModsUI.cs
+  NotifyUI.cs
+  StatsUI.cs
+  UIModule.cs
+ Utils/
+  ArrayExtensions.cs
+  CachedList.cs
+  CircularSet.cs
+  GeomUtil.cs
+  ObjectPool.cs
+  RefSet.cs
+  ShuffleSelector.cs
+  VectorExtenions.cs
+ Weapons/
+  BulletWeapon.cs
+  Shield.cs
+  ShieldItem.cs
+  Specific/
+   Book.cs
+   Boomerang.cs
+   Bow.cs
+   Card.cs
+   DestroyShield.cs
+   Kunai.cs
+   LaserWeapon.cs
+   MeleeWeapon.cs
+   ReflectShield.cs
+   SpinWeapon.cs
+   Stave.cs
+   TrailBow.cs
+   WeaponsModule.cs
+  Weapon.cs
+  WeaponItem.cs
+
+[metadataReferences]
+<DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.4/ref/net10.0/
+ Microsoft.CSharp.dll
+ Microsoft.VisualBasic.Core.dll
+ Microsoft.VisualBasic.dll
+ Microsoft.Win32.Primitives.dll
+ Microsoft.Win32.Registry.dll
+ mscorlib.dll
+ netstandard.dll
+ System.AppContext.dll
+ System.Buffers.dll
+ System.Collections.Concurrent.dll
+ System.Collections.dll
+ System.Collections.Immutable.dll
+ System.Collections.NonGeneric.dll
+ System.Collections.Specialized.dll
+ System.ComponentModel.Annotations.dll
+ System.ComponentModel.DataAnnotations.dll
+ System.ComponentModel.dll
+ System.ComponentModel.EventBasedAsync.dll
+ System.ComponentModel.Primitives.dll
+ System.ComponentModel.TypeConverter.dll
+ System.Configuration.dll
+ System.Console.dll
+ System.Core.dll
+ System.Data.Common.dll
+ System.Data.DataSetExtensions.dll
+ System.Data.dll
+ System.Diagnostics.Contracts.dll
+ System.Diagnostics.Debug.dll
+ System.Diagnostics.DiagnosticSource.dll
+ System.Diagnostics.FileVersionInfo.dll
+ System.Diagnostics.Process.dll
+ System.Diagnostics.StackTrace.dll
+ System.Diagnostics.TextWriterTraceListener.dll
+ System.Diagnostics.Tools.dll
+ System.Diagnostics.TraceSource.dll
+ System.Diagnostics.Tracing.dll
+ System.dll
+ System.Drawing.dll
+ System.Drawing.Primitives.dll
+ System.Dynamic.Runtime.dll
+ System.Formats.Asn1.dll
+ System.Formats.Tar.dll
+ System.Globalization.Calendars.dll
+ System.Globalization.dll
+ System.Globalization.Extensions.dll
+ System.IO.Compression.Brotli.dll
+ System.IO.Compression.dll
+ System.IO.Compression.FileSystem.dll
+ System.IO.Compression.ZipFile.dll
+ System.IO.dll
+ System.IO.FileSystem.AccessControl.dll
+ System.IO.FileSystem.dll
+ System.IO.FileSystem.DriveInfo.dll
+ System.IO.FileSystem.Primitives.dll
+ System.IO.FileSystem.Watcher.dll
+ System.IO.IsolatedStorage.dll
+ System.IO.MemoryMappedFiles.dll
+ System.IO.Pipelines.dll
+ System.IO.Pipes.AccessControl.dll
+ System.IO.Pipes.dll
+ System.IO.UnmanagedMemoryStream.dll
+ System.Linq.AsyncEnumerable.dll
+ System.Linq.dll
+ System.Linq.Expressions.dll
+ System.Linq.Parallel.dll
+ System.Linq.Queryable.dll
+ System.Memory.dll
+ System.Net.dll
+ System.Net.Http.dll
+ System.Net.Http.Json.dll
+ System.Net.HttpListener.dll
+ System.Net.Mail.dll
+ System.Net.NameResolution.dll
+ System.Net.NetworkInformation.dll
+ System.Net.Ping.dll
+ System.Net.Primitives.dll
+ System.Net.Quic.dll
+ System.Net.Requests.dll
+ System.Net.Security.dll
+ System.Net.ServerSentEvents.dll
+ System.Net.ServicePoint.dll
+ System.Net.Sockets.dll
+ System.Net.WebClient.dll
+ System.Net.WebHeaderCollection.dll
+ System.Net.WebProxy.dll
+ System.Net.WebSockets.Client.dll
+ System.Net.WebSockets.dll
+ System.Numerics.dll
+ System.Numerics.Vectors.dll
+ System.ObjectModel.dll
+ System.Reflection.DispatchProxy.dll
+ System.Reflection.dll
+ System.Reflection.Emit.dll
+ System.Reflection.Emit.ILGeneration.dll
+ System.Reflection.Emit.Lightweight.dll
+ System.Reflection.Extensions.dll
+ System.Reflection.Metadata.dll
+ System.Reflection.Primitives.dll
+ System.Reflection.TypeExtensions.dll
+ System.Resources.Reader.dll
+ System.Resources.ResourceManager.dll
+ System.Resources.Writer.dll
+ System.Runtime.CompilerServices.Unsafe.dll
+ System.Runtime.CompilerServices.VisualC.dll
+ System.Runtime.dll
+ System.Runtime.Extensions.dll
+ System.Runtime.Handles.dll
+ System.Runtime.InteropServices.dll
+ System.Runtime.InteropServices.JavaScript.dll
+ System.Runtime.InteropServices.RuntimeInformation.dll
+ System.Runtime.Intrinsics.dll
+ System.Runtime.Loader.dll
+ System.Runtime.Numerics.dll
+ System.Runtime.Serialization.dll
+ System.Runtime.Serialization.Formatters.dll
+ System.Runtime.Serialization.Json.dll
+ System.Runtime.Serialization.Primitives.dll
+ System.Runtime.Serialization.Xml.dll
+ System.Security.AccessControl.dll
+ System.Security.Claims.dll
+ System.Security.Cryptography.Algorithms.dll
+ System.Security.Cryptography.Cng.dll
+ System.Security.Cryptography.Csp.dll
+ System.Security.Cryptography.dll
+ System.Security.Cryptography.Encoding.dll
+ System.Security.Cryptography.OpenSsl.dll
+ System.Security.Cryptography.Primitives.dll
+ System.Security.Cryptography.X509Certificates.dll
+ System.Security.dll
+ System.Security.Principal.dll
+ System.Security.Principal.Windows.dll
+ System.Security.SecureString.dll
+ System.ServiceModel.Web.dll
+ System.ServiceProcess.dll
+ System.Text.Encoding.CodePages.dll
+ System.Text.Encoding.dll
+ System.Text.Encoding.Extensions.dll
+ System.Text.Encodings.Web.dll
+ System.Text.Json.dll
+ System.Text.RegularExpressions.dll
+ System.Threading.AccessControl.dll
+ System.Threading.Channels.dll
+ System.Threading.dll
+ System.Threading.Overlapped.dll
+ System.Threading.Tasks.Dataflow.dll
+ System.Threading.Tasks.dll
+ System.Threading.Tasks.Extensions.dll
+ System.Threading.Tasks.Parallel.dll
+ System.Threading.Thread.dll
+ System.Threading.ThreadPool.dll
+ System.Threading.Timer.dll
+ System.Transactions.dll
+ System.Transactions.Local.dll
+ System.ValueTuple.dll
+ System.Web.dll
+ System.Web.HttpUtility.dll
+ System.Windows.dll
+ System.Xml.dll
+ System.Xml.Linq.dll
+ System.Xml.ReaderWriter.dll
+ System.Xml.Serialization.dll
+ System.Xml.XDocument.dll
+ System.Xml.XmlDocument.dll
+ System.Xml.XmlSerializer.dll
+ System.Xml.XPath.dll
+ System.Xml.XPath.XDocument.dll
+ WindowsBase.dll
+<NUGET>/
+ arch.aot.sourcegenerator/1.0.1/lib/netstandard2.0/Arch.AOT.SourceGenerator.dll
+ arch.eventbus/1.0.2/lib/netstandard2.0/Arch.EventBus.dll
+ arch.lowlevel/1.1.5/lib/net7.0/Arch.LowLevel.dll
+ arch.system.sourcegenerator/2.1.0/lib/netstandard2.0/Arch.System.SourceGenerator.dll
+ arch.system/1.1.0/lib/net7.0/Arch.System.dll
+ arch/2.1.0/lib/net8.0/Arch.dll
+ autofac/9.1.0/lib/net10.0/Autofac.dll
+ collections.pooled/2.0.0-preview.27/lib/netcoreapp3.0/Collections.Pooled.dll
+ communitytoolkit.highperformance/8.2.2/lib/net7.0/CommunityToolkit.HighPerformance.dll
+ imgui.net/1.91.6.1/lib/net8.0/ImGui.NET.dll
+ microsoft.bcl.asyncinterfaces/5.0.0/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll
+ microsoft.codeanalysis.common/4.1.0/lib/netcoreapp3.1/Microsoft.CodeAnalysis.dll
+ microsoft.codeanalysis.csharp.workspaces/4.1.0/lib/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+ microsoft.codeanalysis.csharp/4.1.0/lib/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.dll
+ microsoft.codeanalysis.workspaces.common/4.1.0/lib/netcoreapp3.1/Microsoft.CodeAnalysis.Workspaces.dll
+ microsoft.extensions.objectpool/7.0.0/lib/net7.0/Microsoft.Extensions.ObjectPool.dll
+ raylib-cs/7.0.2/lib/net8.0/Raylib-cs.dll
+ rlimgui-cs/3.2.0/lib/net6.0/rlImGui.dll
+ system.composition.attributedmodel/1.0.31/lib/netstandard1.0/System.Composition.AttributedModel.dll
+ system.composition.convention/1.0.31/lib/netstandard1.0/System.Composition.Convention.dll
+ system.composition.hosting/1.0.31/lib/netstandard1.0/System.Composition.Hosting.dll
+ system.composition.runtime/1.0.31/lib/netstandard1.0/System.Composition.Runtime.dll
+ system.composition.typedparts/1.0.31/lib/netstandard1.0/System.Composition.TypedParts.dll
+ zeroallocjobscheduler/1.1.2/lib/netstandard2.1/Schedulers.dll
+ zstring/2.6.0/lib/net7.0/ZString.dll
+
+[analyzerReferences]
+<DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.4/analyzers/dotnet/cs/
+ Microsoft.Interop.ComInterfaceGenerator.dll
+ Microsoft.Interop.JavaScript.JSImportGenerator.dll
+ Microsoft.Interop.LibraryImportGenerator.dll
+ Microsoft.Interop.SourceGeneration.dll
+ System.Text.Json.SourceGeneration.dll
+ System.Text.RegularExpressions.Generator.dll
+<DOTNET>/sdk/10.0.104/Sdks/Microsoft.NET.Sdk/analyzers/
+ Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
+ Microsoft.CodeAnalysis.NetAnalyzers.dll
+<NUGET>/
+ arch.aot.sourcegenerator/1.0.1/analyzers/dotnet/cs/Arch.AOT.SourceGenerator.dll
+ arch.eventbus/1.0.2/analyzers/dotnet/cs/Arch.EventBus.dll
+ arch.system.sourcegenerator/2.1.0/analyzers/dotnet/cs/Arch.System.SourceGenerator.dll
+ microsoft.codeanalysis.analyzers/3.3.3/analyzers/dotnet/cs/
+  Microsoft.CodeAnalysis.Analyzers.dll
+  Microsoft.CodeAnalysis.CSharp.Analyzers.dll
+
+[analyzerConfigFiles]
+<DOTNET>/sdk/10.0.104/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_10_default.globalconfig
+obj/Debug/net10.0/Survivors.GeneratedMSBuildEditorConfig.editorconfig

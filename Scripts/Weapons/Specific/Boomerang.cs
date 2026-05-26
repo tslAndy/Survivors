@@ -8,7 +8,7 @@ using Systems;
 
 namespace Weapons.Specific;
 
-class Boomerang : Bow
+public class Boomerang : Bow
 {
     public Boomerang(
         BulletConfig bulletConfig,

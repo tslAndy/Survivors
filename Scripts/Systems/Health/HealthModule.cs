@@ -2,7 +2,7 @@ using Autofac;
 
 namespace Systems.Health;
 
-class HealthModule : Module
+public class HealthModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

@@ -9,7 +9,7 @@ using Utils;
 
 namespace Weapons.Specific;
 
-struct LaserConfig
+public struct LaserConfig
 {
     public int raysCount;
     public float start,
@@ -19,7 +19,7 @@ struct LaserConfig
     public Color color;
 }
 
-class LaserWeapon : Weapon
+public class LaserWeapon : Weapon
 {
     protected readonly LaserConfig laserConfig;
 
