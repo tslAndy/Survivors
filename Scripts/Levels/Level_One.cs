@@ -107,7 +107,8 @@ static class Level_One
                 x.ResolveNamed<Item>("simpleTrailBowItem"),
                 x.ResolveNamed<Item>("simpleLaserItem"),
                 x.ResolveNamed<Item>("simpleBookItem"),
-                x.ResolveNamed<Item>("simpleCardItem")
+                x.ResolveNamed<Item>("simpleCardItem"),
+                x.ResolveNamed<Item>("curseShieldItem")
             ),
             x
         );

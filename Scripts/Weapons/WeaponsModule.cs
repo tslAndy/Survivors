@@ -460,6 +460,33 @@ public class WeaponsModule : Module
                     projectileLayer = x.Resolve<LayerMap>()["EnemyBullets"],
                 };
 
+                ShieldCallbacks callbacks = new ShieldCallbacks
+                {
+                    hitCallback = (ent, ref hit) =>
+                    {
+                        if (hit.source == null)
+                            return;
+                        ref DamageComp damage = ref hit.source.Value.Get<DamageComp>();
+                        damage.hits.Add(new Hit(1_000_000, StatusEffectType.None));
+                    },
+                };
+
+                IShield shield = new Shield(config, callbacks, x.Resolve<WorldContext>());
+                return new ShieldElem(shield, null);
+            })
+            .Named<ShieldElem>("curseShield")
+            .InstancePerDependency();
+
+        builder
+            .Register<ShieldElem>(x =>
+            {
+                ShieldConfig config = new ShieldConfig
+                {
+                    detectRadius = 2.0f,
+                    entityLayer = x.Resolve<LayerMap>()["EnemyEnts"],
+                    projectileLayer = x.Resolve<LayerMap>()["EnemyBullets"],
+                };
+
                 IShield shield = new DestroyShield(config, default, x.Resolve<WorldContext>());
                 return new ShieldElem(shield, null);
             })
@@ -673,6 +700,23 @@ class ItemsModule : Module
             .Named<Item>("simpleBookItem")
             .InstancePerLifetimeScope();
 
+        builder
+            .Register<Item>(x =>
+            {
+                return new ShieldItem(
+                    new ItemInfo(
+                        "curseShield",
+                        x.Resolve<SpriteAtlasManager>()
+                            .Get("./Resources/SpriteAtlases/Items/MainItems.spriteAtlas")[
+                            "shield_1"
+                        ],
+                        "Curse shield",
+                        "Instantly kills enemy who attacked you----"
+                    )
+                );
+            })
+            .Named<Item>("curseShieldItem")
+            .InstancePerLifetimeScope();
         builder
             .Register<Item>(x =>
             {
